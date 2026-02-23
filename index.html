@@ -226,37 +226,24 @@
 <body>
 
 <!-- LOGO PREVIEW TEMPORAIRE -->
-<div id="logoPreview" style="position:fixed;inset:0;background:#07070f;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;">
+<div id="logoPreview" style="position:fixed;inset:0;background:#07070f;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:60px;">
 
-  <!-- Version grande — icône ronde -->
+  <!-- VERSION RONDE COMPLÈTE (photo de profil) -->
   <div style="text-align:center;">
-    <div style="width:160px;height:160px;background:linear-gradient(135deg,#00d4ff,#7c3aed);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 80px rgba(0,212,255,0.35);margin:0 auto 32px;">
-      <svg width="80" height="80" viewBox="0 0 64 64" fill="none">
-        <line x1="16" y1="10" x2="16" y2="54" stroke="white" stroke-width="7" stroke-linecap="round"/>
-        <line x1="16" y1="32" x2="46" y2="12" stroke="white" stroke-width="7" stroke-linecap="round"/>
-        <line x1="16" y1="32" x2="46" y2="52" stroke="white" stroke-width="7" stroke-linecap="round"/>
-        <circle cx="50" cy="13" r="5" fill="white" opacity="0.9"/>
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;font-weight:700;color:#64748b;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">Version ronde (photo de profil)</div>
+    <div style="width:400px;height:400px;background:linear-gradient(135deg,#00d4ff 0%,#7c3aed 100%);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;box-shadow:0 0 120px rgba(0,212,255,0.3),0 0 60px rgba(124,58,237,0.2);">
+      <!-- K icon -->
+      <svg width="100" height="100" viewBox="0 0 64 64" fill="none">
+        <line x1="16" y1="8" x2="16" y2="56" stroke="white" stroke-width="7" stroke-linecap="round"/>
+        <line x1="16" y1="32" x2="48" y2="10" stroke="white" stroke-width="7" stroke-linecap="round"/>
+        <line x1="16" y1="32" x2="48" y2="54" stroke="white" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="52" cy="10" r="5" fill="rgba(255,255,255,0.9)"/>
       </svg>
+      <!-- KodAI text -->
+      <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:72px;font-weight:900;letter-spacing:-1px;line-height:1;color:white;">KodAI</div>
+      <!-- Subtitle -->
+      <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;font-weight:600;color:rgba(255,255,255,0.75);letter-spacing:3px;text-transform:uppercase;">Automatisation IA</div>
     </div>
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:80px;font-weight:900;letter-spacing:-2px;line-height:1;">
-      <span style="color:#f8fafc;">Kod</span><span style="background:linear-gradient(135deg,#00d4ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AI</span>
-    </div>
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;font-weight:600;color:#64748b;letter-spacing:4px;text-transform:uppercase;margin-top:10px;">Automatisation · Intelligence Artificielle</div>
-  </div>
-
-  <!-- Version compacte horizontale -->
-  <div style="display:flex;align-items:center;gap:14px;background:#0e0e1f;border:1px solid #1c1c3a;border-radius:99px;padding:16px 28px;">
-    <div style="width:42px;height:42px;background:linear-gradient(135deg,#00d4ff,#7c3aed);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-      <svg width="22" height="22" viewBox="0 0 64 64" fill="none">
-        <line x1="16" y1="10" x2="16" y2="54" stroke="white" stroke-width="8" stroke-linecap="round"/>
-        <line x1="16" y1="32" x2="46" y2="12" stroke="white" stroke-width="8" stroke-linecap="round"/>
-        <line x1="16" y1="32" x2="46" y2="52" stroke="white" stroke-width="8" stroke-linecap="round"/>
-        <circle cx="50" cy="13" r="5" fill="white"/>
-      </svg>
-    </div>
-    <span style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:26px;font-weight:900;letter-spacing:0px;">
-      <span style="color:#f8fafc;">Kod</span><span style="background:linear-gradient(135deg,#00d4ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AI</span>
-    </span>
   </div>
 
   <button onclick="document.getElementById('logoPreview').style.display='none'" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#64748b;padding:10px 24px;border-radius:99px;cursor:pointer;font-size:13px;">Fermer ✕</button>
