@@ -198,6 +198,100 @@
       #kodai-chat-panel { width: calc(100vw - 32px); right: 16px; bottom: 80px; }
       #kodai-chat-btn { right: 16px; bottom: 16px; }
     }
+
+    /* POPUP */
+    #kodai-popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: kodaiFadeIn 0.3s ease;
+    }
+    #kodai-popup-overlay.kodai-hidden { display: none; }
+    @keyframes kodaiFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    #kodai-popup {
+      background: #0e0e1f;
+      border: 1px solid #1c1c3a;
+      border-radius: 24px;
+      padding: 40px 36px;
+      max-width: 440px;
+      width: calc(100vw - 40px);
+      text-align: center;
+      position: relative;
+      animation: kodaiPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0,212,255,0.1);
+    }
+    @keyframes kodaiPopIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    #kodai-popup-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+      padding: 4px 8px;
+      transition: color 0.2s;
+    }
+    #kodai-popup-close:hover { color: #f8fafc; }
+    .kodai-popup-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .kodai-popup-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #f8fafc;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .kodai-popup-sub {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .kodai-popup-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .kodai-popup-btn-primary {
+      background: linear-gradient(135deg, #00d4ff, #7c3aed);
+      color: #fff;
+      border: none;
+      border-radius: 99px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+    .kodai-popup-btn-primary:hover { opacity: 0.85; }
+    .kodai-popup-btn-ghost {
+      background: transparent;
+      color: #64748b;
+      border: none;
+      border-radius: 99px;
+      padding: 12px 20px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .kodai-popup-btn-ghost:hover { color: #f8fafc; }
   `;
   document.head.appendChild(style);
 
@@ -318,4 +412,40 @@
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 80) + 'px';
   });
+
+  // ===== POPUP =====
+  if (!sessionStorage.getItem('kodai_popup_seen')) {
+    const overlay = document.createElement('div');
+    overlay.id = 'kodai-popup-overlay';
+    overlay.innerHTML = `
+      <div id="kodai-popup">
+        <button id="kodai-popup-close">✕</button>
+        <div class="kodai-popup-icon">🚀</div>
+        <div class="kodai-popup-title">Votre idée mérite<br>d'exister.</div>
+        <div class="kodai-popup-sub">Site web, agent IA, automatisation — on livre vite,<br>sans jargon technique. Soumission gratuite.</div>
+        <div class="kodai-popup-btns">
+          <button class="kodai-popup-btn-primary" id="kodaiPopupChat">Parler à l'assistant →</button>
+          <button class="kodai-popup-btn-ghost" id="kodaiPopupDismiss">Plus tard</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    function closePopup() {
+      sessionStorage.setItem('kodai_popup_seen', '1');
+      overlay.classList.add('kodai-hidden');
+    }
+
+    document.getElementById('kodai-popup-close')?.addEventListener('click', closePopup);
+    document.getElementById('kodaiPopupDismiss')?.addEventListener('click', closePopup);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
+
+    document.getElementById('kodaiPopupChat')?.addEventListener('click', () => {
+      closePopup();
+      if (!open) toggle();
+    });
+
+    setTimeout(() => { overlay.style.display = 'flex'; }, 5000);
+    overlay.style.display = 'none';
+  }
 })();
