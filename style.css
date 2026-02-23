@@ -260,6 +260,32 @@ footer {
     padding-right: 20px !important;
   }
   .card { padding: 24px 20px; }
+
+  /* Fix débordement sections inline */
+  div[style*="padding:80px 40px"],
+  div[style*="padding: 80px 40px"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Fix flex items qui débordent */
+  div[style*="display:flex"] > div,
+  div[style*="display: flex"] > div {
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  /* Fix grids inline */
+  div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Fix cercle fondateur */
+  .founder-layout,
+  .idea-layout {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
 }
 
 /* ===== GLOWING ORB ===== */
