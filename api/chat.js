@@ -28,6 +28,14 @@ MENSUEL RÉCURRENT:
 - Bot actif (agent IA en continu): 300–800$/mois
 - Licence SaaS sur mesure: 200–2 000$/mois
 
+CERCLE FONDATEUR (offre exclusive):
+- Seulement 5 places disponibles pour les premiers clients
+- 30% de rabais sur le projet
+- Tarif mensuel garanti 5 ans (même si les prix augmentent)
+- Priorité absolue — livraison en moins de 48h
+- Badge "Client fondateur" permanent sur le site KodAI
+- Sans engagement, soumission gratuite
+
 DÉLAIS: 1–2 semaines pour un site web standard. Des projets ont été livrés en 1 journée.
 CONTACT: info@kodai.ca ou formulaire de contact sur le site
 SOUMISSION: gratuite, sans engagement
