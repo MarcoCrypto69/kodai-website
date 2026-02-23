@@ -111,7 +111,7 @@
         <div class="contact-icon">📧</div>
         <div>
           <div class="contact-detail-label">Email</div>
-          <div class="contact-detail-val">info@nexora.com</div>
+          <div class="contact-detail-val">info@kodai.ca</div>
         </div>
       </div>
       <div class="contact-detail">
@@ -144,6 +144,9 @@
       <p class="sub">Plus vous êtes précis, plus notre soumission sera adaptée à vos besoins.</p>
 
       <form id="contactForm" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="access_key" value="9b0607fb-99bb-49ec-9a0f-211ed217af86">
+        <input type="hidden" name="subject" value="Nouvelle soumission — KodAI">
+        <input type="hidden" name="from_name" value="KodAI Website">
         <div class="form-row">
           <div class="form-group">
             <label>Prénom *</label>
@@ -228,12 +231,26 @@
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { btn.classList.remove('open'); nav.classList.remove('open'); }));
 })();
 
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
-  // TODO: brancher Formspree ou autre service d'envoi
-  // fetch('https://formspree.io/f/VOTRE_ID', { method:'POST', body: new FormData(e.target) })
-  document.getElementById('contactForm').style.display = 'none';
-  document.getElementById('successMsg').style.display = 'block';
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.textContent = 'Envoi en cours...';
+  btn.disabled = true;
+
+  const res = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    body: new FormData(e.target)
+  });
+  const data = await res.json();
+
+  if (data.success) {
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  } else {
+    btn.textContent = 'Envoyer ma demande →';
+    btn.disabled = false;
+    alert('Erreur lors de l\'envoi. Contactez-nous directement à info@kodai.ca');
+  }
 }
 </script>
 
