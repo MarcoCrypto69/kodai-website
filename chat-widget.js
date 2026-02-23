@@ -433,7 +433,7 @@
 
     function closePopup() {
       sessionStorage.setItem('kodai_popup_seen', '1');
-      overlay.classList.add('kodai-hidden');
+      overlay.style.display = 'none';
     }
 
     document.getElementById('kodai-popup-close')?.addEventListener('click', closePopup);
