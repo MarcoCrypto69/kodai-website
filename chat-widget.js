@@ -381,7 +381,7 @@
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history.slice(-10) }),
+        body: JSON.stringify({ messages: history.slice(history.findIndex(m => m.role === 'user')).slice(-10) }),
       });
       const data = await res.json();
       hideTyping();
