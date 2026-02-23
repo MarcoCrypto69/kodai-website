@@ -330,7 +330,7 @@
   let open = false;
   let loading = false;
 
-  addBot("Bonjour! 👋 Je suis l'assistant de KodAI. Comment puis-je vous aider? Sites web, agents IA, automatisation — posez-moi vos questions!");
+  addBot("Bonjour. Je suis l'assistant de KodAI. Comment puis-je vous aider?");
 
   function addBot(text) {
     history.push({ role: 'assistant', content: text });
