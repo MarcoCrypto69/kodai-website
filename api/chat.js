@@ -32,7 +32,7 @@ SOUMISSION: gratuite, sans engagement
 
 Ton rôle: répondre aux questions sur les services et tarifs, aider le prospect à identifier la meilleure solution pour son besoin, et l'encourager à demander une soumission gratuite. Sois concis — max 3-4 phrases par réponse. Pour les projets complexes ou sur mesure, invite-les à remplir le formulaire de contact.`;
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
