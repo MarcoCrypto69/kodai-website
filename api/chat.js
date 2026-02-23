@@ -1,3 +1,5 @@
+const https = require('https');
+
 const SYSTEM_PROMPT = `Tu es l'assistant virtuel de KodAI, une agence numérique québécoise spécialisée en développement web et intelligence artificielle. Tu réponds en français de manière professionnelle mais décontractée.
 
 SERVICES ET TARIFS:
@@ -32,7 +34,7 @@ SOUMISSION: gratuite, sans engagement
 
 Ton rôle: répondre aux questions sur les services et tarifs, aider le prospect à identifier la meilleure solution pour son besoin, et l'encourager à demander une soumission gratuite. Sois concis — max 3-4 phrases par réponse. Pour les projets complexes ou sur mesure, invite-les à remplir le formulaire de contact.`;
 
-module.exports = async function handler(req, res) {
+module.exports = function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -43,30 +45,49 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid request' });
   }
 
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 400,
-        system: SYSTEM_PROMPT,
-        messages: messages.slice(-10),
-      }),
+  const body = JSON.stringify({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 400,
+    system: SYSTEM_PROMPT,
+    messages: messages.slice(-10),
+  });
+
+  const options = {
+    hostname: 'api.anthropic.com',
+    path: '/v1/messages',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(body),
+      'x-api-key': process.env.ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+    },
+  };
+
+  const request = https.request(options, (response) => {
+    let data = '';
+    response.on('data', (chunk) => { data += chunk; });
+    response.on('end', () => {
+      try {
+        const parsed = JSON.parse(data);
+        if (parsed.content && parsed.content[0]) {
+          res.status(200).json({ message: parsed.content[0].text });
+        } else {
+          console.error('Unexpected API response:', data);
+          res.status(500).json({ error: 'Réponse invalide' });
+        }
+      } catch (e) {
+        console.error('Parse error:', e, data);
+        res.status(500).json({ error: 'Erreur de parsing' });
+      }
     });
+  });
 
-    if (!response.ok) {
-      throw new Error(`Anthropic API error: ${response.status}`);
-    }
+  request.on('error', (error) => {
+    console.error('HTTPS error:', error);
+    res.status(500).json({ error: 'Erreur réseau' });
+  });
 
-    const data = await response.json();
-    return res.status(200).json({ message: data.content[0].text });
-  } catch (error) {
-    console.error('Chat error:', error);
-    return res.status(500).json({ error: 'Erreur serveur' });
-  }
-}
+  request.write(body);
+  request.end();
+};
