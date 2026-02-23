@@ -10,7 +10,7 @@ Sites web:
 
 Agents IA & Bots: à partir de 2 000$
 Automatisation & Bots: à partir de 1 500$
-Apps mobile & SaaS: à partir de 5 000$
+Apps mobile & SaaS: à partir de 2 500$
 
 OPTIONS (ajouts à n'importe quel package):
 - Vidéo explicatif IA: +300$
