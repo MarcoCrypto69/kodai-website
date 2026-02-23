@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KodAI — On automatise votre business</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Combien coûte un site web professionnel au Québec?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Un site web professionnel au Québec coûte généralement entre 1 200$ et 3 500$+. Chez KodAI, le package Starter commence à 1 200$ (5 pages, design sur mesure, mobile), le package Pro à 1 800$ (Stripe, vidéo IA, SEO avancé) et le package Business à 3 500$+ (chatbot IA, automatisation, espace membre)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment automatiser mon entreprise avec l'IA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "L'automatisation IA consiste à remplacer les tâches répétitives — entrée de données, réponses clients, envoi de rapports — par des bots et agents IA qui travaillent 24h/7j. KodAI analyse vos processus et développe des solutions sur mesure avec Python, n8n, Make ou des agents IA, livrées en quelques jours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Est-ce qu'un bot peut vraiment remplacer un employé?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pour les tâches répétitives et bien définies, oui. Un bot peut gérer l'entrée de données, les réponses automatiques aux clients, la génération de rapports et la surveillance de systèmes 24h/7j sans erreurs ni congés. Il ne remplace pas la créativité ou le jugement humain, mais pour les tâches répétitives, c'est plus fiable et beaucoup moins coûteux qu'un employé."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Combien d'argent je peux économiser avec un bot IA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Un employé à temps plein coûte en moyenne 40 000$ à 60 000$/an au Québec (salaire + charges). Trois bots IA qui effectuent les mêmes tâches répétitives coûtent environ 600$/mois (7 200$/an), soit des économies potentielles de 30 000$ à 50 000$ par année sur les tâches automatisables."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Combien de temps pour livrer un site web?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Chez KodAI, un site web complet est livré en 1 à 2 semaines. Pour les projets urgents, certains sites simples peuvent être livrés en 24 à 48 heures."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "KodAI fait-elle des applications mobiles et Apple Watch?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui. KodAI développe des applications iOS, Android et Apple Watch. On construit aussi des SaaS complets avec tableau de bord, API sur mesure et intégration de paiements récurrents via Stripe."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "C'est quoi le Cercle Fondateur de KodAI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le Cercle Fondateur est une offre exclusive limitée à 5 clients. Les membres obtiennent 30% de rabais sur leur projet, un tarif mensuel garanti 5 ans, la priorité absolue pour les livraisons en moins de 48h et un badge Client fondateur sur le site KodAI."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "C'est quoi le Cercle Fondateur de KodAI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le Cercle Fondateur est une offre exclusive limitée à 5 clients. Les membres obtiennent 30% de rabais sur leur projet, un tarif mensuel garanti 5 ans, la priorité absolue pour les livraisons en moins de 48h et un badge Client fondateur sur le site KodAI."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Vous pouvez développer un projet à partir d'une simple idée?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, c'est même notre spécialité. Pas besoin de cahier des charges ni de connaissances techniques. Décrivez votre idée en quelques lignes — KodAI s'occupe de tout, de la conception à la livraison."
+        }
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 740px; }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 99px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before { content: '●'; font-size: 8px; animation: blink 1.5s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    .hero-title {
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1.08;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+    .hero-title .line2 {
+      background: var(--grad-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 20px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 60px; }
+    .hero-services {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .hero-tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    /* Orbs */
+    .hero-orb1 { width: 500px; height: 500px; top: -100px; right: -100px; }
+    .hero-orb2 { width: 300px; height: 300px; bottom: 0; left: 200px; }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .stats-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .stats-bar-inner { grid-template-columns: 1fr 1fr; padding: 32px 20px; }
+      .hero-title { font-size: 40px; }
+      .hero { padding: 60px 20px; }
+    }
+
+    /* ===== SERVICES PREVIEW ===== */
+    .service-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .icon-cyan { background: rgba(0,212,255,0.1); }
+    .icon-purple { background: rgba(124,58,237,0.1); }
+    .icon-orange { background: rgba(249,115,22,0.1); }
+    .icon-green { background: rgba(74,222,128,0.1); }
+    .card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+    .card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .card-link {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cyan);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-link:hover { gap: 8px; }
+
+    /* ===== CTA BAND ===== */
+    .cta-band {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .cta-band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .cta-band h2 { font-size: 36px; font-weight: 900; max-width: 500px; }
+    @media (max-width: 768px) {
+      .cta-band-inner { padding: 50px 20px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">KodAI</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">Accueil</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="tarifs.html">Tarifs</a></li>
+    <li><a href="portfolio.html">Réalisations</a></li>
+    <li><a href="contact.html" class="nav-cta">Soumission gratuite</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div style="position:relative;overflow:hidden;">
+  <canvas id="particles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;"></canvas>
+  <div class="orb orb-cyan orb1" style="position:absolute;width:600px;height:600px;top:-150px;right:-100px;background:rgba(0,212,255,0.07);border-radius:50%;filter:blur(100px);pointer-events:none;"></div>
+  <div class="orb orb-purple" style="position:absolute;width:400px;height:400px;bottom:-50px;left:100px;background:rgba(124,58,237,0.08);border-radius:50%;filter:blur(80px);pointer-events:none;"></div>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Disponible pour nouveaux projets</div>
+      <h1 class="hero-title">
+        On automatise<br>
+        <span class="line2">votre business.</span>
+      </h1>
+      <p class="hero-sub">Remplacez les tâches répétitives par des agents IA qui travaillent 24/7, sans salaire, sans vacances, sans erreurs. C'est pas une dépense — c'est l'investissement le plus rentable de votre business.</p>
+      <div class="hero-ctas">
+        <a href="contact.html" class="btn btn-primary">Soumission gratuite et sans engagement →</a>
+        <a href="services.html" class="btn btn-outline">Voir nos services</a>
+      </div>
+      <div class="hero-services">
+        <span class="hero-tag">🤖 Agents IA</span>
+        <span class="hero-tag">⚡ Automatisation</span>
+        <span class="hero-tag">🌐 Sites web</span>
+        <span class="hero-tag">📱 Apps mobiles</span>
+        <span class="hero-tag">⌚ Apple Watch</span>
+        <span class="hero-tag">🔗 Intégration Stripe</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- IDÉE SECTION -->
+<div style="position:relative;z-index:1;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;padding:72px 40px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;" class="idea-layout">
+
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:99px;padding:6px 16px;font-size:12px;font-weight:700;color:#a78bfa;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;">
+          💡 Pas besoin d'être technique
+        </div>
+        <h2 style="font-size:38px;font-weight:900;line-height:1.15;margin-bottom:16px;">
+          Vous avez une idée.<br><span class="grad-text">On s'occupe du reste.</span>
+        </h2>
+        <p style="color:var(--muted);font-size:17px;line-height:1.7;margin-bottom:28px;">Pas de cahier des charges. Pas de specs techniques. Décrivez-nous votre problème en 2 minutes — on vous dit comment le régler et combien ça coûte.</p>
+        <a href="contact.html" class="btn btn-primary">Parlez-nous de votre idée →</a>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;align-items:center;gap:20px;background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:20px 24px;">
+          <div style="width:44px;height:44px;background:var(--grad);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:16px;flex-shrink:0;">1</div>
+          <div>
+            <div style="font-weight:800;margin-bottom:4px;">Vous parlez</div>
+            <div style="font-size:13px;color:var(--muted);">Décrivez votre idée ou votre problème en quelques lignes. Aucune connaissance technique requise.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:20px;background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:20px 24px;">
+          <div style="width:44px;height:44px;background:var(--grad);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:16px;flex-shrink:0;">2</div>
+          <div>
+            <div style="font-weight:800;margin-bottom:4px;">On conçoit</div>
+            <div style="font-size:13px;color:var(--muted);">On traduit votre idée en solution concrète et on vous soumet un plan clair avec un prix fixe.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:20px;background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:20px 24px;">
+          <div style="width:44px;height:44px;background:var(--grad);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:16px;flex-shrink:0;">3</div>
+          <div>
+            <div style="font-weight:800;margin-bottom:4px;">On livre</div>
+            <div style="font-size:13px;color:var(--muted);">Rapide, propre, fonctionnel. Vous recevez exactement ce qu'on a promis, dans les délais.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<style>
+@media (max-width: 768px) {
+  .idea-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+}
+</style>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div>
+      <div class="stat-num">48h</div>
+      <div class="stat-label">Délai de livraison moyen</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Projets livrés à temps</div>
+    </div>
+    <div>
+      <div class="stat-num">AI</div>
+      <div class="stat-label">Intégré dans chaque solution</div>
+    </div>
+    <div>
+      <div class="stat-num">24h</div>
+      <div class="stat-label">Délai de réponse garanti</div>
+    </div>
+  </div>
+</div>
+
+<!-- ROI SECTION -->
+<div style="position:relative;z-index:1;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;padding:80px 40px;">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div class="section-label" style="display:inline-block;">Pourquoi maintenant</div>
+      <h2 class="section-title" style="margin-bottom:12px;">L'IA <span class="grad-text">remplace des emplois.</span><br>Profitez-en.</h2>
+      <p style="color:var(--muted);font-size:18px;max-width:600px;margin:0 auto;">Les entreprises qui automatisent maintenant vont écraser celles qui attendent. C'est pas une tendance — c'est une révolution permanente.</p>
+    </div>
+
+    <div class="grid-3" style="margin-bottom:56px;">
+      <div class="card" style="text-align:center;border-color:rgba(239,68,68,0.2);">
+        <div style="font-size:40px;margin-bottom:16px;">💸</div>
+        <h3 style="font-size:20px;margin-bottom:10px;">Coupez vos coûts</h3>
+        <p style="font-size:14px;color:var(--muted);">Un agent IA remplace des heures de travail manuel à une fraction du coût d'un employé. Pas de vacances, pas de maladie, pas d'erreurs.</p>
+        <div style="margin-top:16px;font-size:24px;font-weight:900;color:#ef4444;">−60% de coûts opérationnels</div>
+      </div>
+      <div class="card" style="text-align:center;border-color:rgba(0,212,255,0.3);box-shadow:var(--glow-cyan);">
+        <div style="font-size:40px;margin-bottom:16px;">⚡</div>
+        <h3 style="font-size:20px;margin-bottom:10px;">Travaillez 24/7</h3>
+        <p style="font-size:14px;color:var(--muted);">Vos bots et agents IA ne dorment jamais. Pendant que vous dormez, votre business génère, traite et répond automatiquement.</p>
+        <div style="margin-top:16px;font-size:24px;font-weight:900;" style="background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+          <span class="grad-text">24h/24 · 7j/7 · 365j/an</span>
+        </div>
+      </div>
+      <div class="card" style="text-align:center;border-color:rgba(74,222,128,0.2);">
+        <div style="font-size:40px;margin-bottom:16px;">📈</div>
+        <h3 style="font-size:20px;margin-bottom:10px;">Faites plus d'argent</h3>
+        <p style="font-size:14px;color:var(--muted);">Moins de coûts + plus de capacité = plus de profits. Réinvestissez ce que vous économisez en croissance réelle.</p>
+        <div style="margin-top:16px;font-size:24px;font-weight:900;color:#4ade80;">ROI dès les premiers mois</div>
+      </div>
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg,#0d0d1f,#13082a);border-color:rgba(124,58,237,0.3);padding:40px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+        <div style="max-width:560px;">
+          <div style="font-size:13px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">Exemple concret</div>
+          <h3 style="font-size:24px;font-weight:900;margin-bottom:12px;">Un employé à 40 000$/an gère les emails, entre les données et envoie les rapports?</h3>
+          <p style="color:var(--muted);font-size:15px;line-height:1.7;">Trois bots font le même travail pour <strong style="color:#a78bfa;">600$/mois</strong> — soit <strong style="color:#4ade80;">7 200$/an</strong>. Vous économisez <strong style="color:#4ade80;">32 800$ la première année</strong>, 24h/7j, sans erreurs, sans congés maladie.</p>
+        </div>
+        <div style="text-align:center;flex-shrink:0;">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:4px;">Économies année 1</div>
+          <div style="font-size:56px;font-weight:900;"><span class="grad-text">32 800$</span></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px;">pour UN seul employé remplacé</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES PREVIEW -->
+<section>
+  <div class="section-label">Ce qu'on fait</div>
+  <h2 class="section-title">Nos <span class="grad-text">services</span></h2>
+  <p class="section-sub">De la vitrine web au SaaS complet — on livre des solutions qui roulent pendant que vous dormez.</p>
+  <div class="grid-4">
+    <div class="card">
+      <div class="service-icon icon-purple">🤖</div>
+      <h3>Agents IA & Bots</h3>
+      <p>Automatisez l'entrée de données, les réponses clients et les tâches répétitives 24/7.</p>
+      <a href="services.html" class="card-link">En savoir plus →</a>
+    </div>
+    <div class="card">
+      <div class="service-icon icon-orange">⚡</div>
+      <h3>Automatisation</h3>
+      <p>Workflows, intégrations, scraping — vos processus tournent sans intervention humaine.</p>
+      <a href="services.html" class="card-link">En savoir plus →</a>
+    </div>
+    <div class="card">
+      <div class="service-icon icon-cyan">🌐</div>
+      <h3>Sites web</h3>
+      <p>Moderne, rapide, avec Stripe et paiement en ligne. Livré en 48h.</p>
+      <a href="services.html" class="card-link">En savoir plus →</a>
+    </div>
+    <div class="card">
+      <div class="service-icon icon-green">📱</div>
+      <h3>Apps mobiles & SaaS</h3>
+      <p>iPhone, Apple Watch, tableaux de bord et solutions SaaS sur mesure.</p>
+      <a href="services.html" class="card-link">En savoir plus →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CERCLE FONDATEUR -->
+<div style="position:relative;z-index:1;border-top:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;padding:80px 40px;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25);border-radius:99px;padding:6px 18px;font-size:12px;font-weight:700;color:#fbbf24;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;">
+        ⭐ Offre exclusive — réseau personnel
+      </div>
+      <h2 class="section-title">Cercle <span style="background:linear-gradient(135deg,#fbbf24,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Fondateur</span></h2>
+      <p style="color:var(--muted);font-size:18px;max-width:540px;margin:0 auto;">5 places réservées aux premiers clients. Rentrez tôt, payez moins, gardez l'avantage.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:32px;align-items:center;" class="founder-layout">
+
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="background:var(--surface);border:1px solid rgba(251,191,36,0.2);border-radius:20px;padding:24px;display:flex;align-items:center;gap:16px;">
+          <div style="width:48px;height:48px;background:rgba(251,191,36,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">💸</div>
+          <div>
+            <div style="font-weight:800;margin-bottom:4px;">30% de rabais sur le projet</div>
+            <div style="font-size:13px;color:var(--muted);">Économie immédiate sur votre investissement de départ</div>
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(251,191,36,0.2);border-radius:20px;padding:24px;display:flex;align-items:center;gap:16px;">
+          <div style="width:48px;height:48px;background:rgba(251,191,36,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🔒</div>
+          <div>
+            <div style="font-weight:800;margin-bottom:4px;">Tarif mensuel garanti 5 ans</div>
+            <div style="font-size:13px;color:var(--muted);">Vos frais récurrents restent fixes même si nos prix augmentent</div>
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(251,191,36,0.2);border-radius:20px;padding:24px;display:flex;align-items:center;gap:16px;">
+          <div style="width:48px;height:48px;background:rgba(251,191,36,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">⚡</div>
+          <div>
+            <div style="font-weight:800;margin-bottom:4px;">Priorité absolue — délais &lt; 48h</div>
+            <div style="font-size:13px;color:var(--muted);">Vos demandes passent avant tout le monde, toujours</div>
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(251,191,36,0.2);border-radius:20px;padding:24px;display:flex;align-items:center;gap:16px;">
+          <div style="width:48px;height:48px;background:rgba(251,191,36,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🏆</div>
+          <div>
+            <div style="font-weight:800;margin-bottom:4px;">Badge "Client fondateur" sur le site</div>
+            <div style="font-size:13px;color:var(--muted);">Visibilité permanente dans notre section réalisations</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,#0e0e1f,#1a1008);border:1px solid rgba(251,191,36,0.35);border-radius:24px;padding:40px;text-align:center;box-shadow:0 0 40px rgba(251,191,36,0.08);">
+        <div style="font-size:13px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;">Places disponibles</div>
+        <div style="display:flex;justify-content:center;gap:10px;margin-bottom:28px;">
+          <div style="width:44px;height:44px;background:rgba(251,191,36,0.15);border:2px solid #fbbf24;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;">1</div>
+          <div style="width:44px;height:44px;background:rgba(251,191,36,0.15);border:2px solid #fbbf24;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;">2</div>
+          <div style="width:44px;height:44px;background:rgba(251,191,36,0.15);border:2px solid #fbbf24;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;">3</div>
+          <div style="width:44px;height:44px;background:rgba(251,191,36,0.15);border:2px solid #fbbf24;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;">4</div>
+          <div style="width:44px;height:44px;background:rgba(251,191,36,0.15);border:2px solid #fbbf24;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;">5</div>
+        </div>
+        <div style="font-size:42px;font-weight:900;margin-bottom:4px;background:linear-gradient(135deg,#fbbf24,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">5 / 5</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:28px;">places encore disponibles</div>
+        <a href="contact.html" style="display:block;background:linear-gradient(135deg,#fbbf24,#f97316);color:#000;font-weight:800;font-size:15px;padding:16px 24px;border-radius:12px;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+          Je veux ma place →
+        </a>
+        <div style="font-size:12px;color:var(--muted);margin-top:14px;">Offre sans engagement · Soumission gratuite</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+@media (max-width: 768px) {
+  .founder-layout { grid-template-columns: 1fr !important; }
+}
+</style>
+
+<!-- FAQ -->
+<div style="position:relative;z-index:1;border-top:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;padding:80px 40px;">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div class="section-label" style="display:inline-block;">Questions fréquentes</div>
+      <h2 class="section-title">Tout ce que vous <span class="grad-text">voulez savoir</span></h2>
+    </div>
+    <div style="max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px;">
+
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;" open>
+        <summary style="padding:24px 28px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Combien coûte un site web professionnel au Québec?
+          <span style="color:var(--cyan);font-size:20px;flex-shrink:0;margin-left:16px;">+</span>
+        </summary>
+        <div style="padding:0 28px 24px;color:var(--muted);font-size:15px;line-height:1.7;border-top:1px solid var(--border);">
+          Un site web professionnel au Québec coûte généralement entre <strong style="color:var(--text);">1 200$ et 3 500$+</strong>. Chez KodAI, le package Starter commence à 1 200$ (5 pages, design sur mesure, mobile), le package Pro à 1 800$ (Stripe, vidéo IA, SEO avancé) et le package Business à 3 500$+ (chatbot IA, automatisation, espace membre).
+        </div>
+      </details>
+
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="padding:24px 28px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Comment automatiser mon entreprise avec l'IA?
+          <span style="color:var(--cyan);font-size:20px;flex-shrink:0;margin-left:16px;">+</span>
+        </summary>
+        <div style="padding:0 28px 24px;color:var(--muted);font-size:15px;line-height:1.7;border-top:1px solid var(--border);">
+          L'automatisation IA consiste à remplacer les tâches répétitives — entrée de données, réponses clients, envoi de rapports — par des bots et agents IA qui travaillent <strong style="color:var(--text);">24h/7j</strong>. On analyse vos processus et on développe des solutions sur mesure avec Python, n8n, Make ou des agents IA, livrées en quelques jours.
+        </div>
+      </details>
+
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="padding:24px 28px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Est-ce qu'un bot peut vraiment remplacer un employé?
+          <span style="color:var(--cyan);font-size:20px;flex-shrink:0;margin-left:16px;">+</span>
+        </summary>
+        <div style="padding:0 28px 24px;color:var(--muted);font-size:15px;line-height:1.7;border-top:1px solid var(--border);">
+          Pour les tâches répétitives et bien définies, oui. Un bot peut gérer l'entrée de données, les réponses automatiques, la génération de rapports et la surveillance 24h/7j sans erreurs ni congés. Il ne remplace pas la créativité ou le jugement humain — mais pour les tâches répétitives, c'est plus fiable et beaucoup moins coûteux.
+        </div>
+      </details>
+
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="padding:24px 28px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Combien d'argent je peux économiser avec un bot IA?
+          <span style="color:var(--cyan);font-size:20px;flex-shrink:0;margin-left:16px;">+</span>
+        </summary>
+        <div style="padding:0 28px 24px;color:var(--muted);font-size:15px;line-height:1.7;border-top:1px solid var(--border);">
+          Un employé à temps plein coûte en moyenne <strong style="color:var(--text);">40 000$ à 60 000$/an</strong> au Québec. Trois bots IA qui effectuent les mêmes tâches répétitives coûtent environ <strong style="color:var(--green);">600$/mois</strong> — soit des économies potentielles de <strong style="color:var(--green);">30 000$ à 50 000$ par année</strong>.
+        </div>
+      </details>
+
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="padding:24px 28px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Combien de temps pour livrer un site web?
+          <span style="color:var(--cyan);font-size:20px;flex-shrink:0;margin-left:16px;">+</span>
+        </summary>
+        <div style="padding:0 28px 24px;color:var(--muted);font-size:15px;line-height:1.7;border-top:1px solid var(--border);">
+          Un site web complet est livré en <strong style="color:var(--text);">1 à 2 semaines</strong>. Pour les projets urgents, certains sites simples peuvent être livrés en <strong style="color:var(--cyan);">24 à 48 heures</strong>.
+        </div>
+      </details>
+
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="padding:24px 28px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Vous faites des applications mobiles et Apple Watch?
+          <span style="color:var(--cyan);font-size:20px;flex-shrink:0;margin-left:16px;">+</span>
+        </summary>
+        <div style="padding:0 28px 24px;color:var(--muted);font-size:15px;line-height:1.7;border-top:1px solid var(--border);">
+          Oui. On développe des applications <strong style="color:var(--text);">iOS, Android et Apple Watch</strong>. On construit aussi des SaaS complets avec tableau de bord, API sur mesure et intégration de paiements récurrents via Stripe.
+        </div>
+      </details>
+
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="padding:24px 28px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          C'est quoi le Cercle Fondateur?
+          <span style="color:var(--cyan);font-size:20px;flex-shrink:0;margin-left:16px;">+</span>
+        </summary>
+        <div style="padding:0 28px 24px;color:var(--muted);font-size:15px;line-height:1.7;border-top:1px solid var(--border);">
+          Le Cercle Fondateur est une offre exclusive limitée à <strong style="color:var(--text);">5 clients</strong>. Les membres obtiennent <strong style="color:#fbbf24;">30% de rabais</strong> sur leur projet, un tarif mensuel <strong style="color:#fbbf24;">garanti 5 ans</strong>, la priorité absolue pour les livraisons en moins de 48h et un badge "Client fondateur" permanent sur notre site.
+        </div>
+      </details>
+
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="padding:24px 28px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Vous pouvez développer un projet à partir d'une simple idée?
+          <span style="color:var(--cyan);font-size:20px;flex-shrink:0;margin-left:16px;">+</span>
+        </summary>
+        <div style="padding:0 28px 24px;color:var(--muted);font-size:15px;line-height:1.7;border-top:1px solid var(--border);">
+          Oui, c'est même notre spécialité. <strong style="color:var(--text);">Pas besoin de cahier des charges ni de connaissances techniques.</strong> Décrivez-nous votre idée en quelques lignes — on s'occupe de tout, de la conception à la livraison.
+        </div>
+      </details>
+
+    </div>
+  </div>
+</div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <h2>Prêt à entrer dans <span class="grad-text">l'ère de l'IA</span>?<br><span style="font-size:18px;font-weight:400;color:var(--muted);">Vous avez une idée mais vous ne savez pas par où commencer? Parlez-nous — on s'occupe du reste.</span></h2>
+    <a href="contact.html" class="btn btn-primary" style="flex-shrink:0;">Soumission gratuite et sans engagement →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">KodAI</div>
+  <div class="footer-links">
+    <a href="services.html">Services</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="portfolio.html">Réalisations</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 KodAI · Tous droits réservés</div>
+</footer>
+
+<!-- POPUP CERCLE FONDATEUR -->
+<div id="foundersPopup" style="display:none;position:fixed;bottom:28px;right:28px;z-index:999;max-width:320px;background:linear-gradient(135deg,#0e0e1f,#1a1008);border:1px solid rgba(251,191,36,0.4);border-radius:20px;padding:24px;box-shadow:0 0 40px rgba(251,191,36,0.12);">
+  <button onclick="dismissPopup()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;line-height:1;">×</button>
+  <div style="font-size:13px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">⭐ Offre limitée</div>
+  <div style="font-size:18px;font-weight:900;margin-bottom:8px;">Cercle Fondateur</div>
+  <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;">30% de rabais + tarif mensuel garanti 5 ans. Seulement <strong style="color:#fbbf24;">5 places</strong> disponibles.</p>
+  <a href="contact.html" style="display:block;background:linear-gradient(135deg,#fbbf24,#f97316);color:#000;font-weight:800;font-size:14px;padding:12px 16px;border-radius:10px;text-decoration:none;text-align:center;">Je veux ma place →</a>
+</div>
+
+<script>
+/* ===== PARTICLES ===== */
+(function() {
+  const canvas = document.getElementById('particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, dots = [];
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', () => { resize(); initDots(); });
+
+  function initDots() {
+    const count = Math.floor((W * H) / 18000);
+    dots = Array.from({ length: count }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 1.5 + 0.5
+    }));
+  }
+  initDots();
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const maxDist = 130;
+
+    for (let i = 0; i < dots.length; i++) {
+      const d = dots[i];
+      d.x += d.vx; d.y += d.vy;
+      if (d.x < 0 || d.x > W) d.vx *= -1;
+      if (d.y < 0 || d.y > H) d.vy *= -1;
+
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,212,255,0.5)';
+      ctx.fill();
+
+      for (let j = i + 1; j < dots.length; j++) {
+        const b = dots[j];
+        const dx = d.x - b.x, dy = d.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < maxDist) {
+          const alpha = (1 - dist / maxDist) * 0.18;
+          ctx.beginPath();
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(0,212,255,${alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ===== STAT COUNTERS ===== */
+(function() {
+  const statNums = document.querySelectorAll('.stat-num');
+  const parsed = Array.from(statNums).map(el => {
+    const raw = el.textContent.trim();
+    const num = parseInt(raw);
+    const suffix = isNaN(num) ? null : raw.replace(String(num), '');
+    return { el, num, suffix, raw, animated: false };
+  });
+
+  function animateCount(item) {
+    if (item.animated || item.suffix === null) return;
+    item.animated = true;
+    const duration = 1400;
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      item.el.textContent = Math.round(ease * item.num) + item.suffix;
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        parsed.forEach(animateCount);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const statsBar = document.querySelector('.stats-bar');
+  if (statsBar) observer.observe(statsBar);
+})();
+
+/* ===== POPUP FONDATEUR ===== */
+(function() {
+  if (localStorage.getItem('founderPopupDismissed')) return;
+  setTimeout(() => {
+    document.getElementById('foundersPopup').style.display = 'block';
+  }, 5000);
+})();
+function dismissPopup() {
+  document.getElementById('foundersPopup').style.display = 'none';
+  localStorage.setItem('founderPopupDismissed', '1');
+}
+
+/* ===== HAMBURGER ===== */
+(function() {
+  const btn = document.getElementById('hamburger');
+  const nav = document.getElementById('navLinks');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    nav.classList.toggle('open');
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    btn.classList.remove('open');
+    nav.classList.remove('open');
+  }));
+})();
+</script>
+</body>
+</html>

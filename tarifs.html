@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarifs — KodAI</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    @media (max-width: 1024px) { .pricing-grid { grid-template-columns: 1fr; } }
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 36px;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .price-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.3); box-shadow: var(--glow-cyan); }
+    .price-card.featured {
+      border-color: rgba(0,212,255,0.4);
+      background: linear-gradient(135deg, #0e0e1f 0%, #130d24 100%);
+    }
+    .featured-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--grad);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+    .price-name { font-size: 14px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+    .price-amount { font-size: 52px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+    .price-amount span { font-size: 20px; font-weight: 600; color: var(--muted); }
+    .price-desc { font-size: 14px; color: var(--muted); margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--muted); }
+    .check { color: var(--cyan); flex-shrink: 0; font-weight: 800; margin-top: 1px; }
+    .cross { color: #333; flex-shrink: 0; }
+    .price-cta { width: 100%; text-align: center; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; text-decoration: none; display: block; transition: all 0.2s; }
+    .cta-grad { background: var(--grad); color: #fff; border: none; }
+    .cta-grad:hover { opacity: 0.85; }
+    .cta-border { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .cta-border:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* ADDONS */
+    .addon-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .addon-row:last-child { border-bottom: none; }
+    .addon-name { display: flex; align-items: center; gap: 10px; color: var(--text); }
+    .addon-price { font-weight: 800; color: var(--cyan); white-space: nowrap; }
+
+    /* RECURRENT */
+    .recurrent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 768px) { .recurrent-grid { grid-template-columns: 1fr; } }
+    .rec-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+    .rec-card h4 { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+    .rec-card p { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+    .rec-price { font-size: 28px; font-weight: 900; }
+    .rec-price span { font-size: 13px; color: var(--muted); font-weight: 400; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">KodAI</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="tarifs.html" class="active">Tarifs</a></li>
+    <li><a href="portfolio.html">Réalisations</a></li>
+    <li><a href="contact.html" class="nav-cta">Soumission gratuite</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-hero">
+  <div class="section-label">Investissement</div>
+  <h1 class="section-title">Tarifs <span class="grad-text">transparents</span></h1>
+  <p class="section-sub">Pas de surprise. Soumission gratuite pour chaque projet — on s'ajuste à votre budget.</p>
+</div>
+
+<section>
+
+  <!-- PACKAGES -->
+  <div class="section-label">Packages</div>
+  <h2 class="section-title" style="font-size:28px;margin-bottom:40px;">Sites web</h2>
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <div class="price-name">Starter</div>
+      <div class="price-amount"><span>$</span>1 200</div>
+      <p class="price-desc">Site vitrine professionnel pour démarrer en ligne</p>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Jusqu'à 5 pages</li>
+        <li><span class="check">✓</span> Design sur mesure</li>
+        <li><span class="check">✓</span> Optimisé mobile</li>
+        <li><span class="check">✓</span> Formulaire de contact</li>
+        <li><span class="check">✓</span> SEO de base</li>
+        <li><span class="check">✓</span> Hébergement configuré</li>
+        <li><span class="cross">✗</span> Paiements en ligne</li>
+        <li><span class="cross">✗</span> Vidéo IA</li>
+      </ul>
+      <a href="contact.html" class="price-cta cta-border">Démarrer →</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="featured-badge">⭐ Populaire</div>
+      <div class="price-name">Pro</div>
+      <div class="price-amount grad-text"><span style="-webkit-text-fill-color:inherit">$</span>1 800</div>
+      <p class="price-desc">Site complet avec paiement et vidéos — le package complet</p>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Jusqu'à 8 pages</li>
+        <li><span class="check">✓</span> Design premium</li>
+        <li><span class="check">✓</span> Intégration Stripe</li>
+        <li><span class="check">✓</span> Vidéo explicatif IA</li>
+        <li><span class="check">✓</span> Pitch green screen 30s</li>
+        <li><span class="check">✓</span> SEO avancé</li>
+        <li><span class="check">✓</span> Google Analytics</li>
+        <li><span class="check">✓</span> 30 jours de support</li>
+      </ul>
+      <a href="contact.html" class="price-cta cta-grad">Démarrer →</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-name">Business</div>
+      <div class="price-amount"><span>$</span>3 500+</div>
+      <p class="price-desc">Solution complète avec automatisation et IA intégrée</p>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Pages illimitées</li>
+        <li><span class="check">✓</span> Tout le package Pro</li>
+        <li><span class="check">✓</span> Chatbot IA</li>
+        <li><span class="check">✓</span> Automatisation incluse</li>
+        <li><span class="check">✓</span> Espace membre</li>
+        <li><span class="check">✓</span> Tableau de bord admin</li>
+        <li><span class="check">✓</span> Intégration CRM</li>
+        <li><span class="check">✓</span> 60 jours de support</li>
+      </ul>
+      <a href="contact.html" class="price-cta cta-border">Soumission →</a>
+    </div>
+
+  </div>
+
+  <!-- ADDONS -->
+  <h2 class="section-title" style="font-size:28px;margin-bottom:8px;">Options & ajouts</h2>
+  <p class="section-sub" style="margin-bottom:32px;">À ajouter à n'importe quel package</p>
+  <div class="card" style="margin-bottom:60px;">
+    <div class="addon-row"><div class="addon-name">🎬 Vidéo explicatif IA</div><div class="addon-price">+300$</div></div>
+    <div class="addon-row"><div class="addon-name">🎥 Pitch green screen 30 secondes</div><div class="addon-price">+300$</div></div>
+    <div class="addon-row"><div class="addon-name">📅 Réservations en ligne</div><div class="addon-price">+250$</div></div>
+    <div class="addon-row"><div class="addon-name">💬 Chat en direct</div><div class="addon-price">+200$</div></div>
+    <div class="addon-row"><div class="addon-name">📧 Newsletter (Mailchimp / Brevo)</div><div class="addon-price">+200$</div></div>
+    <div class="addon-row"><div class="addon-name">🌍 Version bilingue FR/EN</div><div class="addon-price">+400$</div></div>
+    <div class="addon-row"><div class="addon-name">🔐 Espace membre / login</div><div class="addon-price">+500$</div></div>
+    <div class="addon-row"><div class="addon-name">📦 Boutique en ligne</div><div class="addon-price">+600$</div></div>
+    <div class="addon-row"><div class="addon-name">🤖 Chatbot IA</div><div class="addon-price">+800$</div></div>
+  </div>
+
+  <!-- RECURRENT -->
+  <h2 class="section-title" style="font-size:28px;margin-bottom:8px;">Mensuel récurrent</h2>
+  <p class="section-sub" style="margin-bottom:32px;">Revenu passif — vos solutions qui tournent en continu</p>
+  <div class="recurrent-grid">
+    <div class="rec-card">
+      <h4>🔧 Maintenance</h4>
+      <p>Mises à jour, hébergement, support technique</p>
+      <div class="rec-price">150$ <span>/mois</span></div>
+    </div>
+    <div class="rec-card">
+      <h4>🤖 Bot actif</h4>
+      <p>Bot ou agent IA qui tourne en continu sur vos serveurs</p>
+      <div class="rec-price">300–800$ <span>/mois</span></div>
+    </div>
+    <div class="rec-card">
+      <h4>📊 SaaS en licence</h4>
+      <p>Accès à votre solution SaaS sur mesure</p>
+      <div class="rec-price">200–2 000$ <span>/mois</span></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding-top:60px;">
+    <p style="color:var(--muted);font-size:16px;margin-bottom:20px;">Projet sur mesure? On s'ajuste à votre réalité.</p>
+    <a href="contact.html" class="btn btn-primary" style="font-size:16px;padding:16px 36px;">Soumission gratuite et sans engagement →</a>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-logo">KodAI</div>
+  <div class="footer-links">
+    <a href="services.html">Services</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="portfolio.html">Réalisations</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 KodAI · Tous droits réservés</div>
+</footer>
+
+<script>
+(function() {
+  const btn = document.getElementById('hamburger');
+  const nav = document.getElementById('navLinks');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', () => { btn.classList.toggle('open'); nav.classList.toggle('open'); });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { btn.classList.remove('open'); nav.classList.remove('open'); }));
+})();
+</script>
+</body>
+</html>

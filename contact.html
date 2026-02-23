@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — KodAI</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 60px;
+      align-items: start;
+    }
+    @media (max-width: 768px) { .contact-layout { grid-template-columns: 1fr; } }
+    .contact-info h2 { font-size: 28px; font-weight: 900; margin-bottom: 16px; }
+    .contact-info p { color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .contact-detail:last-child { border-bottom: none; }
+    .contact-icon {
+      width: 40px; height: 40px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-detail-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .contact-detail-val { font-weight: 600; color: var(--text); margin-top: 2px; }
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+    }
+    .form-card h3 { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+    .form-card .sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+    .success-msg {
+      display: none;
+      background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.3);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      color: var(--green);
+      font-weight: 700;
+      margin-top: 16px;
+    }
+    .gratuit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 99px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">KodAI</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="tarifs.html">Tarifs</a></li>
+    <li><a href="portfolio.html">Réalisations</a></li>
+    <li><a href="contact.html" class="nav-cta active">Soumission gratuite</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-hero">
+  <div class="section-label">Parlez-nous</div>
+  <h1 class="section-title">Démarrons votre <span class="grad-text">projet</span></h1>
+  <p class="section-sub">Soumission gratuite et sans engagement. Réponse dans les 24 heures.</p>
+</div>
+
+<section>
+  <div class="contact-layout">
+
+    <!-- INFOS -->
+    <div class="contact-info">
+      <h2>On est là pour vous</h2>
+      <p>Que ce soit pour un site web, un bot, une intégration IA ou un projet sur mesure — décrivez-nous votre besoin et on vous revient rapidement avec une soumission claire.</p>
+
+      <div style="background:linear-gradient(135deg,#0d0d1f,#13082a);border:1px solid rgba(124,58,237,0.3);border-radius:16px;padding:20px 24px;margin-bottom:8px;">
+        <div style="font-size:18px;margin-bottom:8px;">💡</div>
+        <p style="color:var(--text);font-weight:700;font-size:15px;margin-bottom:6px;">Vous avez une idée mais vous ne savez pas où commencer ou comment faire?</p>
+        <p style="color:var(--muted);font-size:14px;margin:0;">Parlez-nous de votre idée — on s'occupe du reste. Pas besoin d'être technique.</p>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-icon">📧</div>
+        <div>
+          <div class="contact-detail-label">Email</div>
+          <div class="contact-detail-val">info@nexora.com</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-detail-label">Téléphone / SMS</div>
+          <div class="contact-detail-val">À confirmer</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">⏰</div>
+        <div>
+          <div class="contact-detail-label">Délai de réponse</div>
+          <div class="contact-detail-val">24 heures maximum</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">🌍</div>
+        <div>
+          <div class="contact-detail-label">Zone de service</div>
+          <div class="contact-detail-val">Canada · USA · International</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card">
+      <div class="gratuit-badge">✓ Soumission gratuite et sans engagement</div>
+      <h3>Décrivez votre projet</h3>
+      <p class="sub">Plus vous êtes précis, plus notre soumission sera adaptée à vos besoins.</p>
+
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom *</label>
+            <input type="text" name="prenom" placeholder="Jean" required>
+          </div>
+          <div class="form-group">
+            <label>Nom *</label>
+            <input type="text" name="nom" placeholder="Tremblay" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" name="email" placeholder="jean@entreprise.com" required>
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" name="tel" placeholder="514-555-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Entreprise</label>
+          <input type="text" name="entreprise" placeholder="Nom de votre entreprise">
+        </div>
+        <div class="form-group">
+          <label>Service qui vous intéresse *</label>
+          <select name="service" required>
+            <option value="">— Choisir —</option>
+            <option>Site web</option>
+            <option>Agents IA & Bots</option>
+            <option>Automatisation</option>
+            <option>Application / SaaS</option>
+            <option>Plusieurs services</option>
+            <option>Je ne sais pas encore</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Budget approximatif</label>
+          <select name="budget">
+            <option value="">— Choisir —</option>
+            <option>Moins de 1 000$</option>
+            <option>1 000$ – 3 000$</option>
+            <option>3 000$ – 10 000$</option>
+            <option>10 000$+</option>
+            <option>À discuter</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Décrivez votre projet *</label>
+          <textarea name="description" placeholder="Expliquez ce que vous voulez accomplir, vos défis actuels, vos objectifs..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:16px;padding:16px;">
+          Envoyer ma demande →
+        </button>
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        ✅ Message envoyé! On vous revient dans les 24 heures.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">KodAI</div>
+  <div class="footer-links">
+    <a href="services.html">Services</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="portfolio.html">Réalisations</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 KodAI · Tous droits réservés</div>
+</footer>
+
+<script>
+(function() {
+  const btn = document.getElementById('hamburger');
+  const nav = document.getElementById('navLinks');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', () => { btn.classList.toggle('open'); nav.classList.toggle('open'); });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { btn.classList.remove('open'); nav.classList.remove('open'); }));
+})();
+
+function handleSubmit(e) {
+  e.preventDefault();
+  // TODO: brancher Formspree ou autre service d'envoi
+  // fetch('https://formspree.io/f/VOTRE_ID', { method:'POST', body: new FormData(e.target) })
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+}
+</script>
+
+</body>
+</html>

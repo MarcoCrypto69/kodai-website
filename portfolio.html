@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réalisations — KodAI</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .project-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.3); box-shadow: var(--glow-cyan); }
+    .project-thumb {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      border-bottom: 1px solid var(--border);
+    }
+    .project-body { padding: 24px; }
+    .project-body h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+    .project-body p { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .project-link {
+      font-size: 13px; font-weight: 700; color: var(--cyan);
+      text-decoration: none; display: inline-flex; align-items: center; gap: 4px;
+    }
+    .project-link:hover { gap: 8px; }
+    .stat-chips { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .stat-chip {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 99px; padding: 4px 12px;
+      font-size: 12px; font-weight: 700; color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">KodAI</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="tarifs.html">Tarifs</a></li>
+    <li><a href="portfolio.html" class="active">Réalisations</a></li>
+    <li><a href="contact.html" class="nav-cta">Soumission gratuite</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-hero">
+  <div class="section-label">Portfolio</div>
+  <h1 class="section-title">Nos <span class="grad-text">réalisations</span></h1>
+  <p class="section-sub">Des projets concrets, livrés rapidement, qui génèrent des résultats réels.</p>
+</div>
+
+<section>
+  <div class="grid-3">
+
+    <div class="project-card">
+      <div class="project-thumb" style="background:#000;padding:0;overflow:hidden;">
+        <img src="negociauto-logo.jpg" alt="NégociAuto" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="project-body">
+        <h3>NegociAuto.ca</h3>
+        <p>Site web complet pour un service de négociation automobile — avec vidéo IA, pitch green screen et appel à l'action optimisé.</p>
+        <div class="stat-chips">
+          <span class="stat-chip">⚡ Livré en 1 journée</span>
+          <span class="stat-chip">🎬 Vidéo IA</span>
+        </div>
+        <div class="project-tags">
+          <span class="badge badge-cyan">Site web</span>
+          <span class="badge badge-purple">Vidéo IA</span>
+          <span class="badge badge-orange">Green screen</span>
+        </div>
+        <a href="https://negociauto.ca" target="_blank" class="project-link">Voir le site →</a>
+      </div>
+    </div>
+
+    <div class="project-card" style="opacity:0.5;">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#0d0d1f,#1a1a3e);font-size:40px;color:var(--muted);">🔒</div>
+      <div class="project-body">
+        <h3>Projet confidentiel</h3>
+        <p>SaaS de trading automatisé avec 4 agents autonomes, intégration IA et gestion dynamique du risque.</p>
+        <div class="project-tags">
+          <span class="badge badge-cyan">SaaS</span>
+          <span class="badge badge-purple">Agents IA</span>
+          <span class="badge badge-green">Automatisation</span>
+        </div>
+        <span style="font-size:13px;color:var(--muted);">NDA — non disponible publiquement</span>
+      </div>
+    </div>
+
+    <div class="project-card" style="border-style:dashed;">
+      <div class="project-thumb" style="background:var(--surface2);font-size:40px;">➕</div>
+      <div class="project-body">
+        <h3>Votre projet ici</h3>
+        <p>On cherche des projets pilotes pour compléter notre portfolio. Tarif réduit disponible pour les 2 prochains clients.</p>
+        <div class="project-tags">
+          <span class="badge badge-orange">Places limitées</span>
+        </div>
+        <a href="contact.html" class="project-link">Nous contacter →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;padding-top:60px;">
+    <a href="contact.html" class="btn btn-primary" style="font-size:16px;padding:16px 36px;">Démarrer votre projet →</a>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-logo">KodAI</div>
+  <div class="footer-links">
+    <a href="services.html">Services</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="portfolio.html">Réalisations</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 KodAI · Tous droits réservés</div>
+</footer>
+
+<script>
+(function() {
+  const btn = document.getElementById('hamburger');
+  const nav = document.getElementById('navLinks');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', () => { btn.classList.toggle('open'); nav.classList.toggle('open'); });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { btn.classList.remove('open'); nav.classList.remove('open'); }));
+})();
+</script>
+</body>
+</html>

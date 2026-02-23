@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — KodAI</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .service-block { margin-bottom: 80px; }
+    .service-block-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .service-big-icon {
+      width: 64px; height: 64px;
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+    .service-block-header h2 { font-size: 32px; font-weight: 900; }
+    .service-block-header p { font-size: 16px; color: var(--muted); margin-top: 4px; }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .feature-list li::before {
+      content: '✓';
+      width: 22px; height: 22px;
+      background: rgba(0,212,255,0.1);
+      color: var(--cyan);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .addon-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .addon-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .price-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">KodAI</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="tarifs.html">Tarifs</a></li>
+    <li><a href="portfolio.html">Réalisations</a></li>
+    <li><a href="contact.html" class="nav-cta">Soumission gratuite</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-hero">
+  <div class="section-label">Ce qu'on fait</div>
+  <h1 class="section-title">Nos <span class="grad-text">services</span></h1>
+  <p class="section-sub">Tout ce qu'il faut pour construire, automatiser et faire tourner votre business — vite et efficacement.</p>
+</div>
+
+<section>
+
+  <!-- SITES WEB -->
+  <div class="service-block">
+    <div class="service-block-header">
+      <div class="service-big-icon icon-cyan">🌐</div>
+      <div>
+        <h2>Sites web</h2>
+        <p>Design moderne, livraison rapide, prêt à vendre</p>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <ul class="feature-list">
+          <li>Design sur mesure — moderne et professionnel</li>
+          <li>Optimisé mobile et rapide (Core Web Vitals)</li>
+          <li>Intégration Stripe — paiements en ligne</li>
+          <li>Formulaires de contact et de soumission</li>
+          <li>SEO de base inclus</li>
+          <li>Hébergement et domaine configurés</li>
+          <li>Livraison en 1–2 semaines</li>
+        </ul>
+        <div class="price-hint">💰 À partir de 1 200$</div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--cyan);margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;">Options & ajouts</div>
+        <div class="addon-grid">
+          <span class="addon-chip">📦 Boutique en ligne</span>
+          <span class="addon-chip">📅 Réservations en ligne</span>
+          <span class="addon-chip">💬 Chat en direct</span>
+          <span class="addon-chip">📧 Newsletter</span>
+          <span class="addon-chip">📊 Google Analytics</span>
+          <span class="addon-chip">🌍 Multi-langue</span>
+          <span class="addon-chip">🎬 Vidéo explicatif IA</span>
+          <span class="addon-chip">🎥 Pitch green screen 30s</span>
+          <span class="addon-chip">📱 Notifications SMS/email</span>
+          <span class="addon-chip">🔐 Espace membre</span>
+          <span class="addon-chip">📝 Blog / contenu</span>
+          <span class="addon-chip">🔗 Intégration CRM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin-bottom:80px;">
+
+  <!-- AGENTS IA & BOTS -->
+  <div class="service-block">
+    <div class="service-block-header">
+      <div class="service-big-icon icon-purple">🤖</div>
+      <div>
+        <h2>Agents IA & Bots</h2>
+        <p>Intelligence artificielle qui travaille pour vous 24/7</p>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <ul class="feature-list">
+          <li>Chatbot IA pour votre site web ou application</li>
+          <li>Agent de réponse automatique aux clients</li>
+          <li>Classification et tri automatique de données</li>
+          <li>Résumés automatiques de documents</li>
+          <li>Analyse de données et rapports IA</li>
+          <li>Intégration avec vos outils existants</li>
+        </ul>
+        <div class="price-hint">💰 À partir de 2 000$</div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:#a78bfa;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;">Cas d'usage</div>
+        <ul class="feature-list">
+          <li>Support client automatisé</li>
+          <li>Qualification de leads automatique</li>
+          <li>Extraction de données de documents</li>
+          <li>Assistant virtuel interne</li>
+          <li>Surveillance et alertes intelligentes</li>
+          <li>Génération de contenu automatisée</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin-bottom:80px;">
+
+  <!-- AUTOMATISATION -->
+  <div class="service-block">
+    <div class="service-block-header">
+      <div class="service-big-icon icon-orange">⚡</div>
+      <div>
+        <h2>Automatisation & Bots</h2>
+        <p>Vos processus répétitifs tournent sans vous</p>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <ul class="feature-list">
+          <li>Automatisation d'entrée de données</li>
+          <li>Scraping et collecte de données web</li>
+          <li>Workflows automatiques (emails, CRM, rapports)</li>
+          <li>Synchronisation entre plateformes</li>
+          <li>Bots de surveillance et d'alerte</li>
+          <li>Scripts d'optimisation de processus</li>
+        </ul>
+        <div class="price-hint">💰 À partir de 1 500$</div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;">Technologies utilisées</div>
+        <div class="addon-grid">
+          <span class="addon-chip">Python</span>
+          <span class="addon-chip">n8n</span>
+          <span class="addon-chip">Make (Integromat)</span>
+          <span class="addon-chip">Zapier</span>
+          <span class="addon-chip">Playwright</span>
+          <span class="addon-chip">API REST</span>
+          <span class="addon-chip">Webhooks</span>
+          <span class="addon-chip">Cron jobs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin-bottom:80px;">
+
+  <!-- APPS & SAAS -->
+  <div class="service-block">
+    <div class="service-block-header">
+      <div class="service-big-icon icon-green">📱</div>
+      <div>
+        <h2>Apps mobiles, Apple Watch & SaaS</h2>
+        <p>Solutions complètes sur mesure — mobile, wearable et web</p>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <ul class="feature-list">
+          <li>Tableaux de bord (dashboard) sur mesure</li>
+          <li>API et backend custom</li>
+          <li>Applications mobiles</li>
+          <li>SaaS complet avec abonnements</li>
+          <li>Intégration de paiements récurrents</li>
+          <li>Panel d'administration</li>
+        </ul>
+        <div class="price-hint">💰 À partir de 5 000$</div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;">Plateformes</div>
+        <div class="addon-grid">
+          <span class="addon-chip">Web (React / Next.js)</span>
+          <span class="addon-chip">iOS & Android</span>
+          <span class="addon-chip">⌚ Apple Watch</span>
+          <span class="addon-chip">API REST / GraphQL</span>
+          <span class="addon-chip">PostgreSQL</span>
+          <span class="addon-chip">FastAPI / Node.js</span>
+          <span class="addon-chip">Stripe Subscriptions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding-top:20px;">
+    <a href="contact.html" class="btn btn-primary" style="font-size:16px;padding:16px 36px;">Soumission gratuite et sans engagement →</a>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-logo">KodAI</div>
+  <div class="footer-links">
+    <a href="services.html">Services</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="portfolio.html">Réalisations</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 KodAI · Tous droits réservés</div>
+</footer>
+
+<script>
+(function() {
+  const btn = document.getElementById('hamburger');
+  const nav = document.getElementById('navLinks');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', () => { btn.classList.toggle('open'); nav.classList.toggle('open'); });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { btn.classList.remove('open'); nav.classList.remove('open'); }));
+})();
+</script>
+</body>
+</html>
