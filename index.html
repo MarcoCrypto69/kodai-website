@@ -226,46 +226,40 @@
 <body>
 
 <!-- LOGO PREVIEW TEMPORAIRE -->
-<div id="logoPreview" style="position:fixed;inset:0;background:#07070f;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;">
+<div id="logoPreview" style="position:fixed;inset:0;background:#07070f;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;">
 
-  <!-- Icône -->
-  <div style="position:relative;">
-    <div style="width:120px;height:120px;background:linear-gradient(135deg,#00d4ff,#7c3aed);border-radius:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(0,212,255,0.3);">
-      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-        <!-- K stylisé -->
+  <!-- Version grande — icône ronde -->
+  <div style="text-align:center;">
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,#00d4ff,#7c3aed);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 80px rgba(0,212,255,0.35);margin:0 auto 32px;">
+      <svg width="80" height="80" viewBox="0 0 64 64" fill="none">
         <line x1="16" y1="10" x2="16" y2="54" stroke="white" stroke-width="7" stroke-linecap="round"/>
-        <line x1="16" y1="32" x2="48" y2="10" stroke="white" stroke-width="7" stroke-linecap="round"/>
-        <line x1="16" y1="32" x2="48" y2="54" stroke="white" stroke-width="7" stroke-linecap="round"/>
-        <!-- Point IA -->
-        <circle cx="52" cy="14" r="5" fill="#00d4ff"/>
+        <line x1="16" y1="32" x2="46" y2="12" stroke="white" stroke-width="7" stroke-linecap="round"/>
+        <line x1="16" y1="32" x2="46" y2="52" stroke="white" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="50" cy="13" r="5" fill="white" opacity="0.9"/>
       </svg>
     </div>
-  </div>
-
-  <!-- Texte -->
-  <div style="text-align:center;">
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:72px;font-weight:900;letter-spacing:-2px;line-height:1;">
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:80px;font-weight:900;letter-spacing:-2px;line-height:1;">
       <span style="color:#f8fafc;">Kod</span><span style="background:linear-gradient(135deg,#00d4ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AI</span>
     </div>
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;font-weight:600;color:#64748b;letter-spacing:4px;text-transform:uppercase;margin-top:8px;">Automatisation · Intelligence Artificielle</div>
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;font-weight:600;color:#64748b;letter-spacing:4px;text-transform:uppercase;margin-top:10px;">Automatisation · Intelligence Artificielle</div>
   </div>
 
-  <!-- Version horizontale pour logo compact -->
-  <div style="display:flex;align-items:center;gap:16px;background:#0e0e1f;border:1px solid #1c1c3a;border-radius:16px;padding:20px 32px;">
-    <div style="width:44px;height:44px;background:linear-gradient(135deg,#00d4ff,#7c3aed);border-radius:12px;display:flex;align-items:center;justify-content:center;">
-      <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+  <!-- Version compacte horizontale -->
+  <div style="display:flex;align-items:center;gap:14px;background:#0e0e1f;border:1px solid #1c1c3a;border-radius:99px;padding:16px 28px;">
+    <div style="width:42px;height:42px;background:linear-gradient(135deg,#00d4ff,#7c3aed);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <svg width="22" height="22" viewBox="0 0 64 64" fill="none">
         <line x1="16" y1="10" x2="16" y2="54" stroke="white" stroke-width="8" stroke-linecap="round"/>
-        <line x1="16" y1="32" x2="48" y2="10" stroke="white" stroke-width="8" stroke-linecap="round"/>
-        <line x1="16" y1="32" x2="48" y2="54" stroke="white" stroke-width="8" stroke-linecap="round"/>
-        <circle cx="52" cy="14" r="5" fill="#00d4ff"/>
+        <line x1="16" y1="32" x2="46" y2="12" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <line x1="16" y1="32" x2="46" y2="52" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="50" cy="13" r="5" fill="white"/>
       </svg>
     </div>
-    <span style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:28px;font-weight:900;letter-spacing:1px;">
+    <span style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:26px;font-weight:900;letter-spacing:0px;">
       <span style="color:#f8fafc;">Kod</span><span style="background:linear-gradient(135deg,#00d4ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AI</span>
     </span>
   </div>
 
-  <button onclick="document.getElementById('logoPreview').style.display='none'" style="margin-top:20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:10px 24px;border-radius:99px;cursor:pointer;font-size:14px;">Fermer ✕</button>
+  <button onclick="document.getElementById('logoPreview').style.display='none'" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#64748b;padding:10px 24px;border-radius:99px;cursor:pointer;font-size:13px;">Fermer ✕</button>
 </div>
 
 <!-- NAV -->
