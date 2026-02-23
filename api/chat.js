@@ -74,7 +74,7 @@ module.exports = function handler(req, res) {
           res.status(200).json({ message: parsed.content[0].text });
         } else {
           console.error('Unexpected API response:', data);
-          res.status(500).json({ error: 'Réponse invalide' });
+          res.status(500).json({ error: 'Réponse invalide', detail: parsed });
         }
       } catch (e) {
         console.error('Parse error:', e, data);
