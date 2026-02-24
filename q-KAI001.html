@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soumission — Dom — KodAI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #070714;
+      color: #f8fafc;
+      padding: 60px 40px;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #0e0e1f;
+      border: 1px solid #1c1c3a;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #0d0d1f, #13082a);
+      border-bottom: 1px solid #1c1c3a;
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo img { height: 48px; }
+    .soumission-info { text-align: right; }
+    .soumission-info .label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+    .soumission-info .value { font-size: 14px; font-weight: 700; color: #f8fafc; }
+
+    /* BADGE */
+    .badge-wrap { padding: 24px 48px 0; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 99px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #00d4ff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* CLIENT + TITRE */
+    .client-section { padding: 28px 48px 32px; }
+    .client-section h1 { font-size: 32px; font-weight: 900; margin-bottom: 8px; }
+    .client-section h1 span {
+      background: linear-gradient(135deg, #00d4ff, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .client-section .sub { font-size: 14px; color: #64748b; }
+    .client-section .client-name { font-size: 16px; font-weight: 700; color: #f8fafc; margin-top: 16px; }
+
+    /* SECTION TITLE */
+    .section-title {
+      padding: 0 48px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #00d4ff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* BASE */
+    .base-block {
+      margin: 0 48px 32px;
+      background: #13132a;
+      border: 1px solid #1c1c3a;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .base-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #1c1c3a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .base-header h3 { font-size: 16px; font-weight: 800; }
+    .base-price { font-size: 28px; font-weight: 900; color: #00d4ff; }
+    .features-grid {
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .feature-item::before {
+      content: '✓';
+      color: #00d4ff;
+      font-weight: 800;
+      flex-shrink: 0;
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    /* OPTIONS */
+    .options-block {
+      margin: 0 48px 32px;
+    }
+    .option-row {
+      background: #13132a;
+      border: 1px solid #1c1c3a;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .option-name { font-size: 14px; font-weight: 600; color: #f8fafc; }
+    .option-desc { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .option-price { font-size: 18px; font-weight: 800; color: #a78bfa; white-space: nowrap; }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: #1c1c3a; margin: 0 48px 32px; }
+
+    /* TOTAUX */
+    .totaux-block {
+      margin: 0 48px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .total-card {
+      background: #13132a;
+      border: 1px solid #1c1c3a;
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .total-card.featured {
+      background: linear-gradient(135deg, #0d0d1f, #130d24);
+      border-color: rgba(0,212,255,0.3);
+      box-shadow: 0 0 30px rgba(0,212,255,0.06);
+    }
+    .total-card-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+    .total-line { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+    .total-line.taxes { color: #64748b; font-size: 12px; }
+    .total-line.grand { font-size: 16px; font-weight: 900; color: #f8fafc; padding-top: 12px; border-top: 1px solid #1c1c3a; margin-top: 4px; }
+    .total-line.grand span:last-child { color: #00d4ff; }
+
+    /* VERSEMENTS */
+    .versements-block {
+      margin: 0 48px 32px;
+    }
+    .versements-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .versement-card {
+      background: #13132a;
+      border: 1px solid #1c1c3a;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .versement-header {
+      padding: 14px 20px;
+      background: rgba(0,212,255,0.05);
+      border-bottom: 1px solid #1c1c3a;
+      font-size: 12px;
+      font-weight: 700;
+      color: #00d4ff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .versement-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-bottom: 1px solid #1c1c3a;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .versement-row:last-child { border-bottom: none; }
+    .versement-row span:last-child { font-weight: 700; color: #f8fafc; }
+    .versement-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: rgba(124,58,237,0.08);
+      border-top: 1px solid rgba(124,58,237,0.2);
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .versement-total span:last-child { color: #a78bfa; }
+
+    /* VALIDITÉ */
+    .validite-block {
+      margin: 0 48px 40px;
+      background: linear-gradient(135deg, #0d0d1f, #13082a);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .validite-block .v-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+    .validite-block .v-value { font-size: 15px; font-weight: 800; color: #fbbf24; }
+    .validite-block .v-cta {
+      background: linear-gradient(135deg, #00d4ff, #7c3aed);
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 99px;
+      text-decoration: none;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #070714;
+      border-top: 1px solid #1c1c3a;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer .f-logo { font-size: 20px; font-weight: 900; background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .footer .f-contact { font-size: 12px; color: #64748b; text-align: right; }
+    .footer .f-contact a { color: #00d4ff; text-decoration: none; }
+
+    @media print {
+      body { background: #070714; padding: 0; }
+      .page { border-radius: 0; border: none; }
+      .base-block, .option-row, .total-card, .versement-card, .validite-block, .footer { page-break-inside: avoid; }
+      .section-title { page-break-after: avoid; }
+      .footer { page-break-before: avoid; }
+      @page { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo" style="font-size:36px;font-weight:900;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">KodAI</div>
+    <div class="soumission-info">
+      <div class="label">Soumission</div>
+      <div class="value">#KAI-2026-001</div>
+      <div style="margin-top:10px;">
+        <div class="label">Date</div>
+        <div class="value">23 février 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BADGE -->
+  <div class="badge-wrap" style="display:flex;gap:10px;flex-wrap:wrap;">
+    <div class="badge">⭐ Soumission personnalisée</div>
+    <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.3);border-radius:99px;padding:6px 16px;font-size:12px;font-weight:700;color:#fbbf24;letter-spacing:1px;text-transform:uppercase;">🏆 Cercle Fondateur — 30% de rabais</div>
+  </div>
+
+  <!-- CLIENT -->
+  <div class="client-section">
+    <h1>Site web <span>inventaire automobile</span></h1>
+    <p class="sub">Système de vente automatisé complet avec IA</p>
+    <p class="client-name">Préparé pour : Dom</p>
+  </div>
+
+  <!-- BASE -->
+  <div class="section-title">Package de base</div>
+  <div class="base-block">
+    <div class="base-header">
+      <h3>Système de vente automatisé complet</h3>
+      <div>
+        <div style="font-size:14px;color:#64748b;text-decoration:line-through;text-align:right;">5 500$</div>
+        <div class="base-price">3 850$</div>
+        <div style="font-size:11px;color:#fbbf24;font-weight:700;text-align:right;">Cercle Fondateur −30%</div>
+      </div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item">Page inventaire avec photos, prix, km, description</div>
+      <div class="feature-item">Galerie photos par véhicule</div>
+      <div class="feature-item">Statut en temps réel — Disponible / Réservé / Vendu</div>
+      <div class="feature-item">Formulaire d'intérêt sur chaque véhicule</div>
+      <div class="feature-item">Formulaire d'échange de véhicule</div>
+      <div class="feature-item">Réservation avec dépôt en ligne via Stripe</div>
+      <div class="feature-item">Reçu PDF automatique au client</div>
+      <div class="feature-item">Booking d'essai routier via Calendly</div>
+      <div class="feature-item">Relance automatique par email aux clients</div>
+      <div class="feature-item">Notifications à Dom à chaque réservation</div>
+      <div class="feature-item">Panel admin — ajout / modification / suppression</div>
+      <div class="feature-item">SEO local — Joliette et région</div>
+      <div class="feature-item">Hébergement inclus — aucun frais mensuel</div>
+      <div class="feature-item">Optimisé mobile</div>
+      <div class="feature-item">Corrections illimitées jusqu'à satisfaction</div>
+      <div class="feature-item">Livraison en 2 semaines</div>
+    </div>
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="section-title">Options disponibles</div>
+  <div class="options-block">
+    <div class="option-row">
+      <div>
+        <div class="option-name">🤖 Descriptions de véhicules par IA</div>
+        <div class="option-desc">L'IA génère automatiquement la description de vente à chaque ajout de véhicule</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:12px;color:#64748b;text-decoration:line-through;">+500$</div>
+        <div class="option-price">+350$</div>
+      </div>
+    </div>
+    <div class="option-row">
+      <div>
+        <div class="option-name">💬 Agent IA sur le site</div>
+        <div class="option-desc">Répond aux questions des clients sur l'inventaire disponible 24/7</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:12px;color:#64748b;text-decoration:line-through;">+800$</div>
+        <div class="option-price">+560$</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TOTAUX -->
+  <div class="section-title">Totaux</div>
+  <div class="totaux-block">
+    <div class="total-card">
+      <div class="total-card-label">Sans options</div>
+      <div class="total-line taxes"><span>Prix régulier</span><span style="text-decoration:line-through;">5 500,00$</span></div>
+      <div class="total-line"><span>Cercle Fondateur −30%</span><span style="color:#fbbf24;">−1 650,00$</span></div>
+      <div class="total-line"><span>Sous-total</span><span>3 850,00$</span></div>
+      <div class="total-line taxes"><span>TPS (5%)</span><span>192,50$</span></div>
+      <div class="total-line taxes"><span>TVQ (9,975%)</span><span>384,04$</span></div>
+      <div class="total-line grand"><span>Total</span><span>4 426,54$</span></div>
+    </div>
+    <div class="total-card featured">
+      <div class="total-card-label">Avec options IA</div>
+      <div class="total-line taxes"><span>Prix régulier</span><span style="text-decoration:line-through;">7 800,00$</span></div>
+      <div class="total-line"><span>Cercle Fondateur −30%</span><span style="color:#fbbf24;">−2 340,00$</span></div>
+      <div class="total-line"><span>Sous-total</span><span>5 460,00$</span></div>
+      <div class="total-line taxes"><span>TPS (5%)</span><span>273,00$</span></div>
+      <div class="total-line taxes"><span>TVQ (9,975%)</span><span>544,64$</span></div>
+      <div class="total-line grand"><span>Total</span><span>6 277,64$</span></div>
+    </div>
+  </div>
+
+  <!-- VERSEMENTS -->
+  <div class="section-title">Paiement en 4 versements</div>
+  <div class="versements-block">
+    <div class="versements-grid">
+      <div class="versement-card">
+        <div class="versement-header">Sans options — 4 426,54$</div>
+        <div class="versement-row"><span>Au démarrage</span><span>1 106,64$</span></div>
+        <div class="versement-row"><span>Semaine 1</span><span>1 106,64$</span></div>
+        <div class="versement-row"><span>Semaine 2</span><span>1 106,64$</span></div>
+        <div class="versement-row"><span>À la livraison</span><span>1 106,62$</span></div>
+        <div class="versement-total"><span>Total</span><span>4 426,54$</span></div>
+      </div>
+      <div class="versement-card">
+        <div class="versement-header">Avec options IA — 6 277,64$</div>
+        <div class="versement-row"><span>Au démarrage</span><span>1 569,41$</span></div>
+        <div class="versement-row"><span>Semaine 1</span><span>1 569,41$</span></div>
+        <div class="versement-row"><span>Semaine 2</span><span>1 569,41$</span></div>
+        <div class="versement-row"><span>À la livraison</span><span>1 569,41$</span></div>
+        <div class="versement-total"><span>Total</span><span>6 277,64$</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION CASH -->
+  <div class="section-title">Option paiement comptant</div>
+  <div style="margin: 0 48px 32px;">
+    <div style="background:linear-gradient(135deg,#0d1f0d,#0a1a08);border:1px solid rgba(74,222,128,0.25);border-radius:16px;padding:24px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.15);border-radius:12px;padding:20px;">
+          <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">Sans options</div>
+          <div style="font-size:13px;color:#94a3b8;text-decoration:line-through;margin-bottom:4px;">4 426,54$ avec taxes</div>
+          <div style="font-size:28px;font-weight:900;color:#4ade80;">3 850$</div>
+          <div style="font-size:12px;color:#64748b;margin-top:4px;">Économie de 576,54$</div>
+        </div>
+        <div style="background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.15);border-radius:12px;padding:20px;">
+          <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;">Avec options IA</div>
+          <div style="font-size:13px;color:#94a3b8;text-decoration:line-through;margin-bottom:4px;">6 277,64$ avec taxes</div>
+          <div style="font-size:28px;font-weight:900;color:#4ade80;">5 460$</div>
+          <div style="font-size:12px;color:#64748b;margin-top:4px;">Économie de 817,64$</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#4ade80;margin-top:16px;text-align:center;font-weight:600;">✓ Paiement comptant — aucune taxe applicable</div>
+    </div>
+  </div>
+
+  <!-- VALIDITÉ -->
+  <div class="validite-block">
+    <div>
+      <div class="v-label">Pour confirmer</div>
+      <div class="v-value">info@kodai.ca</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="f-logo">KodAI</div>
+    <div class="f-contact">
+      info@kodai.ca · kodai.ca<br>
+      <a href="https://kodai.ca">kodai.ca</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
