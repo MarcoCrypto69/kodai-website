@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Carte d'affaires — KodAI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+      padding: 60px 40px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .pair {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .side-label {
+      font-size: 9px;
+      color: rgba(255,255,255,0.25);
+      text-align: center;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    /* Carte = 3.5" × 2" → 420px × 240px (preview 120dpi) */
+    .card {
+      width: 420px;
+      height: 240px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+    }
+
+    /* ===== RECTO ===== */
+    .recto {
+      background: #0a0f1e;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Zone logo — pleine carte */
+    .logo-zone {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-zone img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+
+    /* ===== VERSO ===== */
+    .verso {
+      background: #0a0f1e;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 32px;
+      gap: 0;
+    }
+
+    .verso::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -20px;
+      transform: translateY(-50%);
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(0,180,255,0.05) 0%, rgba(124,58,237,0.04) 40%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .verso-accent {
+      width: 28px;
+      height: 2px;
+      background: linear-gradient(90deg, #00d4ff, #7c3aed);
+      border-radius: 2px;
+      margin-bottom: 14px;
+    }
+
+    .verso-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: #f0f4ff;
+      letter-spacing: -0.3px;
+      margin-bottom: 3px;
+    }
+
+    .verso-title {
+      font-size: 9.5px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      background: linear-gradient(135deg, #00d4ff, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 18px;
+    }
+
+    .verso-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .verso-info-line {
+      font-size: 10.5px;
+      color: rgba(255,255,255,0.45);
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .verso-info-line span {
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+    }
+
+    .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00d4ff, #7c3aed);
+      flex-shrink: 0;
+    }
+
+    /* ===== PRINT ===== */
+    @media print {
+      body {
+        background: white;
+        padding: 10mm;
+        gap: 8mm;
+      }
+
+      .section-label, .side-label { display: none; }
+
+      .pair { gap: 5mm; page-break-inside: avoid; }
+
+      .card {
+        width: 88.9mm;
+        height: 50.8mm;
+        border-radius: 3px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .verso-name { font-size: 12pt; }
+      .verso-title { font-size: 7pt; }
+      .verso-info-line { font-size: 8pt; }
+      .verso { padding: 18px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SET 1 -->
+  <div>
+    <div class="section-label">Aperçu — 3 sets · 6 cartes</div>
+    <div class="pair">
+      <div>
+        <div class="side-label">Recto</div>
+        <div class="card recto">
+          <div class="logo-zone">
+            <img src="kodailogo.png" alt="KodAI">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="side-label">Verso</div>
+        <div class="card verso">
+          <div class="verso-accent"></div>
+          <div class="verso-name">Marc-André Blais</div>
+          <div class="verso-title">Architecte IA</div>
+          <div class="verso-info">
+            <div class="verso-info-line"><div class="dot"></div><span>kodai.ca</span></div>
+            <div class="verso-info-line"><div class="dot"></div><span>info@kodai.ca</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SET 2 -->
+  <div>
+    <div class="pair">
+      <div>
+        <div class="side-label">Recto</div>
+        <div class="card recto">
+          <div class="logo-zone">
+            <img src="kodailogo.png" alt="KodAI">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="side-label">Verso</div>
+        <div class="card verso">
+          <div class="verso-accent"></div>
+          <div class="verso-name">Marc-André Blais</div>
+          <div class="verso-title">Architecte IA</div>
+          <div class="verso-info">
+            <div class="verso-info-line"><div class="dot"></div><span>kodai.ca</span></div>
+            <div class="verso-info-line"><div class="dot"></div><span>info@kodai.ca</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SET 3 -->
+  <div>
+    <div class="pair">
+      <div>
+        <div class="side-label">Recto</div>
+        <div class="card recto">
+          <div class="logo-zone">
+            <img src="kodailogo.png" alt="KodAI">
+          </div>
+          <div class="separator"></div>
+          <div class="contact-zone">
+            <div>
+              <div class="contact-name">Marc-André Blais</div>
+              <div class="contact-title">Architecte IA</div>
+            </div>
+            <div class="contact-right">
+              <div class="contact-url">kodai.ca</div>
+              <div class="contact-email">info@kodai.ca</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="side-label">Verso</div>
+        <div class="card verso">
+          <div class="verso-accent"></div>
+          <div class="verso-question">
+            Combien d'heures par semaine<br>
+            vos employés font des tâches<br>
+            qu'<em>un système pourrait faire</em>?
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SET 3 -->
+  <div>
+    <div class="pair">
+      <div>
+        <div class="side-label">Recto</div>
+        <div class="card recto">
+          <div class="logo-zone">
+            <img src="kodailogo.png" alt="KodAI">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="side-label">Verso</div>
+        <div class="card verso">
+          <div class="verso-accent"></div>
+          <div class="verso-name">Marc-André Blais</div>
+          <div class="verso-title">Architecte IA</div>
+          <div class="verso-info">
+            <div class="verso-info-line"><div class="dot"></div><span>kodai.ca</span></div>
+            <div class="verso-info-line"><div class="dot"></div><span>info@kodai.ca</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monsieur Matelas — Géré par Google Sheets</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root { --bleu:#1a3a5c; --or:#c9a84c; --rouge:#c0392b; --border:#e5e5e5; --gris:#666; }
+    body { font-family: system-ui, sans-serif; background:#f9f9f9; color:#1b1b1b; }
+
+    /* BADGE EXPLICATION */
+    .sheets-banner {
+      background: #0f9d58; color: white;
+      padding: 12px 24px; text-align: center;
+      font-size: 14px; font-weight: 700;
+    }
+    .sheets-banner span { background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 99px; margin: 0 4px; }
+
+    nav {
+      background: white; border-bottom: 1px solid var(--border);
+      padding: 14px 24px; display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    nav img { height: 48px; object-fit: contain; }
+    nav .nav-phone { margin-left: auto; background: var(--bleu); color: white; padding: 9px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; text-decoration: none; }
+
+    .promo-strip { background:#fff8e1; border-top: 3px solid var(--or); border-bottom: 3px solid var(--or); padding: 16px; text-align: center; }
+    .promo-strip h2 { font-size: clamp(16px,3vw,24px); font-weight:900; color: var(--bleu); }
+    .promo-strip p { font-size:12px; color:#888; margin-top:4px; }
+
+    .catalogue { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
+    .catalogue-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+    .catalogue-titre { font-size:22px; font-weight:900; }
+    #produit-count { font-size:14px; color:var(--gris); }
+
+    .produits-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:24px; }
+
+    .produit-card { background:white; border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:box-shadow .2s,transform .2s; position:relative; }
+    .produit-card:hover { box-shadow:0 8px 32px rgba(0,0,0,.10); transform:translateY(-3px); }
+
+    .produit-img-wrap { position:relative; height:200px; background:#f5f3f0; display:flex; align-items:center; justify-content:center; font-size:72px; overflow:hidden; }
+    .produit-img-wrap img { width:100%; height:100%; object-fit:cover; }
+    .badge-rabais { position:absolute; bottom:12px; left:12px; background:var(--rouge); color:white; padding:4px 12px; border-radius:6px; font-size:12px; font-weight:800; }
+    .badge-new { position:absolute; top:12px; left:12px; background:var(--bleu); color:white; padding:4px 12px; border-radius:6px; font-size:12px; font-weight:800; }
+    .btn-favori { position:absolute; top:12px; right:12px; background:white; border:1px solid var(--border); width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; cursor:pointer; }
+
+    .produit-body { padding:18px; }
+    .produit-tailles { font-size:12px; color:var(--gris); margin-bottom:6px; }
+    .produit-nom { font-size:16px; font-weight:800; margin-bottom:8px; line-height:1.3; }
+    .produit-prix { display:flex; align-items:baseline; gap:8px; margin-bottom:8px; flex-wrap:wrap; }
+    .prix-label { font-size:13px; color:var(--gris); }
+    .prix-montant { font-size:26px; font-weight:900; }
+    .prix-montant sup { font-size:14px; font-weight:700; vertical-align:top; margin-top:6px; display:inline-block; }
+    .prix-ancien { font-size:13px; color:#aaa; text-decoration:line-through; }
+    .produit-stars { display:flex; align-items:center; gap:6px; margin-bottom:12px; }
+    .stars { color:var(--or); font-size:14px; }
+    .stars-count { font-size:12px; color:var(--gris); }
+    .produit-specs { border:1px solid var(--border); border-radius:10px; padding:12px; display:flex; }
+    .spec-item { flex:1; text-align:center; padding:0 6px; border-right:1px solid var(--border); }
+    .spec-item:last-child { border-right:none; }
+    .spec-icon { font-size:20px; margin-bottom:3px; }
+    .spec-label { font-size:10px; color:var(--gris); margin-bottom:2px; }
+    .spec-val { font-size:11px; font-weight:800; }
+
+    /* LOADING */
+    .loading { text-align:center; padding:60px; color:var(--gris); font-size:18px; }
+
+    /* FOOTER SHEETS EXPLICATION */
+    .sheets-explication {
+      background: #1b1b2e; color: #ccc;
+      padding: 40px 24px; margin-top: 40px;
+    }
+    .sheets-explication h3 { color: #0f9d58; font-size: 18px; margin-bottom: 16px; }
+    .sheets-explication pre {
+      background: #0d0d1a; padding: 20px; border-radius: 12px;
+      font-size: 13px; line-height: 1.8; overflow-x: auto;
+      color: #a8d8a8; border: 1px solid #333;
+    }
+    .sheets-explication .comment { color: #666; }
+    .sheets-explication .key { color: #79b8ff; }
+    .sheets-explication .val { color: #f8c555; }
+    .sheets-explication p { margin-top: 16px; font-size: 13px; color: #888; line-height: 1.7; }
+
+    footer { background:#0d1f33; color:#7a99b8; padding:32px 24px; text-align:center; font-size:13px; }
+    .kodai-badge { position:fixed; bottom:20px; right:20px; background:#0a0a0f; color:white; padding:8px 16px; border-radius:99px; font-size:12px; font-weight:700; border:1px solid #333; z-index:999; }
+    .kodai-badge span { color:#60a5fa; }
+  </style>
+</head>
+<body>
+
+<!-- BANNIÈRE EXPLICATION -->
+<div class="sheets-banner">
+  ✅ Ce site est géré par <span>Google Sheets</span> — le propriétaire modifie sa feuille, le site se met à jour automatiquement
+</div>
+
+<!-- NAV -->
+<nav>
+  <img src="https://img1.wsimg.com/isteam/ip/4beeb4e7-1989-4bbc-ae98-c14ae352cd10/Logo%20monsieur-matelas-v2.jpg/:/rs=h:178,cg:true,m/qt=q:95" alt="Monsieur Matelas">
+  <a href="tel:4507594000" class="nav-phone">📞 450-759-4000</a>
+</nav>
+
+<!-- PROMO -->
+<div class="promo-strip">
+  <h2>⚡ LIQUIDATION INVENTAIRE 2025 — 30 à 70% de rabais sur presque tout</h2>
+  <p>Valide jusqu'au 28 février · En magasin · 95 Rue Baby, Joliette</p>
+</div>
+
+<!-- CATALOGUE DYNAMIQUE -->
+<div class="catalogue">
+  <div class="catalogue-header">
+    <div>
+      <div class="catalogue-titre">Nos matelas</div>
+      <div id="produit-count">Chargement...</div>
+    </div>
+  </div>
+  <div id="produits-grid" class="produits-grid">
+    <div class="loading">⏳ Chargement des produits depuis Google Sheets...</div>
+  </div>
+</div>
+
+<!-- EXPLICATION TECHNIQUE -->
+<div class="sheets-explication">
+  <div style="max-width:900px;margin:0 auto;">
+    <h3>🔧 Comment ça marche — Google Sheets comme backend</h3>
+    <pre><span class="comment">// 1. Le propriétaire modifie sa Google Sheet :</span>
+<span class="comment">// Nom            | Prix | PrixAnc | Confort    | Type    | Epaisseur | Rabais | Badge</span>
+<span class="comment">// Matelas Simple  | 179  | 249     | Semi-ferme | Mousse  | 10 po     | 28%    | </span>
+<span class="comment">// MLILY Cool      | 699  |         | Ferme      | Hybride | 12 po     |        | BESTSELLER</span>
+
+<span class="comment">// 2. Le site fetch les données (1 ligne de code) :</span>
+const <span class="key">SHEET_ID</span> = <span class="val">'1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms'</span>;
+const <span class="key">data</span> = await fetch(
+  `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Produits?key=${API_KEY}`
+);
+
+<span class="comment">// 3. On transforme en produits et on affiche dans la grille</span>
+<span class="comment">// → Le propriétaire ne touche JAMAIS au code</span>
+<span class="comment">// → Il ajoute une ligne dans son tableur = nouveau produit en ligne</span>
+<span class="comment">// → Il change un prix = mis à jour instantanément</span></pre>
+    <p>💡 <strong style="color:white">Pour le propriétaire</strong> : il ouvre Google Sheets sur son téléphone, change un prix, sauvegarde. C'est tout. Le site se met à jour en quelques secondes.</p>
+    <p>💡 <strong style="color:white">Pour KodAI</strong> : zéro serveur, zéro base de données, zéro maintenance. Google gère tout gratuitement.</p>
+  </div>
+</div>
+
+<footer>© 2026 Monsieur Matelas · Joliette, Québec · Site démo KodAI</footer>
+<div class="kodai-badge">Démo par <span>KodAI</span></div>
+
+<script>
+  // ============================================================
+  // SIMULATION GOOGLE SHEETS
+  // En production: remplacer par fetch() vers l'API Google Sheets
+  // ============================================================
+
+  const PRODUITS_SHEETS = [
+    {
+      nom: "Matelas Monsieur Matelas — Confort Standard",
+      prix: 179,
+      prixAnc: 249,
+      confort: "Semi-ferme",
+      type: "Mousse",
+      epaisseur: "10 po",
+      rabais: "28%",
+      badge: "",
+      tailles: "+4 Tailles",
+      emoji: "🛏️",
+      etoiles: 5,
+      avis: 38
+    },
+    {
+      nom: "Matelas Monsieur Matelas — Entrée de gamme",
+      prix: 149,
+      prixAnc: 199,
+      confort: "Ferme",
+      type: "Mousse",
+      epaisseur: "8 po",
+      rabais: "25%",
+      badge: "",
+      tailles: "+4 Tailles",
+      emoji: "🛌",
+      etoiles: 4,
+      avis: 21
+    },
+    {
+      nom: "Matelas MLILY Power Cool — Ventilation intégrée",
+      prix: 699,
+      prixAnc: null,
+      confort: "Semi-ferme",
+      type: "Hybride",
+      epaisseur: "12 po",
+      rabais: "",
+      badge: "BESTSELLER",
+      tailles: "+3 Tailles",
+      emoji: "❄️",
+      etoiles: 5,
+      avis: 14
+    },
+    {
+      nom: "Matelas Polysleep — Mousse mémoire haut de gamme",
+      prix: 499,
+      prixAnc: null,
+      confort: "Moelleux",
+      type: "Mém. mémoire",
+      epaisseur: "11 po",
+      rabais: "",
+      badge: "",
+      tailles: "+5 Tailles",
+      emoji: "🌿",
+      etoiles: 5,
+      avis: 27
+    },
+    {
+      nom: "Base Électrique Ajustable — Acier · Zéro Gravité",
+      prix: 599,
+      prixAnc: null,
+      confort: "Zéro gravité",
+      type: "Acier",
+      epaisseur: "Garantie vie",
+      rabais: "",
+      badge: "GARANTIE À VIE",
+      tailles: "Queen · King · Double",
+      emoji: "⚡",
+      etoiles: 5,
+      avis: 19
+    },
+    {
+      nom: "Matelas Sur Mesure — Commercial & Résidentiel",
+      prix: null,
+      prixAnc: null,
+      confort: "Sur mesure",
+      type: "VR · Camping",
+      epaisseur: "Personnalisé",
+      rabais: "",
+      badge: "",
+      tailles: "Toutes dimensions",
+      emoji: "📐",
+      etoiles: 5,
+      avis: 8
+    }
+  ];
+
+  function etoiles(n) {
+    return '★'.repeat(n) + '☆'.repeat(5 - n);
+  }
+
+  function renderProduit(p) {
+    const prixHTML = p.prix
+      ? `<span class="prix-label">À partir de</span>
+         <span class="prix-montant"><sup>$</sup>${p.prix}<span>,00</span></span>
+         ${p.prixAnc ? `<span class="prix-ancien">${p.prixAnc},00 $</span>` : ''}`
+      : `<span class="prix-montant" style="font-size:18px;margin-top:4px;">Sur demande</span>`;
+
+    const badgeRabais = p.rabais
+      ? `<span class="badge-rabais">${p.rabais} de rabais</span>` : '';
+    const badgeNew = p.badge
+      ? `<span class="badge-new">${p.badge}</span>` : '';
+
+    return `
+    <div class="produit-card">
+      <div class="produit-img-wrap">
+        <div style="font-size:72px">${p.emoji}</div>
+        ${badgeRabais}
+        ${badgeNew}
+        <div class="btn-favori">🤍</div>
+      </div>
+      <div class="produit-body">
+        <div class="produit-tailles">${p.tailles}</div>
+        <div class="produit-nom">${p.nom}</div>
+        <div class="produit-prix">${prixHTML}</div>
+        <div class="produit-stars">
+          <span class="stars">${etoiles(p.etoiles)}</span>
+          <span class="stars-count">(${p.avis})</span>
+        </div>
+        <div class="produit-specs">
+          <div class="spec-item">
+            <div class="spec-icon">😴</div>
+            <div class="spec-label">Confort</div>
+            <div class="spec-val">${p.confort}</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-icon">🧱</div>
+            <div class="spec-label">Type</div>
+            <div class="spec-val">${p.type}</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-icon">📏</div>
+            <div class="spec-label">Épaisseur</div>
+            <div class="spec-val">${p.epaisseur}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Simule le délai d'un vrai fetch API (300ms)
+  setTimeout(() => {
+    const grid = document.getElementById('produits-grid');
+    const count = document.getElementById('produit-count');
+    grid.innerHTML = PRODUITS_SHEETS.map(renderProduit).join('');
+    count.textContent = `${PRODUITS_SHEETS.length} produits`;
+  }, 300);
+</script>
+</body>
+</html>
