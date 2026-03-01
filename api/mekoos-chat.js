@@ -1,16 +1,33 @@
 const fetch = require('node-fetch');
+const { kv } = require('@vercel/kv');
 const fs = require('fs');
 const path = require('path');
 
-// Knowledge base chargée une fois au cold start
-let KB_TEXT = '';
-try {
-  KB_TEXT = fs.readFileSync(path.join(__dirname, '../mekoos-kb.md'), 'utf8');
-} catch (e) {
-  KB_TEXT = '(knowledge base non disponible)';
+const KV_KEY = 'mekoos:kb';
+const STATIC_KB = path.join(__dirname, '../mekoos-kb.md');
+
+// Cache en mémoire — rafraîchi toutes les 2 minutes
+let kbCache = { text: null, ts: 0 };
+
+async function getKB() {
+  const now = Date.now();
+  if (kbCache.text && now - kbCache.ts < 2 * 60 * 1000) {
+    return kbCache.text;
+  }
+  try {
+    const fromKV = await kv.get(KV_KEY);
+    if (fromKV) {
+      kbCache = { text: fromKV, ts: now };
+      return fromKV;
+    }
+  } catch (_) {}
+  // Fallback fichier statique
+  const fromFile = fs.readFileSync(STATIC_KB, 'utf8');
+  kbCache = { text: fromFile, ts: now };
+  return fromFile;
 }
 
-const SYSTEM_PROMPT = `Tu es l'assistant IA de la Pourvoirie Mekoos, une pourvoirie de luxe dans les Hautes-Laurentides, Québec, Canada.
+const SYSTEM_BASE = `Tu es l'assistant IA de la Pourvoirie Mekoos, une pourvoirie de luxe dans les Hautes-Laurentides, Québec, Canada.
 Propriétaire: Sébastien Dumoulin et son épouse Isabelle — 819-623-2336 | info@mekoos.com
 
 CONTEXTE IMPORTANT: Tu parles ici directement avec Sébastien et Isabelle Dumoulin, les propriétaires, qui testent leur futur agent IA. Quand c'est naturel, tu peux les interpeller par prénom (Sébastien ou Isabelle). Tu leur montres concrètement ce que leurs clients vont vivre.
@@ -30,10 +47,9 @@ RÈGLES:
 10. Ton confiant — Mekoos est une destination prisée
 
 BASE DE CONNAISSANCE:
-${KB_TEXT}`;
+`;
 
 module.exports = async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -48,6 +64,9 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'history requis' });
   }
 
+  const kbText = await getKB();
+  const systemPrompt = SYSTEM_BASE + kbText;
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -59,13 +78,12 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 512,
-        system: SYSTEM_PROMPT,
+        system: systemPrompt,
         messages: history.slice(-20),
       }),
     });
 
     const data = await response.json();
-
     if (data.content && data.content[0]) {
       return res.status(200).json({ reply: data.content[0].text });
     } else {

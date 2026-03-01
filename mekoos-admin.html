@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Agent IA Mekoos</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #070714;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .card {
+      background: #0e0e1f;
+      border: 1px solid #1c1c3a;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 780px;
+      overflow: hidden;
+    }
+    .card-header {
+      background: linear-gradient(135deg, #0d0d1f, #13082a);
+      border-bottom: 1px solid #1c1c3a;
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { font-size: 22px; font-weight: 900; background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header-title { font-size: 13px; font-weight: 700; color: #64748b; }
+
+    .body { padding: 32px; }
+
+    /* Écran mot de passe */
+    #screen-password { text-align: center; }
+    #screen-password h2 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    #screen-password p { font-size: 13px; color: #64748b; margin-bottom: 28px; }
+    .pw-wrap { display: flex; gap: 10px; max-width: 380px; margin: 0 auto; }
+    .pw-input {
+      flex: 1;
+      background: #13132a;
+      border: 1px solid #1c1c3a;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+    }
+    .pw-input:focus { border-color: rgba(0,212,255,0.4); }
+    .btn-primary {
+      background: linear-gradient(135deg, #00d4ff, #0ea5e9);
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #070714;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .error-msg { color: #f87171; font-size: 12px; margin-top: 10px; }
+
+    /* Écran éditeur */
+    #screen-editor { display: none; }
+    .editor-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #00d4ff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .editor-info {
+      background: rgba(0,212,255,0.05);
+      border: 1px solid rgba(0,212,255,0.15);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    textarea {
+      width: 100%;
+      min-height: 460px;
+      background: #13132a;
+      border: 1px solid #1c1c3a;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 12px;
+      font-family: 'Courier New', monospace;
+      color: #e2e8f0;
+      line-height: 1.6;
+      outline: none;
+      resize: vertical;
+      margin-bottom: 16px;
+    }
+    textarea:focus { border-color: rgba(0,212,255,0.4); }
+
+    .actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .chars { font-size: 12px; color: #475569; }
+    .btn-save {
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      border: none;
+      border-radius: 10px;
+      padding: 13px 28px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #052e16;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-save:hover { opacity: 0.85; }
+    .btn-save:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .toast {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .toast.success { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+    .toast.error { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: #f87171; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <div class="logo">KodAI</div>
+    <div class="header-title">🦌 Administration — Agent IA Mekoos</div>
+  </div>
+
+  <div class="body">
+
+    <!-- ÉCRAN MOT DE PASSE -->
+    <div id="screen-password">
+      <h2>Accès réservé</h2>
+      <p>Entrez votre mot de passe pour modifier les informations de votre agent IA.</p>
+      <div class="pw-wrap">
+        <input type="password" class="pw-input" id="pw-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter') login()">
+        <button class="btn-primary" onclick="login()">Entrer</button>
+      </div>
+      <div class="error-msg" id="pw-error"></div>
+    </div>
+
+    <!-- ÉCRAN ÉDITEUR -->
+    <div id="screen-editor">
+      <div class="editor-label">Base de connaissance de votre agent IA</div>
+      <div class="editor-info">
+        Modifiez les informations ci-dessous : forfaits, prix, disponibilités, politiques. Votre agent IA utilisera ces données pour répondre aux clients. Les changements sont actifs en moins de 2 minutes.
+      </div>
+      <textarea id="kb-content" oninput="updateChars()"></textarea>
+      <div class="actions">
+        <span class="chars" id="char-count">0 caractères</span>
+        <button class="btn-save" id="btn-save" onclick="save()">✓ Sauvegarder les changements</button>
+      </div>
+      <div class="toast" id="toast"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var password = '';
+
+function login() {
+  var pw = document.getElementById('pw-input').value.trim();
+  if (!pw) return;
+
+  fetch('/api/mekoos-admin?password=' + encodeURIComponent(pw))
+    .then(function(r) {
+      if (r.status === 401) throw new Error('incorrect');
+      return r.json();
+    })
+    .then(function(data) {
+      password = pw;
+      document.getElementById('screen-password').style.display = 'none';
+      document.getElementById('screen-editor').style.display = 'block';
+      document.getElementById('kb-content').value = data.content;
+      updateChars();
+    })
+    .catch(function(e) {
+      document.getElementById('pw-error').textContent =
+        e.message === 'incorrect' ? 'Mot de passe incorrect.' : 'Erreur de connexion.';
+    });
+}
+
+function save() {
+  var content = document.getElementById('kb-content').value;
+  var btn = document.getElementById('btn-save');
+  btn.disabled = true;
+  btn.textContent = 'Sauvegarde…';
+
+  fetch('/api/mekoos-admin', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password: password, content: content })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    btn.disabled = false;
+    btn.textContent = '✓ Sauvegarder les changements';
+    if (data.ok) {
+      showToast('success', '✓ Sauvegardé — votre agent utilise les nouvelles informations dans moins de 2 minutes.');
+    } else {
+      showToast('error', 'Erreur : ' + (data.error || 'inconnue'));
+    }
+  })
+  .catch(function() {
+    btn.disabled = false;
+    btn.textContent = '✓ Sauvegarder les changements';
+    showToast('error', 'Erreur de connexion — réessayez.');
+  });
+}
+
+function updateChars() {
+  var n = document.getElementById('kb-content').value.length;
+  document.getElementById('char-count').textContent = n.toLocaleString('fr-CA') + ' caractères';
+}
+
+function showToast(type, msg) {
+  var t = document.getElementById('toast');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(function() { t.style.display = 'none'; }, 5000);
+}
+</script>
+</body>
+</html>
