@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soumission — Pourvoirie Mekoos — KodAI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #070714;
+      color: #f8fafc;
+      padding: 60px 40px;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #0e0e1f;
+      border: 1px solid #1c1c3a;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #0d0d1f, #13082a);
+      border-bottom: 1px solid #1c1c3a;
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { font-size: 36px; font-weight: 900; background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .soumission-info { text-align: right; }
+    .soumission-info .label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+    .soumission-info .value { font-size: 14px; font-weight: 700; color: #f8fafc; }
+
+    .badge-wrap { padding: 24px 48px 0; display: flex; gap: 10px; flex-wrap: wrap; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 99px; padding: 6px 16px; font-size: 12px; font-weight: 700;
+      color: #00d4ff; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .badge-green {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 99px; padding: 6px 16px; font-size: 12px; font-weight: 700;
+      color: #4ade80; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    .client-section { padding: 28px 48px 32px; }
+    .client-section h1 { font-size: 32px; font-weight: 900; margin-bottom: 8px; }
+    .client-section h1 span { background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .client-section .sub { font-size: 14px; color: #64748b; }
+    .client-section .client-name { font-size: 16px; font-weight: 700; color: #f8fafc; margin-top: 16px; }
+
+    .section-title { padding: 0 48px 16px; font-size: 11px; font-weight: 700; color: #00d4ff; text-transform: uppercase; letter-spacing: 2px; }
+
+    .base-block { margin: 0 48px 32px; background: #13132a; border: 1px solid #1c1c3a; border-radius: 16px; overflow: hidden; }
+    .base-header { padding: 20px 24px; border-bottom: 1px solid #1c1c3a; display: flex; justify-content: space-between; align-items: center; }
+    .base-header h3 { font-size: 16px; font-weight: 800; }
+    .base-price { font-size: 28px; font-weight: 900; color: #00d4ff; }
+    .features-grid { padding: 20px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .feature-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #94a3b8; }
+    .feature-item::before { content: '✓'; color: #00d4ff; font-weight: 800; flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+
+    .roi-block {
+      margin: 0 48px 32px;
+      background: linear-gradient(135deg, #0d1a0d, #081308);
+      border: 1px solid rgba(74,222,128,0.25);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .roi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .roi-card { text-align: center; }
+    .roi-card .roi-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .roi-card .roi-value { font-size: 26px; font-weight: 900; color: #4ade80; }
+    .roi-card .roi-sub { font-size: 12px; color: #64748b; margin-top: 4px; }
+    .roi-divider { width: 1px; background: rgba(74,222,128,0.15); }
+
+    .options-block { margin: 0 48px 32px; }
+    .option-row { background: #13132a; border: 1px solid #1c1c3a; border-radius: 12px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .option-name { font-size: 14px; font-weight: 600; color: #f8fafc; }
+    .option-desc { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .option-price { font-size: 18px; font-weight: 800; color: #a78bfa; white-space: nowrap; }
+
+    .divider { height: 1px; background: #1c1c3a; margin: 0 48px 32px; }
+
+    .totaux-block { margin: 0 48px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .total-card { background: #13132a; border: 1px solid #1c1c3a; border-radius: 16px; padding: 24px; }
+    .total-card.featured { background: linear-gradient(135deg, #0d0d1f, #130d24); border-color: rgba(0,212,255,0.3); box-shadow: 0 0 30px rgba(0,212,255,0.06); }
+    .total-card-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+    .total-line { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+    .total-line.taxes { color: #64748b; font-size: 12px; }
+    .total-line.grand { font-size: 16px; font-weight: 900; color: #f8fafc; padding-top: 12px; border-top: 1px solid #1c1c3a; margin-top: 4px; }
+    .total-line.grand span:last-child { color: #00d4ff; }
+
+    .mensuel-block { margin: 0 48px 32px; }
+    .mensuel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .mensuel-card { background: #13132a; border: 1px solid #1c1c3a; border-radius: 16px; overflow: hidden; }
+    .mensuel-header { padding: 14px 20px; background: rgba(0,212,255,0.05); border-bottom: 1px solid #1c1c3a; font-size: 12px; font-weight: 700; color: #00d4ff; text-transform: uppercase; letter-spacing: 1px; }
+    .mensuel-row { display: flex; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid #1c1c3a; font-size: 13px; color: #94a3b8; }
+    .mensuel-row:last-child { border-bottom: none; }
+    .mensuel-row span:last-child { font-weight: 700; color: #f8fafc; }
+    .mensuel-total { display: flex; justify-content: space-between; padding: 14px 20px; background: rgba(124,58,237,0.08); border-top: 1px solid rgba(124,58,237,0.2); font-size: 14px; font-weight: 900; }
+    .mensuel-total span:last-child { color: #a78bfa; }
+
+    .versements-block { margin: 0 48px 32px; }
+    .versements-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .versement-card { background: #13132a; border: 1px solid #1c1c3a; border-radius: 16px; overflow: hidden; }
+    .versement-header { padding: 14px 20px; background: rgba(0,212,255,0.05); border-bottom: 1px solid #1c1c3a; font-size: 12px; font-weight: 700; color: #00d4ff; text-transform: uppercase; letter-spacing: 1px; }
+    .versement-row { display: flex; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid #1c1c3a; font-size: 13px; color: #94a3b8; }
+    .versement-row:last-child { border-bottom: none; }
+    .versement-row span:last-child { font-weight: 700; color: #f8fafc; }
+    .versement-total { display: flex; justify-content: space-between; padding: 14px 20px; background: rgba(124,58,237,0.08); border-top: 1px solid rgba(124,58,237,0.2); font-size: 14px; font-weight: 900; }
+    .versement-total span:last-child { color: #a78bfa; }
+
+    .validite-block {
+      margin: 0 48px 40px;
+      background: linear-gradient(135deg, #0d0d1f, #13082a);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .validite-block .v-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+    .validite-block .v-value { font-size: 15px; font-weight: 800; color: #fbbf24; }
+
+    .footer { background: #070714; border-top: 1px solid #1c1c3a; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; }
+    .footer .f-logo { font-size: 20px; font-weight: 900; background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .footer .f-contact { font-size: 12px; color: #64748b; text-align: right; }
+    .footer .f-contact a { color: #00d4ff; text-decoration: none; }
+
+    @media (max-width: 640px) {
+      body { padding: 0; }
+      .page { border-radius: 0; border: none; }
+      .header { padding: 24px 20px; flex-direction: column; align-items: flex-start; gap: 16px; }
+      .soumission-info { text-align: left; }
+      .badge-wrap, .client-section, .section-title { padding-left: 20px; padding-right: 20px; }
+      .base-block, .options-block, .totaux-block, .mensuel-block, .versements-block { margin-left: 20px; margin-right: 20px; }
+      .features-grid, .roi-grid, .totaux-block, .mensuel-grid, .versements-grid { grid-template-columns: 1fr; }
+      .roi-divider { display: none; }
+      .validite-block { margin: 0 20px 32px; flex-direction: column; align-items: flex-start; }
+      .footer { padding: 20px; flex-direction: column; gap: 8px; }
+      .footer .f-contact { text-align: left; }
+    }
+
+    /* Calculateur ROI */
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .calc-field { display: flex; flex-direction: column; gap: 8px; }
+    .calc-field-label { font-size: 12px; font-weight: 700; color: #f8fafc; }
+    .calc-field-sub { font-size: 11px; color: #64748b; margin-top: -4px; }
+    .calc-slider-wrap { display: flex; align-items: center; gap: 10px; }
+    .calc-slider-wrap input[type=range] {
+      flex: 1; -webkit-appearance: none; height: 5px;
+      border-radius: 99px; background: #1c1c3a; outline: none; cursor: pointer;
+    }
+    .calc-slider-wrap input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+      background: #00d4ff; cursor: pointer; box-shadow: 0 0 6px rgba(0,212,255,0.5);
+    }
+    .calc-val { font-size: 13px; font-weight: 800; color: #00d4ff; min-width: 52px; text-align: right; }
+    .calc-taux { display: flex; align-items: center; gap: 12px; background: #13132a; border: 1px solid #1c1c3a; border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; }
+    .calc-taux label { font-size: 12px; font-weight: 600; color: #94a3b8; flex: 1; }
+    .calc-bar-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+    .calc-bar-info { display: flex; justify-content: space-between; font-size: 12px; }
+    .calc-bar-track { height: 7px; background: #1c1c3a; border-radius: 99px; overflow: hidden; }
+    .calc-bar-fill { height: 100%; border-radius: 99px; transition: width 0.25s ease; }
+    .calc-gain { display: flex; justify-content: space-between; align-items: center; background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.15); border-radius: 12px; padding: 14px 18px; margin-top: 16px; }
+    .calc-gain-label { font-size: 13px; font-weight: 700; color: #f8fafc; }
+    .calc-gain-val { font-size: 24px; font-weight: 900; color: #00d4ff; }
+
+    @media (max-width: 560px) { .calc-grid { grid-template-columns: 1fr; } }
+
+    /* Comment ça fonctionne */
+    .steps-block { margin: 0 48px 32px; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 0; }
+    .step { background: #13132a; border: 1px solid #1c1c3a; border-radius: 14px; padding: 18px 16px; text-align: center; }
+    .step-icon { font-size: 28px; margin-bottom: 10px; }
+    .step-title { font-size: 13px; font-weight: 800; color: #f8fafc; margin-bottom: 6px; }
+    .step-desc { font-size: 11px; color: #64748b; line-height: 1.5; }
+    .step-arrow { font-size: 20px; color: #1c1c3a; padding: 0 10px; text-align: center; }
+    @media (max-width: 640px) {
+      .steps-block { grid-template-columns: 1fr; }
+      .step-arrow { transform: rotate(90deg); padding: 4px 0; }
+    }
+
+    @media print {
+      body { background: #070714; padding: 0; }
+      .page { border-radius: 0; border: none; }
+      .demo-chat-block { display: none; }
+    }
+
+    /* ── Widget Chat Démo ─────────────────────────────────────────── */
+    .demo-chat-block {
+      margin: 0 48px 32px;
+      border: 1px solid rgba(0,212,255,0.25);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .demo-chat-header {
+      background: linear-gradient(135deg, #0d0d1f, #13082a);
+      border-bottom: 1px solid rgba(0,212,255,0.15);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .demo-chat-header-left { display: flex; align-items: center; gap: 12px; }
+    .demo-chat-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #00d4ff, #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .demo-chat-name { font-size: 14px; font-weight: 800; color: #f8fafc; }
+    .demo-chat-status { font-size: 11px; color: #4ade80; display: flex; align-items: center; gap: 5px; }
+    .demo-chat-status::before { content: ''; width: 6px; height: 6px; background: #4ade80; border-radius: 50%; display: inline-block; }
+    .demo-chat-badge {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: #00d4ff; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.25);
+      border-radius: 99px; padding: 4px 12px;
+    }
+    .demo-chat-messages {
+      background: #070714;
+      height: 260px;
+      overflow-y: auto;
+      padding: 20px 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-behavior: smooth;
+    }
+    .demo-chat-messages::-webkit-scrollbar { width: 4px; }
+    .demo-chat-messages::-webkit-scrollbar-thumb { background: #1c1c3a; border-radius: 99px; }
+    .demo-msg { display: flex; gap: 10px; max-width: 88%; }
+    .demo-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .demo-msg-avatar {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #00d4ff, #7c3aed);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+    .demo-msg.user .demo-msg-avatar { background: #1c1c3a; }
+    .demo-msg-bubble {
+      background: #13132a;
+      border: 1px solid #1c1c3a;
+      border-radius: 14px;
+      border-top-left-radius: 4px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #e2e8f0;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    .demo-msg.user .demo-msg-bubble {
+      background: rgba(0,212,255,0.1);
+      border-color: rgba(0,212,255,0.2);
+      border-radius: 14px;
+      border-top-right-radius: 4px;
+      color: #f8fafc;
+    }
+    .demo-typing { display: flex; align-items: center; gap: 6px; padding: 8px 14px; }
+    .demo-typing span {
+      width: 6px; height: 6px; background: #00d4ff; border-radius: 50%;
+      animation: blink 1.4s infinite ease-in-out;
+    }
+    .demo-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .demo-typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0%,80%,100% { opacity: 0.2; } 40% { opacity: 1; } }
+
+    .demo-chat-input-row {
+      display: flex; gap: 10px;
+      background: #0e0e1f;
+      border-top: 1px solid #1c1c3a;
+      padding: 14px 16px;
+    }
+    .demo-chat-input {
+      flex: 1;
+      background: #13132a;
+      border: 1px solid #1c1c3a;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      resize: none;
+      min-height: 42px;
+      max-height: 100px;
+    }
+    .demo-chat-input::placeholder { color: #475569; }
+    .demo-chat-input:focus { border-color: rgba(0,212,255,0.4); }
+    .demo-chat-send {
+      width: 42px; height: 42px; flex-shrink: 0;
+      background: linear-gradient(135deg, #00d4ff, #0ea5e9);
+      border: none; border-radius: 10px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; transition: opacity 0.15s;
+    }
+    .demo-chat-send:hover { opacity: 0.85; }
+    .demo-chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+    .demo-chat-footer {
+      background: #0e0e1f;
+      border-top: 1px solid #1c1c3a;
+      padding: 8px 16px;
+      font-size: 10px;
+      color: #475569;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      .demo-chat-block { margin-left: 20px; margin-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">KodAI</div>
+    <div class="soumission-info">
+      <div class="label">Soumission</div>
+      <div class="value">#KAI-2026-002</div>
+      <div style="margin-top:10px;">
+        <div class="label">Date</div>
+        <div class="value">1 mars 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BADGES -->
+  <div class="badge-wrap">
+    <div class="badge">🤖 Agent IA sur mesure</div>
+    <div class="badge-green">✓ Multilingue FR / EN inclus</div>
+    <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.3);border-radius:99px;padding:6px 16px;font-size:12px;font-weight:700;color:#fbbf24;letter-spacing:1px;text-transform:uppercase;">🏆 Premier client — 30% de rabais</div>
+  </div>
+
+  <!-- CLIENT -->
+  <div class="client-section">
+    <h1>Système IA — <span>gestion des courriels</span></h1>
+    <p class="sub">Réponses automatiques • Brouillons prêts à envoyer • 24h/24, 7j/7</p>
+    <p class="client-name">Préparé pour : Sébastien Dumoulin — Pourvoirie Mekoos</p>
+  </div>
+
+  <!-- ROI CALCULATEUR -->
+  <div class="section-title">Calculez votre retour sur investissement</div>
+  <div class="roi-block">
+
+    <div class="calc-grid">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:#00d4ff;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Haute saison</div>
+        <div class="calc-field" style="margin-bottom:14px;">
+          <div class="calc-field-label">Durée <span class="calc-field-sub">— mois</span></div>
+          <div class="calc-slider-wrap">
+            <input type="range" id="mois-haute" min="1" max="7" value="4" oninput="calcRoi()">
+            <span class="calc-val" id="v-mois-haute">4 mois</span>
+          </div>
+        </div>
+        <div class="calc-field">
+          <div class="calc-field-label">Courriels reçus / jour</div>
+          <div class="calc-slider-wrap">
+            <input type="range" id="emails-haute" min="1" max="50" value="15" oninput="calcRoi()">
+            <span class="calc-val" id="v-emails-haute">15</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Basse saison</div>
+        <div class="calc-field" style="margin-bottom:14px;">
+          <div class="calc-field-label">Durée <span class="calc-field-sub">— mois</span></div>
+          <div class="calc-slider-wrap">
+            <input type="range" id="mois-basse" min="0" max="7" value="3" oninput="calcRoi()">
+            <span class="calc-val" id="v-mois-basse">3 mois</span>
+          </div>
+        </div>
+        <div class="calc-field">
+          <div class="calc-field-label">Courriels reçus / jour</div>
+          <div class="calc-slider-wrap">
+            <input type="range" id="emails-basse" min="0" max="30" value="5" oninput="calcRoi()">
+            <span class="calc-val" id="v-emails-basse">5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-taux">
+      <label>Votre temps / courriel <span style="color:#4ade80;font-size:11px;">− 2 min avec l'IA</span></label>
+      <div class="calc-slider-wrap" style="flex:2;">
+        <input type="range" id="min-email" min="3" max="15" value="5" oninput="calcRoi()">
+        <span class="calc-val" id="v-min-email">5 min</span>
+      </div>
+    </div>
+    <div class="calc-taux">
+      <label>Valeur de votre temps ($/h)</label>
+      <div class="calc-slider-wrap" style="flex:2;">
+        <input type="range" id="taux" min="25" max="150" step="5" value="50" oninput="calcRoi()">
+        <span class="calc-val" id="v-taux">50$/h</span>
+      </div>
+    </div>
+
+    <div class="calc-bar-row">
+      <div class="calc-bar-info">
+        <span style="color:#64748b;">Coût du service</span>
+        <span style="font-weight:700;color:#64748b;">2 400$ /an</span>
+      </div>
+      <div class="calc-bar-track"><div class="calc-bar-fill" id="bar-cout" style="background:#334155;"></div></div>
+    </div>
+    <div class="calc-bar-row">
+      <div class="calc-bar-info">
+        <span style="color:#94a3b8;" id="bar-label-haute">Haute saison</span>
+        <span style="font-weight:700;color:#4ade80;" id="bar-val-haute">—</span>
+      </div>
+      <div class="calc-bar-track"><div class="calc-bar-fill" id="bar-haute" style="background:linear-gradient(90deg,#4ade80,#22c55e);"></div></div>
+    </div>
+    <div class="calc-bar-row">
+      <div class="calc-bar-info">
+        <span style="color:#94a3b8;" id="bar-label-basse">Basse saison</span>
+        <span style="font-weight:700;color:#86efac;" id="bar-val-basse">—</span>
+      </div>
+      <div class="calc-bar-track"><div class="calc-bar-fill" id="bar-basse" style="background:linear-gradient(90deg,#86efac,#4ade80);"></div></div>
+    </div>
+
+    <div class="calc-gain">
+      <div>
+        <div class="calc-gain-label">Gain net annuel</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;" id="calc-heures-label">—</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px;" id="calc-detail">—</div>
+      </div>
+      <div class="calc-gain-val" id="res-gain">—</div>
+    </div>
+
+  </div>
+
+  <!-- COMMENT ÇA FONCTIONNE -->
+  <div class="section-title">Comment ça fonctionne</div>
+  <div class="steps-block">
+    <div class="step">
+      <div class="step-icon">📧</div>
+      <div class="step-title">Email reçu</div>
+      <div class="step-desc">Un client écrit à info@mekoos.com — jour ou nuit, n'importe quelle langue</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step">
+      <div class="step-icon">🤖</div>
+      <div class="step-title">Brouillon en 10 secondes</div>
+      <div class="step-desc">L'IA analyse le message, rédige une réponse complète avec les bons forfaits et prix</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step">
+      <div class="step-icon">✅</div>
+      <div class="step-title">Vous envoyez</div>
+      <div class="step-desc">Le brouillon apparaît dans Outlook — vous lisez, ajustez si besoin, appuyez Envoyer</div>
+    </div>
+  </div>
+
+  <!-- BASE -->
+  <div class="section-title">Forfait de base — Agent IA email</div>
+  <div class="base-block">
+    <div class="base-header">
+      <h3>Installation + configuration complète</h3>
+      <div>
+        <div style="font-size:14px;color:#64748b;text-decoration:line-through;text-align:right;">2 150$</div>
+        <div class="base-price">1 500$</div>
+        <div style="font-size:11px;color:#fbbf24;font-weight:700;text-align:right;">Premier client −30%</div>
+      </div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item">Agent IA formé sur tous les forfaits Mekoos</div>
+      <div class="feature-item">Connexion directe à info@mekoos.com</div>
+      <div class="feature-item">Brouillons créés dans Outlook automatiquement</div>
+      <div class="feature-item">Multilingue — détecte et répond dans la langue du client (FR, EN, DE…)</div>
+      <div class="feature-item">Aucune installation sur votre ordinateur</div>
+      <div class="feature-item">Ton et signature Mekoos personnalisés</div>
+      <div class="feature-item">Fonctionne 24h/24 — même quand vous dormez</div>
+      <div class="feature-item">Hébergement serveur inclus (abonnement actif)</div>
+      <div class="feature-item">Formation complète + remise en main propre incluse</div>
+      <div class="feature-item">Mise en ligne en 3 à 5 jours ouvrables</div>
+      <div class="feature-item">Amélioration continue — l'IA s'affine selon vos retours</div>
+    </div>
+  </div>
+
+  <!-- OPTION -->
+  <div class="section-title">Option disponible</div>
+  <div class="options-block">
+    <div class="option-row">
+      <div>
+        <div class="option-name">💬 Agent IA sur le site mekoos.com</div>
+        <div class="option-desc">Widget de clavardage sur votre site — répond aux visiteurs en temps réel, 24/7, dans leur langue, avant même qu'ils envoient un courriel</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:13px;color:#64748b;text-decoration:line-through;">+1 150$</div>
+        <div class="option-price">+800$</div>
+        <div style="font-size:11px;color:#fbbf24;font-weight:700;">Premier client −30%</div>
+      </div>
+    </div>
+    <div class="option-row">
+      <div>
+        <div class="option-name">⚙️ Automatisation sur mesure</div>
+        <div class="option-desc">Facturation, saisie de données, rapports récurrents ou toute autre tâche répétitive — si vous y passez du temps, on peut probablement l'automatiser</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="option-price" style="font-size:14px;">À discuter</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px;">selon le projet</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- INVESTISSEMENT -->
+  <div class="section-title">Investissement</div>
+  <div style="margin:0 48px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+    <!-- OPTION 1 -->
+    <div style="background:#13132a;border:1px solid #1c1c3a;border-radius:16px;overflow:hidden;">
+      <div style="padding:14px 20px;background:rgba(0,212,255,0.05);border-bottom:1px solid #1c1c3a;font-size:12px;font-weight:700;color:#00d4ff;text-transform:uppercase;letter-spacing:1px;">Email IA seulement</div>
+
+      <div style="padding:16px 20px;border-bottom:1px solid #1c1c3a;">
+        <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Installation — une seule fois</div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+          <div>
+            <div style="font-size:11px;color:#64748b;text-decoration:line-through;margin-bottom:2px;">2 150$</div>
+            <div style="font-size:22px;font-weight:900;color:#f8fafc;">1 500$</div>
+            <div style="font-size:11px;color:#fbbf24;">Premier client −30%</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px;color:#64748b;">taxes incluses</div>
+            <div style="font-size:16px;font-weight:900;color:#00d4ff;">1 724,63$</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:#64748b;background:#0e0e1f;border-radius:8px;padding:8px 10px;">
+          2 versements : <strong style="color:#f8fafc;">862,32$</strong> au démarrage · <strong style="color:#f8fafc;">862,31$</strong> à la livraison
+        </div>
+      </div>
+
+      <div style="padding:16px 20px;border-bottom:1px solid #1c1c3a;">
+        <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Abonnement mensuel</div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+          <div>
+            <div style="font-size:11px;color:#64748b;text-decoration:line-through;margin-bottom:2px;">285$/mois</div>
+            <div style="font-size:22px;font-weight:900;color:#f8fafc;">200$/mois</div>
+            <div style="font-size:11px;color:#64748b;">hébergement · support · mises à jour</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px;color:#64748b;">taxes incluses</div>
+            <div style="font-size:16px;font-weight:900;color:#a78bfa;">229,95$/mois</div>
+          </div>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:#64748b;">Engagement min. 6 mois · résiliable avec 30 jours de préavis</div>
+      </div>
+
+      <div style="padding:14px 20px;border-bottom:1px solid #1c1c3a;background:rgba(0,212,255,0.03);">
+        <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Total — premier 6 mois</div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;margin-bottom:3px;"><span>Installation (taxes incl.)</span><span>1 724,63$</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;margin-bottom:8px;"><span>6 × 229,95$ (taxes incl.)</span><span>1 379,70$</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:900;border-top:1px solid #1c1c3a;padding-top:8px;"><span style="color:#f8fafc;">Total</span><span style="color:#00d4ff;">3 104,33$</span></div>
+      </div>
+
+      <div style="padding:12px 20px;background:rgba(74,222,128,0.04);">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:12px;color:#64748b;">Valeur récupérée /an <span style="font-size:10px;">(selon calculateur)</span></span>
+          <span style="font-size:16px;font-weight:900;color:#4ade80;" id="roi-email">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION 2 -->
+    <div style="background:linear-gradient(135deg,#0d0d1f,#130d24);border:1px solid rgba(0,212,255,0.25);border-radius:16px;overflow:hidden;box-shadow:0 0 30px rgba(0,212,255,0.05);">
+      <div style="padding:14px 20px;background:rgba(0,212,255,0.07);border-bottom:1px solid rgba(0,212,255,0.15);font-size:12px;font-weight:700;color:#00d4ff;text-transform:uppercase;letter-spacing:1px;">Email IA + Widget site ⭐</div>
+
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(0,212,255,0.1);">
+        <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Installation — une seule fois</div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+          <div>
+            <div style="font-size:11px;color:#64748b;text-decoration:line-through;margin-bottom:2px;">3 300$</div>
+            <div style="font-size:22px;font-weight:900;color:#f8fafc;">2 300$</div>
+            <div style="font-size:11px;color:#fbbf24;">Premier client −30%</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px;color:#64748b;">taxes incluses</div>
+            <div style="font-size:16px;font-weight:900;color:#00d4ff;">2 644,43$</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:#64748b;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px 10px;">
+          2 versements : <strong style="color:#f8fafc;">1 322,22$</strong> au démarrage · <strong style="color:#f8fafc;">1 322,21$</strong> à la livraison
+        </div>
+      </div>
+
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(0,212,255,0.1);">
+        <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Abonnement mensuel</div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+          <div>
+            <div style="font-size:11px;color:#64748b;text-decoration:line-through;margin-bottom:2px;">357$/mois</div>
+            <div style="font-size:22px;font-weight:900;color:#f8fafc;">250$/mois</div>
+            <div style="font-size:11px;color:#64748b;">hébergement · support · mises à jour</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px;color:#64748b;">taxes incluses</div>
+            <div style="font-size:16px;font-weight:900;color:#a78bfa;">287,44$/mois</div>
+          </div>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:#64748b;">Engagement min. 6 mois · résiliable avec 30 jours de préavis</div>
+      </div>
+
+      <div style="padding:14px 20px;border-bottom:1px solid rgba(0,212,255,0.1);background:rgba(0,212,255,0.03);">
+        <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Total — premier 6 mois</div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;margin-bottom:3px;"><span>Installation (taxes incl.)</span><span>2 644,43$</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;margin-bottom:8px;"><span>6 × 287,44$ (taxes incl.)</span><span>1 724,64$</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:900;border-top:1px solid rgba(0,212,255,0.15);padding-top:8px;"><span style="color:#f8fafc;">Total</span><span style="color:#00d4ff;">4 369,07$</span></div>
+      </div>
+
+      <div style="padding:12px 20px;background:rgba(74,222,128,0.04);">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:12px;color:#64748b;">Valeur récupérée /an <span style="font-size:10px;">(selon calculateur)</span></span>
+          <span style="font-size:16px;font-weight:900;color:#4ade80;" id="roi-widget">—</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div style="margin:0 48px 32px;font-size:12px;color:#94a3b8;padding:12px 16px;background:#13132a;border:1px solid #1c1c3a;border-radius:10px;">
+    🔄 <strong style="color:#f8fafc;">Amélioration continue incluse</strong> — Si vous modifiez souvent le même type de réponse, on ajuste l'IA en conséquence. L'agent s'améliore avec le temps et apprend le style de communication Mekoos.
+  </div>
+
+  <!-- DEMO CHAT -->
+  <div class="section-title">Testez l'agent en direct</div>
+  <div class="demo-chat-block">
+    <div class="demo-chat-header">
+      <div class="demo-chat-header-left">
+        <div class="demo-chat-avatar">🦌</div>
+        <div>
+          <div class="demo-chat-name">Assistant Mekoos</div>
+          <div class="demo-chat-status">En ligne — réponse en quelques secondes</div>
+        </div>
+      </div>
+      <div class="demo-chat-badge">Démo live</div>
+    </div>
+
+    <div class="demo-chat-messages" id="chat-messages">
+      <div class="demo-msg bot">
+        <div class="demo-msg-avatar">🦌</div>
+        <div class="demo-msg-bubble">Bonjour ! Je suis l'assistant IA de la Pourvoirie Mekoos. Posez-moi une question sur nos forfaits, nos chalets, la pêche, la motoneige — dans la langue de votre choix.</div>
+      </div>
+    </div>
+
+    <div class="demo-chat-input-row">
+      <textarea class="demo-chat-input" id="chat-input" placeholder="Ex: Combien coûte le forfait motoneige pour 2 personnes?" rows="1" onkeydown="chatKeydown(event)"></textarea>
+      <button class="demo-chat-send" id="chat-send" onclick="chatSend()">➤</button>
+    </div>
+    <div class="demo-chat-footer">
+      C'est exactement cet agent qui répondrait aux courriels info@mekoos.com — en 10 secondes, dans la langue du client.
+    </div>
+  </div>
+
+  <!-- VALIDITÉ -->
+  <div class="validite-block">
+    <div>
+      <div class="v-label">Pour confirmer</div>
+      <div class="v-value">info@kodai.ca</div>
+    </div>
+    <div>
+      <div class="v-label">Validité de la soumission</div>
+      <div class="v-value">30 jours — 1 avril 2026</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="f-logo">KodAI</div>
+    <div class="f-contact">
+      info@kodai.ca · kodai.ca<br>
+      <a href="https://kodai.ca">kodai.ca</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function fmtCAD(n) {
+  return Math.round(n).toLocaleString('fr-CA') + '\u00a0$';
+}
+function calcRoi() {
+  var mH   = +document.getElementById('mois-haute').value;
+  var mB   = +document.getElementById('mois-basse').value;
+  var eH   = +document.getElementById('emails-haute').value;
+  var eB   = +document.getElementById('emails-basse').value;
+  var taux = +document.getElementById('taux').value;
+  var minParEmail = +document.getElementById('min-email').value;
+
+  document.getElementById('v-mois-haute').textContent   = mH + ' mois';
+  document.getElementById('v-mois-basse').textContent   = mB + ' mois';
+  document.getElementById('v-emails-haute').textContent = eH + ' /jour';
+  document.getElementById('v-emails-basse').textContent = eB === 0 ? 'aucun' : eB + ' /jour';
+  document.getElementById('v-min-email').textContent    = minParEmail + ' min';
+  document.getElementById('v-taux').textContent         = taux + '$/h';
+
+  var hH = (eH * minParEmail / 60) * 7 * (mH * 4.33);
+  var hB = (eB * minParEmail / 60) * 7 * (mB * 4.33);
+  var hT = hH + hB;
+
+  var vH   = hH * taux;
+  var vB   = hB * taux;
+  var vT   = hT * taux;
+  var cout = 2400;
+  var gain = vT - cout;
+
+  // Scale fixe basé sur max possible — haute et basse sont indépendantes
+  var maxHautePossible = (50 * minParEmail / 60) * 7 * (7 * 4.33) * taux;
+  var maxBassePossible = (30 * minParEmail / 60) * 7 * (7 * 4.33) * taux;
+  var fixedMax = Math.max(maxHautePossible, maxBassePossible, cout, 1);
+
+  document.getElementById('bar-cout').style.width  = Math.min(cout / fixedMax * 100, 100) + '%';
+  document.getElementById('bar-haute').style.width = Math.min(vH   / fixedMax * 100, 100) + '%';
+  document.getElementById('bar-basse').style.width = Math.min(vB   / fixedMax * 100, 100) + '%';
+
+  var totalEmails = Math.round((eH * 7 * mH * 4.33) + (eB * 7 * mB * 4.33));
+  document.getElementById('bar-label-haute').textContent = 'Haute saison (' + mH + ' mois · ' + eH + ' courriels/jour)';
+  document.getElementById('bar-val-haute').textContent   = fmtCAD(vH) + ' /an';
+  document.getElementById('bar-label-basse').textContent = 'Basse saison (' + mB + ' mois · ' + eB + ' courriels/jour)';
+  document.getElementById('bar-val-basse').textContent   = fmtCAD(vB) + ' /an';
+
+  document.getElementById('calc-heures-label').textContent = totalEmails + ' courriels/an · ' + Math.round(hT) + 'h récupérées';
+  document.getElementById('calc-detail').textContent = fmtCAD(vT) + ' récupérés − 2 400$ service = gain net';
+  document.getElementById('res-gain').textContent = (gain >= 0 ? '+' : '') + fmtCAD(gain);
+  document.getElementById('res-gain').style.color = gain >= 0 ? '#00d4ff' : '#f87171';
+  document.getElementById('roi-email').textContent  = fmtCAD(vT) + ' /an';
+  document.getElementById('roi-widget').textContent = fmtCAD(vT) + ' /an';
+}
+calcRoi();
+</script>
+
+<script>
+// ── Chat Widget ───────────────────────────────────────────────────────────────
+// LOCAL: http://localhost:5001/mekoos/chat
+// PROD:  https://api.kodai.ca/mekoos/chat
+var CHAT_API_URL = '/api/mekoos-chat';
+
+var chatHistory = [];
+var chatWaiting = false;
+
+function chatKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    chatSend();
+  }
+}
+
+function chatSend() {
+  if (chatWaiting) return;
+  var input = document.getElementById('chat-input');
+  var text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+
+  chatAddMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+
+  chatWaiting = true;
+  document.getElementById('chat-send').disabled = true;
+  chatShowTyping();
+
+  fetch(CHAT_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ history: chatHistory })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    chatRemoveTyping();
+    chatWaiting = false;
+    document.getElementById('chat-send').disabled = false;
+    if (data.reply) {
+      chatHistory.push({ role: 'assistant', content: data.reply });
+      chatAddMsg('bot', data.reply);
+    } else {
+      chatAddMsg('bot', 'Désolé, une erreur est survenue. Réessayez dans un moment.');
+    }
+  })
+  .catch(function() {
+    chatRemoveTyping();
+    chatWaiting = false;
+    document.getElementById('chat-send').disabled = false;
+    chatAddMsg('bot', 'Impossible de joindre le serveur. Cette démo nécessite une connexion internet.');
+  });
+}
+
+function chatAddMsg(role, text) {
+  var msgs = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'demo-msg ' + role;
+  div.innerHTML =
+    '<div class="demo-msg-avatar">' + (role === 'bot' ? '🦌' : '👤') + '</div>' +
+    '<div class="demo-msg-bubble">' + escHtml(text) + '</div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function chatShowTyping() {
+  var msgs = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'demo-msg bot';
+  div.id = 'typing-indicator';
+  div.innerHTML =
+    '<div class="demo-msg-avatar">🦌</div>' +
+    '<div class="demo-msg-bubble demo-typing"><span></span><span></span><span></span></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function chatRemoveTyping() {
+  var el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+          .replace(/\n/g,'<br>');
+}
+
+// Auto-resize textarea
+document.getElementById('chat-input').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+});
+</script>
+</body>
+</html>
