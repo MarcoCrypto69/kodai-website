@@ -9,8 +9,6 @@ function getRedis() {
   return new Redis(process.env.REDIS_URL, {
     maxRetriesPerRequest: 1,
     connectTimeout: 5000,
-    enableReadyCheck: false,
-    lazyConnect: true,
   });
 }
 
@@ -29,9 +27,8 @@ module.exports = async function handler(req, res) {
     let content;
     try {
       const redis = getRedis();
-      await redis.connect();
       content = await redis.get(KV_KEY);
-      await redis.quit();
+      redis.disconnect();
     } catch (e) {
       console.error('Redis GET error:', e.message);
     }
@@ -52,9 +49,8 @@ module.exports = async function handler(req, res) {
     }
     try {
       const redis = getRedis();
-      await redis.connect();
       await redis.set(KV_KEY, content);
-      await redis.quit();
+      redis.disconnect();
       return res.status(200).json({ ok: true, chars: content.length });
     } catch (e) {
       console.error('Redis SET error:', e.message);
