@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { kv } = require('@vercel/kv');
+const Redis = require('ioredis');
 const fs = require('fs');
 const path = require('path');
 
@@ -9,19 +9,22 @@ const STATIC_KB = path.join(__dirname, '../mekoos-kb.md');
 // Cache en mémoire — rafraîchi toutes les 2 minutes
 let kbCache = { text: null, ts: 0 };
 
+function getRedis() {
+  return new Redis(process.env.REDIS_URL, { tls: { rejectUnauthorized: false }, lazyConnect: true });
+}
+
 async function getKB() {
   const now = Date.now();
-  if (kbCache.text && now - kbCache.ts < 2 * 60 * 1000) {
-    return kbCache.text;
-  }
+  if (kbCache.text && now - kbCache.ts < 2 * 60 * 1000) return kbCache.text;
   try {
-    const fromKV = await kv.get(KV_KEY);
+    const redis = getRedis();
+    const fromKV = await redis.get(KV_KEY);
+    await redis.quit();
     if (fromKV) {
       kbCache = { text: fromKV, ts: now };
       return fromKV;
     }
   } catch (_) {}
-  // Fallback fichier statique
   const fromFile = fs.readFileSync(STATIC_KB, 'utf8');
   kbCache = { text: fromFile, ts: now };
   return fromFile;
@@ -54,10 +57,7 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { history } = req.body || {};
   if (!history || !Array.isArray(history) || history.length === 0) {
@@ -65,7 +65,6 @@ module.exports = async function handler(req, res) {
   }
 
   const kbText = await getKB();
-  const systemPrompt = SYSTEM_BASE + kbText;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -78,19 +77,16 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 512,
-        system: systemPrompt,
+        system: SYSTEM_BASE + kbText,
         messages: history.slice(-20),
       }),
     });
-
     const data = await response.json();
     if (data.content && data.content[0]) {
       return res.status(200).json({ reply: data.content[0].text });
-    } else {
-      return res.status(500).json({ error: 'Réponse invalide' });
     }
+    return res.status(500).json({ error: 'Réponse invalide' });
   } catch (error) {
-    console.error('Mekoos chat error:', error.message);
     return res.status(500).json({ error: error.message });
   }
 };
