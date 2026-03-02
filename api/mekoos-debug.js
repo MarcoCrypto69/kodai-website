@@ -1,10 +1,9 @@
 module.exports = function handler(req, res) {
-  const url = process.env.REDIS_URL || '';
-  const m = url.match(/rediss?:\/\/[^:]+:([^@]+)@([^:/]+)/);
-  res.json({
-    redis_url_set: !!url,
-    redis_url_prefix: url.substring(0, 30) + '...',
-    regex_match: !!m,
-    host: m ? m[2] : null,
-  });
+  const keys = Object.keys(process.env)
+    .filter(k => k.includes('REDIS') || k.includes('KV') || k.includes('UPSTASH'))
+    .reduce((acc, k) => {
+      acc[k] = (process.env[k] || '').substring(0, 40) + '...';
+      return acc;
+    }, {});
+  res.json({ vars: keys, count: Object.keys(keys).length });
 };
