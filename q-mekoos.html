@@ -146,11 +146,19 @@
       .soumission-info { text-align: left; }
       .badge-wrap, .client-section, .section-title { padding-left: 20px; padding-right: 20px; }
       .base-block, .options-block, .totaux-block, .mensuel-block, .versements-block { margin-left: 20px; margin-right: 20px; }
+      .roi-block { margin-left: 20px; margin-right: 20px; }
       .features-grid, .roi-grid, .totaux-block, .mensuel-grid, .versements-grid { grid-template-columns: 1fr; }
       .roi-divider { display: none; }
       .validite-block { margin: 0 20px 32px; flex-direction: column; align-items: flex-start; }
       .footer { padding: 20px; flex-direction: column; gap: 8px; }
       .footer .f-contact { text-align: left; }
+      /* Fix calc-taux sliders */
+      .calc-taux { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .calc-taux .calc-slider-wrap { width: 100%; }
+      /* Fix pricing grid */
+      .investissement-grid { grid-template-columns: 1fr !important; margin-left: 20px !important; margin-right: 20px !important; }
+      /* Fix chat header logo */
+      .demo-chat-header-right img { display: none; }
     }
 
     /* Calculateur ROI */
@@ -518,7 +526,7 @@
 
   <!-- INVESTISSEMENT -->
   <div class="section-title">Investissement</div>
-  <div style="margin:0 48px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+  <div class="investissement-grid" style="margin:0 48px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
 
     <!-- OPTION 1 -->
     <div style="background:#13132a;border:1px solid #1c1c3a;border-radius:16px;overflow:hidden;">
@@ -642,7 +650,7 @@
           <div class="demo-chat-status">En ligne — réponse en quelques secondes</div>
         </div>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;">
+      <div class="demo-chat-header-right" style="display:flex;align-items:center;gap:10px;">
         <div class="demo-chat-badge">Démo live</div>
         <img src="https://cdn.shortpixel.ai/spai/w_415+ret_img/www.mekoos.com/wp-content/uploads/2019/01/logo_mekoos-blanc-website.svg" alt="Mekoos" style="height:32px;opacity:0.9;">
       </div>
