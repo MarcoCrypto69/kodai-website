@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const Redis = require('ioredis');
 const fs = require('fs');
 const path = require('path');
 
@@ -12,15 +11,13 @@ async function getKB() {
   const now = Date.now();
   if (kbCache.text && now - kbCache.ts < 2 * 60 * 1000) return kbCache.text;
   try {
-    const redis = new Redis(process.env.REDIS_URL, {
-      maxRetriesPerRequest: 1,
-      connectTimeout: 5000,
+    const r = await fetch(`${process.env.KV_REST_API_URL}/get/${KV_KEY}`, {
+      headers: { Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` },
     });
-    const fromKV = await redis.get(KV_KEY);
-    redis.disconnect();
-    if (fromKV) {
-      kbCache = { text: fromKV, ts: now };
-      return fromKV;
+    const data = await r.json();
+    if (data.result) {
+      kbCache = { text: data.result, ts: now };
+      return data.result;
     }
   } catch (_) {}
   const fromFile = fs.readFileSync(STATIC_KB, 'utf8');
