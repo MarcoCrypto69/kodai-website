@@ -6,20 +6,31 @@ const path = require('path');
 const KV_KEY = 'mekoos:kb';
 const STATIC_KB = path.join(__dirname, '../mekoos-kb.md');
 
+const REDIS_OPTS = {
+  maxRetriesPerRequest: 0,
+  connectTimeout: 3000,
+  lazyConnect: true,
+};
+
 let kbCache = { text: null, ts: 0 };
 
 async function getKB() {
   const now = Date.now();
   if (kbCache.text && now - kbCache.ts < 2 * 60 * 1000) return kbCache.text;
-  try {
-    const redis = new Redis(process.env.REDIS_URL);
-    const content = await redis.get(KV_KEY);
-    await redis.disconnect();
-    if (content) {
-      kbCache = { text: content, ts: now };
-      return content;
-    }
-  } catch (e) { console.error('Redis GET:', e.message); }
+
+  if (process.env.REDIS_URL) {
+    try {
+      const redis = new Redis(process.env.REDIS_URL, REDIS_OPTS);
+      await redis.connect();
+      const content = await redis.get(KV_KEY);
+      redis.disconnect();
+      if (content) {
+        kbCache = { text: content, ts: now };
+        return content;
+      }
+    } catch (e) { console.error('Redis GET:', e.message); }
+  }
+
   const fromFile = fs.readFileSync(STATIC_KB, 'utf8');
   kbCache = { text: fromFile, ts: now };
   return fromFile;
