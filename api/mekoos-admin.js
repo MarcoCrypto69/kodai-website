@@ -1,42 +1,9 @@
-const fetch = require('node-fetch');
+const Redis = require('ioredis');
 const fs = require('fs');
 const path = require('path');
 
 const KV_KEY = 'mekoos:kb';
 const PASSWORD = process.env.MEKOOS_ADMIN_PASSWORD || 'mekoos2026';
-
-// Extrait les credentials REST depuis REDIS_URL
-// Format Upstash: rediss://default:TOKEN@HOSTNAME.upstash.io:PORT
-function getUpstash() {
-  const url = process.env.REDIS_URL || '';
-  const m = url.match(/rediss?:\/\/[^:]+:([^@]+)@([^:/]+)/);
-  if (!m) return null;
-  return { restUrl: `https://${m[2]}`, token: m[1] };
-}
-
-async function kvGet(key) {
-  const u = getUpstash();
-  if (!u) return null;
-  const r = await fetch(`${u.restUrl}/get/${encodeURIComponent(key)}`, {
-    headers: { Authorization: `Bearer ${u.token}` },
-  });
-  const data = await r.json();
-  return data.result || null;
-}
-
-async function kvSet(key, value) {
-  const u = getUpstash();
-  if (!u) throw new Error('REDIS_URL non configuré');
-  const r = await fetch(`${u.restUrl}/set/${encodeURIComponent(key)}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${u.token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(value),
-  });
-  return r.json();
-}
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -50,7 +17,11 @@ module.exports = async function handler(req, res) {
       return res.status(401).json({ error: 'Mot de passe incorrect' });
     }
     let content;
-    try { content = await kvGet(KV_KEY); } catch (e) { console.error(e.message); }
+    try {
+      const redis = new Redis(process.env.REDIS_URL);
+      content = await redis.get(KV_KEY);
+      await redis.disconnect();
+    } catch (e) { console.error('Redis GET:', e.message); }
     if (!content) {
       content = fs.readFileSync(path.join(__dirname, '../mekoos-kb.md'), 'utf8');
     }
@@ -66,7 +37,9 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Contenu trop court' });
     }
     try {
-      await kvSet(KV_KEY, content);
+      const redis = new Redis(process.env.REDIS_URL);
+      await redis.set(KV_KEY, content);
+      await redis.disconnect();
       return res.status(200).json({ ok: true, chars: content.length });
     } catch (e) {
       return res.status(500).json({ error: e.message });

@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const Redis = require('ioredis');
 const fs = require('fs');
 const path = require('path');
 
@@ -7,29 +8,18 @@ const STATIC_KB = path.join(__dirname, '../mekoos-kb.md');
 
 let kbCache = { text: null, ts: 0 };
 
-function getUpstash() {
-  const url = process.env.REDIS_URL || '';
-  const m = url.match(/rediss?:\/\/[^:]+:([^@]+)@([^:/]+)/);
-  if (!m) return null;
-  return { restUrl: `https://${m[2]}`, token: m[1] };
-}
-
 async function getKB() {
   const now = Date.now();
   if (kbCache.text && now - kbCache.ts < 2 * 60 * 1000) return kbCache.text;
   try {
-    const u = getUpstash();
-    if (u) {
-      const r = await fetch(`${u.restUrl}/get/${encodeURIComponent(KV_KEY)}`, {
-        headers: { Authorization: `Bearer ${u.token}` },
-      });
-      const data = await r.json();
-      if (data.result) {
-        kbCache = { text: data.result, ts: now };
-        return data.result;
-      }
+    const redis = new Redis(process.env.REDIS_URL);
+    const content = await redis.get(KV_KEY);
+    await redis.disconnect();
+    if (content) {
+      kbCache = { text: content, ts: now };
+      return content;
     }
-  } catch (_) {}
+  } catch (e) { console.error('Redis GET:', e.message); }
   const fromFile = fs.readFileSync(STATIC_KB, 'utf8');
   kbCache = { text: fromFile, ts: now };
   return fromFile;
