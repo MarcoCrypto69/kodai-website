@@ -7,17 +7,27 @@ const STATIC_KB = path.join(__dirname, '../mekoos-kb.md');
 
 let kbCache = { text: null, ts: 0 };
 
+function getUpstash() {
+  const url = process.env.REDIS_URL || '';
+  const m = url.match(/rediss?:\/\/[^:]+:([^@]+)@([^:/]+)/);
+  if (!m) return null;
+  return { restUrl: `https://${m[2]}`, token: m[1] };
+}
+
 async function getKB() {
   const now = Date.now();
   if (kbCache.text && now - kbCache.ts < 2 * 60 * 1000) return kbCache.text;
   try {
-    const r = await fetch(`${process.env.KV_REST_API_URL}/get/${KV_KEY}`, {
-      headers: { Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` },
-    });
-    const data = await r.json();
-    if (data.result) {
-      kbCache = { text: data.result, ts: now };
-      return data.result;
+    const u = getUpstash();
+    if (u) {
+      const r = await fetch(`${u.restUrl}/get/${encodeURIComponent(KV_KEY)}`, {
+        headers: { Authorization: `Bearer ${u.token}` },
+      });
+      const data = await r.json();
+      if (data.result) {
+        kbCache = { text: data.result, ts: now };
+        return data.result;
+      }
     }
   } catch (_) {}
   const fromFile = fs.readFileSync(STATIC_KB, 'utf8');

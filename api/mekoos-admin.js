@@ -5,20 +5,32 @@ const path = require('path');
 const KV_KEY = 'mekoos:kb';
 const PASSWORD = process.env.MEKOOS_ADMIN_PASSWORD || 'mekoos2026';
 
-// Upstash REST API — HTTP pur, aucun problème de connexion en serverless
+// Extrait les credentials REST depuis REDIS_URL
+// Format Upstash: rediss://default:TOKEN@HOSTNAME.upstash.io:PORT
+function getUpstash() {
+  const url = process.env.REDIS_URL || '';
+  const m = url.match(/rediss?:\/\/[^:]+:([^@]+)@([^:/]+)/);
+  if (!m) return null;
+  return { restUrl: `https://${m[2]}`, token: m[1] };
+}
+
 async function kvGet(key) {
-  const r = await fetch(`${process.env.KV_REST_API_URL}/get/${key}`, {
-    headers: { Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` },
+  const u = getUpstash();
+  if (!u) return null;
+  const r = await fetch(`${u.restUrl}/get/${encodeURIComponent(key)}`, {
+    headers: { Authorization: `Bearer ${u.token}` },
   });
   const data = await r.json();
   return data.result || null;
 }
 
 async function kvSet(key, value) {
-  const r = await fetch(`${process.env.KV_REST_API_URL}/set/${key}`, {
+  const u = getUpstash();
+  if (!u) throw new Error('REDIS_URL non configuré');
+  const r = await fetch(`${u.restUrl}/set/${encodeURIComponent(key)}`, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+      Authorization: `Bearer ${u.token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(value),
@@ -32,7 +44,6 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // GET — charger la KB
   if (req.method === 'GET') {
     const { password } = req.query;
     if (password !== PASSWORD) {
@@ -46,7 +57,6 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ content });
   }
 
-  // POST — sauvegarder
   if (req.method === 'POST') {
     const { password, content } = req.body || {};
     if (password !== PASSWORD) {
