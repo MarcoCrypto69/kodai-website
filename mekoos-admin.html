@@ -141,7 +141,10 @@
 <div class="card">
   <div class="card-header">
     <div class="logo">KodAI</div>
-    <div class="header-title">🦌 Administration — Agent IA Mekoos</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="header-title">🦌 Administration — Agent IA Mekoos</div>
+      <button id="btn-fermer" onclick="fermer()" style="display:none;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.25);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;color:#f87171;cursor:pointer;">✕ Fermer</button>
+    </div>
   </div>
 
   <div class="body">
@@ -190,6 +193,7 @@ function login() {
       password = pw;
       document.getElementById('screen-password').style.display = 'none';
       document.getElementById('screen-editor').style.display = 'block';
+      document.getElementById('btn-fermer').style.display = 'block';
       document.getElementById('kb-content').value = data.content;
       updateChars();
     })
@@ -230,6 +234,15 @@ function save() {
 function updateChars() {
   var n = document.getElementById('kb-content').value.length;
   document.getElementById('char-count').textContent = n.toLocaleString('fr-CA') + ' caractères';
+}
+
+function fermer() {
+  password = '';
+  document.getElementById('screen-editor').style.display = 'none';
+  document.getElementById('screen-password').style.display = 'block';
+  document.getElementById('btn-fermer').style.display = 'none';
+  document.getElementById('pw-input').value = '';
+  document.getElementById('pw-error').textContent = '';
 }
 
 function showToast(type, msg) {
