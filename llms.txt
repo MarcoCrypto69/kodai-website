@@ -1,0 +1,39 @@
+# KodAI
+
+> Agence web et intelligence artificielle au Québec, Canada.
+
+KodAI est une agence spécialisée en développement web et intelligence artificielle pour les PME au Québec. L'approche : automatiser et moderniser la présence web des entreprises locales, sans jargon, livré rapidement.
+
+## Services
+
+- **Sites web professionnels** : Design sur mesure, mobile-first, livré en 1-2 semaines, à partir de 1 200$
+- **Agents IA sur mesure** : Chatbots, agents de service client, automatisation conversationnelle
+- **Automatisation d'entreprise** : Élimination des tâches répétitives avec Python, n8n ou Make — économies jusqu'à 50 000$/an
+- **Applications mobiles** : iOS, Android, Apple Watch
+- **SaaS sur mesure** : Tableau de bord, API, paiements récurrents Stripe
+
+## Packages
+
+- **Starter** : 1 200$ — 5 pages, design sur mesure, mobile responsive
+- **Pro** : 1 800$ — Starter + Stripe, vidéo IA, SEO avancé
+- **Business** : 3 500$+ — Chatbot IA, automatisation complète, espace membre
+
+## Cercle Fondateur
+
+Offre exclusive limitée à 5 clients : 30% de rabais, tarif mensuel garanti 5 ans, priorité livraison 48h.
+
+## Clients / Réalisations
+
+- Monsieur Matelas (Joliette) — site vitrine avec CMS Google Sheets
+- Marco Solo Music — site artiste avec calendrier de shows et booking en ligne
+- Mekoos (Pourvoirie) — site vitrine + réservation
+
+## Zone de service
+
+Québec, Canada — services en ligne disponibles partout.
+
+## Contact
+
+- Site web : https://kodai.ca
+- Courriel : info@kodai.ca
+- Soumission gratuite : https://kodai.ca/contact.html
