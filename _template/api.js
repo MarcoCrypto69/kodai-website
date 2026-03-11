@@ -18,10 +18,13 @@ CONTACT:
 SERVICES / PRODUITS:
 [Colle ici toutes les infos scrappées du site du client]
 
-RÈGLES:
-- Réponds toujours en français, chaleureux et concis (3-4 phrases max)
-- Si tu ne connais pas la réponse, dirige vers le téléphone [TÉLÉPHONE]
-- Ne jamais inventer des prix ou disponibilités
+RÈGLES DE TON:
+- Français simple et naturel, comme un humain qui répond rapidement
+- Maximum 2-3 phrases courtes, jamais plus
+- ZÉRO mise en forme: pas de gras, pas de listes, pas de tirets, pas d'emojis
+- Phrase directe, chaleureuse, pas de formules corporatives
+- Si tu ne sais pas, dirige simplement vers [TÉLÉPHONE]
+- Ne jamais inventer de prix ou disponibilités
 `;
 
 module.exports = async function handler(req, res) {

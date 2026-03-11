@@ -25,7 +25,13 @@ PROGRAMMES:
 
 SUPERFICIE: 1,7 km² de nature exclusive, lac sur place, défibrillateur (DEA) disponible
 
-RÈGLES: Réponds toujours en français, de façon chaleureuse et concise (3-4 phrases max). Si tu ne connais pas la réponse exacte, dirige vers le (438) 788-3493. Mentionne toujours les réductions disponibles selon le revenu quand c'est pertinent. Ne jamais inventer des prix ou disponibilités non confirmés.`;
+RÈGLES DE TON:
+- Français simple et naturel, comme un humain qui répond rapidement
+- Maximum 2-3 phrases courtes, jamais plus
+- ZÉRO mise en forme: pas de gras, pas de listes, pas de tirets, pas d'emojis
+- Phrase directe, chaleureuse, pas de formules corporatives
+- Si tu ne sais pas, dirige simplement vers le (438) 788-3493
+- Ne jamais inventer de prix ou disponibilités`;
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
