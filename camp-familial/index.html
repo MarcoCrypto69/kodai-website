@@ -191,9 +191,7 @@
   <div class="kodai-badge">Propulsé par <a href="https://kodai.ca" target="_blank">KodAI.ca</a></div>
 </div>
 
-<script src="config.js"></script>
 <script>
-const API_KEY = window.KODAI_API_KEY || '';
 
 const SYSTEM_PROMPT = `Tu es l'assistant virtuel du Camp Familial Saint-Urbain, un organisme à but non lucratif fondé en 1927, situé au 1651 chemin Chertsey, Chertsey, QC J0K 3K0. Bientôt 100 ans!
 
@@ -276,18 +274,13 @@ async function sendMessage(text) {
   messages.push({role:'user', content:msg});
   showTyping();
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/api/camp-familial', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-client-side-api-key-access': 'true'
-      },
-      body: JSON.stringify({model:'claude-haiku-4-5-20251001', max_tokens:300, system:SYSTEM_PROMPT, messages})
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages })
     });
     const data = await res.json();
-    const reply = data.content[0].text;
+    const reply = data.message;
     messages.push({role:'assistant', content:reply});
     hideTyping();
     addBotMessage(reply);
