@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camp Familial St-Urbain — Assistant</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f7f0;
+    min-height: 100vh;
+  }
+
+  /* Bouton flottant */
+  #chat-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1565c0, #1976c8);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(21,101,192,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transition: transform 0.2s;
+    z-index: 1000;
+  }
+  #chat-toggle:hover { transform: scale(1.08); }
+
+  /* Fenêtre chat */
+  #chat-window {
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: 360px;
+    height: 530px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 999;
+    animation: slideUp 0.2s ease;
+  }
+  #chat-window.open { display: flex; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Header */
+  .chat-header {
+    background: linear-gradient(135deg, #1565c0, #1976c8);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .chat-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .chat-header-name { color: white; font-weight: 700; font-size: 14px; }
+  .chat-header-status {
+    color: rgba(255,255,255,0.78);
+    font-size: 11px;
+    display: flex; align-items: center; gap: 5px;
+    margin-top: 2px;
+  }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #86efac; display: inline-block; }
+  .chat-close { background: none; border: none; color: rgba(255,255,255,0.75); font-size: 22px; cursor: pointer; margin-left: auto; padding: 2px 4px; line-height: 1; }
+  .chat-close:hover { color: white; }
+
+  /* Messages */
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 14px;
+    display: flex; flex-direction: column; gap: 10px;
+    background: #f5f8ff;
+  }
+  .chat-messages::-webkit-scrollbar { width: 3px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: #c5d5e8; border-radius: 2px; }
+
+  .msg { display: flex; flex-direction: column; max-width: 86%; }
+  .msg.bot { align-self: flex-start; }
+  .msg.user { align-self: flex-end; }
+
+  .bubble { padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.55; }
+  .bot .bubble {
+    background: white; color: #1a2540;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .user .bubble {
+    background: linear-gradient(135deg, #1565c0, #1976c8);
+    color: white; border-bottom-right-radius: 4px;
+  }
+  .msg-time { font-size: 10px; color: #9ca3af; margin-top: 3px; padding: 0 4px; }
+  .bot .msg-time { align-self: flex-start; }
+  .user .msg-time { align-self: flex-end; }
+
+  /* Typing */
+  .typing {
+    display: flex; align-items: center; gap: 5px;
+    padding: 12px 14px; background: white;
+    border-radius: 16px; border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    align-self: flex-start;
+  }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: #1976c8; animation: bounce 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  /* Quick replies */
+  .quick-replies { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+  .quick-btn {
+    background: white; border: 1px solid #1976c8; color: #1565c0;
+    border-radius: 12px; padding: 5px 11px; font-size: 11px; cursor: pointer; transition: all 0.15s;
+  }
+  .quick-btn:hover { background: #1976c8; color: white; }
+
+  /* Input */
+  .chat-input-area {
+    padding: 12px 14px; background: white;
+    border-top: 1px solid #e8eef8;
+    display: flex; gap: 8px; align-items: center;
+  }
+  #userInput {
+    flex: 1; border: 1px solid #c5d5e8; border-radius: 20px;
+    padding: 9px 14px; font-size: 13px; outline: none;
+    background: #f5f8ff; color: #1a2540;
+  }
+  #userInput:focus { border-color: #1976c8; background: white; }
+  #userInput::placeholder { color: #9ca3af; }
+  #sendBtn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #1565c0, #1976c8);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: white; flex-shrink: 0; transition: transform 0.15s;
+  }
+  #sendBtn:hover { transform: scale(1.08); }
+  #sendBtn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Badge KodAI */
+  .kodai-badge {
+    text-align: center; padding: 6px;
+    font-size: 10px; color: #94a3b8;
+    border-top: 1px solid #f0f4ff;
+    background: white;
+  }
+  .kodai-badge a { color: #1976c8; text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<button id="chat-toggle" onclick="toggleChat()">🏕️</button>
+
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">🌻</div>
+    <div>
+      <div class="chat-header-name">Assistant — Camp Familial</div>
+      <div class="chat-header-status"><span class="status-dot"></span> En ligne 24/7</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">×</button>
+  </div>
+
+  <div class="chat-messages" id="messages"></div>
+
+  <div class="chat-input-area">
+    <input type="text" id="userInput" placeholder="Posez votre question..." onkeydown="if(event.key==='Enter')sendMessage()">
+    <button id="sendBtn" onclick="sendMessage()">➤</button>
+  </div>
+  <div class="kodai-badge">Propulsé par <a href="https://kodai.ca" target="_blank">KodAI.ca</a></div>
+</div>
+
+<script src="config.js"></script>
+<script>
+const API_KEY = window.KODAI_API_KEY || '';
+
+const SYSTEM_PROMPT = `Tu es l'assistant virtuel du Camp Familial Saint-Urbain, un organisme à but non lucratif fondé en 1927, situé au 1651 chemin Chertsey, Chertsey, QC J0K 3K0. Bientôt 100 ans!
+
+MISSION: Rendre les vacances et loisirs en nature accessibles aux familles défavorisées, groupes ethnoculturels, personnes à besoins spéciaux et aînés. Réductions de 25% à 93% selon le revenu.
+
+CONTACT:
+- Téléphone: (438) 788-3493 (appuyer 1 pour réception)
+- Sans frais: 1 (888) 882-4719
+- Heures: 7 jours/semaine, 9h à 16h30
+- Facebook: @CFSUrbain
+
+CAMPING 2026:
+- Sites de luxe: eau potable + électricité 20A, foyer privé, table pique-nique, éclairage
+- Vue sur le lac, à 1 minute de la cafétéria
+- 6 terrains: A, B, C, D, F (tentes jusqu'à 12 personnes) + E (site groupe étoile, 3 zones)
+- DISPONIBILITÉ: avant le 19 juin ET après le 16 août 2026 (excluant fête du Travail)
+- VR moins de 19 pieds / 30A: bientôt disponible — pas de vidange eaux usées sur place
+
+PROGRAMMES:
+- Camps d'été 2026
+- Programmes congés scolaires
+- Journées Plein Air (réservation via formulaire sur campfamilial.org)
+- Hébergement événements et mariages
+
+SUPERFICIE: 1,7 km² de nature exclusive, lac sur place, défibrillateur (DEA) disponible
+
+RÈGLES: Réponds toujours en français, chaleureux et concis (3-4 phrases max). Si tu ne sais pas, dirige vers le (438) 788-3493. Mentionne toujours les réductions disponibles si pertinent. Ne jamais inventer de prix ou dates non confirmés.`;
+
+const quickReplies = ["Disponibilités camping","Tarifs et réductions","Comment réserver?","Activités disponibles","Coordonnées"];
+
+let messages = [];
+let isOpen = false;
+
+function toggleChat() {
+  isOpen = !isOpen;
+  document.getElementById('chat-window').classList.toggle('open', isOpen);
+  if (isOpen && messages.length === 0) {
+    addBotMessage("Bonjour! 🌻 Je suis l'assistant du Camp Familial Saint-Urbain. Comment puis-je vous aider?", quickReplies);
+  }
+}
+
+function now() { return new Date().toLocaleTimeString('fr-CA',{hour:'2-digit',minute:'2-digit'}); }
+
+function addBotMessage(text, replies=[]) {
+  const msgs = document.getElementById('messages');
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  d.innerHTML = `<div class="bubble">${text}</div>${replies.length?`<div class="quick-replies">${replies.map(r=>`<button class="quick-btn" onclick="sendMessage('${r}')">${r}</button>`).join('')}</div>`:''}<div class="msg-time">${now()}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMessage(text) {
+  const msgs = document.getElementById('messages');
+  const d = document.createElement('div');
+  d.className = 'msg user';
+  d.innerHTML = `<div class="bubble">${text}</div><div class="msg-time">${now()}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('messages');
+  const d = document.createElement('div');
+  d.className = 'typing'; d.id = 'typing';
+  d.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping() { const t=document.getElementById('typing'); if(t)t.remove(); }
+
+async function sendMessage(text) {
+  const input = document.getElementById('userInput');
+  const msg = text || input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  document.getElementById('sendBtn').disabled = true;
+  addUserMessage(msg);
+  messages.push({role:'user', content:msg});
+  showTyping();
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-client-side-api-key-access': 'true'
+      },
+      body: JSON.stringify({model:'claude-haiku-4-5-20251001', max_tokens:300, system:SYSTEM_PROMPT, messages})
+    });
+    const data = await res.json();
+    const reply = data.content[0].text;
+    messages.push({role:'assistant', content:reply});
+    hideTyping();
+    addBotMessage(reply);
+  } catch(e) {
+    hideTyping();
+    addBotMessage("Désolé, une erreur est survenue. Appelez-nous au (438) 788-3493.");
+  }
+  document.getElementById('sendBtn').disabled = false;
+  document.getElementById('userInput').focus();
+}
+</script>
+</body>
+</html>
