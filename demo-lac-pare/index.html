@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assistant IA — Domaine du Lac Paré</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --vert:       #2d6a4f;
+    --vert2:      #40916c;
+    --vert-clair: #74c69d;
+    --bg:         #f4f9f4;
+    --blanc:      #ffffff;
+    --texte:      #1a2e1a;
+    --gris:       #5a6e5a;
+    --border:     #cde3d0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1b4332, #2d6a4f);
+    color: white;
+    padding: 40px 24px 36px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 99px;
+    padding: 5px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: #b7e4c7;
+  }
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .hero h1 span { color: #b7e4c7; }
+  .hero p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.78);
+    max-width: 480px;
+    margin: 0 auto 20px;
+    line-height: 1.55;
+  }
+  .hero-features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: #b7e4c7;
+    font-weight: 600;
+  }
+  .hero-features span::before { content: '✓ '; }
+
+  /* ── SECTION ── */
+  .section {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 20px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--vert2);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+  }
+  .section h2 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--texte);
+  }
+  .section p {
+    font-size: 14px;
+    color: var(--gris);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  /* ── CHAT ── */
+  .chat-box {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 24px rgba(45,106,79,0.10);
+    overflow: hidden;
+  }
+  .chat-header {
+    background: linear-gradient(135deg, #1b4332, #2d6a4f);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .chat-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .chat-header-name { color: white; font-weight: 700; font-size: 14px; }
+  .chat-header-status {
+    color: rgba(255,255,255,0.75);
+    font-size: 11px;
+    display: flex; align-items: center; gap: 5px;
+    margin-top: 2px;
+  }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #86efac; display: inline-block; }
+
+  .chat-messages {
+    height: 320px;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #f6faf6;
+  }
+  .chat-messages::-webkit-scrollbar { width: 3px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: #c5dbc8; border-radius: 2px; }
+
+  .msg { display: flex; flex-direction: column; max-width: 86%; }
+  .msg.bot { align-self: flex-start; }
+  .msg.user { align-self: flex-end; }
+
+  .bubble {
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .bot .bubble {
+    background: white; color: #1a2540;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .user .bubble {
+    background: linear-gradient(135deg, #1b4332, #2d6a4f);
+    color: white; border-bottom-right-radius: 4px;
+  }
+  .msg-time { font-size: 10px; color: #9ca3af; margin-top: 3px; padding: 0 4px; }
+  .bot .msg-time { align-self: flex-start; }
+  .user .msg-time { align-self: flex-end; }
+
+  .quick-replies { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+  .quick-btn {
+    background: white; border: 1px solid var(--vert2); color: var(--vert);
+    border-radius: 12px; padding: 5px 11px; font-size: 11px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .quick-btn:hover { background: var(--vert2); color: white; }
+
+  .typing {
+    display: flex; align-items: center; gap: 5px;
+    padding: 12px 14px; background: white;
+    border-radius: 16px; border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    align-self: flex-start;
+  }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--vert2); animation: bounce 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  .chat-input-area {
+    padding: 12px 14px; background: white;
+    border-top: 1px solid #e8f0e8;
+    display: flex; gap: 8px; align-items: center;
+  }
+  #userInput {
+    flex: 1; border: 1px solid var(--border); border-radius: 20px;
+    padding: 9px 14px; font-size: 13px; outline: none;
+    background: #f6faf6; color: var(--texte);
+    font-family: inherit;
+  }
+  #userInput:focus { border-color: var(--vert2); background: white; }
+  #userInput::placeholder { color: #9ca3af; }
+  #sendBtn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #1b4332, #2d6a4f);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: white; flex-shrink: 0; transition: transform 0.15s;
+  }
+  #sendBtn:hover { transform: scale(1.08); }
+  #sendBtn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* ── DIVISEUR ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 20px;
+  }
+
+  /* ── EMAIL DRAFT ── */
+  .email-demo {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 24px rgba(45,106,79,0.08);
+    overflow: hidden;
+  }
+  .email-demo-header {
+    background: #f0f7f0;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--vert);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .email-badge {
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .email-received, .email-draft {
+    padding: 16px 18px;
+  }
+  .email-received { border-bottom: 1px solid var(--border); }
+  .email-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9ca3af;
+    margin-bottom: 8px;
+  }
+  .email-from {
+    font-size: 12px;
+    color: var(--gris);
+    margin-bottom: 6px;
+  }
+  .email-body {
+    font-size: 13px;
+    color: var(--texte);
+    line-height: 1.55;
+    background: #f9fafb;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+  }
+  .email-draft .email-body {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #14532d;
+    position: relative;
+  }
+  .cursor {
+    display: inline-block;
+    width: 2px; height: 14px;
+    background: var(--vert2);
+    vertical-align: middle;
+    margin-left: 1px;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  .draft-note {
+    font-size: 11px;
+    color: var(--vert2);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, #1b4332, #2d6a4f);
+    padding: 40px 24px;
+    text-align: center;
+    color: white;
+  }
+  .cta-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .cta-section p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 24px;
+  }
+  .price-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 16px;
+    padding: 12px 28px;
+    margin-bottom: 20px;
+  }
+  .price-badge .amount { font-size: 36px; font-weight: 900; }
+  .price-badge .period { font-size: 14px; color: rgba(255,255,255,0.65); }
+  .cta-btn {
+    display: block;
+    max-width: 320px;
+    margin: 0 auto 12px;
+    background: white;
+    color: #1b4332;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 16px 24px;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .cta-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 16px;
+    font-size: 11px;
+    color: #9ca3af;
+    background: white;
+    border-top: 1px solid var(--border);
+  }
+  .footer a { color: var(--vert2); text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Démo personnalisée</div>
+  <h1>Votre assistant IA,<br><span>Domaine du Lac Paré</span></h1>
+  <p>Répond à vos campeurs 24h/24 sur votre site — et prépare vos réponses courriel en brouillon.</p>
+  <div class="hero-features">
+    <span>Disponible 24h/24</span>
+    <span>Répond en secondes</span>
+    <span>Connaît votre camping</span>
+  </div>
+</div>
+
+<!-- SECTION CHAT -->
+<div class="section">
+  <div class="section-label">Fonctionnalité 1 — Widget sur votre site</div>
+  <h2>Testez l'agent maintenant</h2>
+  <p>Il connaît déjà vos tarifs, vos services, vos activités. Posez-lui n'importe quelle question comme si vous étiez un campeur.</p>
+
+  <div class="chat-box">
+    <div class="chat-header">
+      <div class="chat-avatar">🌲</div>
+      <div>
+        <div class="chat-header-name">Assistant — Domaine du Lac Paré</div>
+        <div class="chat-header-status"><span class="status-dot"></span> En ligne 24/7</div>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="messages"></div>
+
+    <div class="chat-input-area">
+      <input type="text" id="userInput" placeholder="Ex: C'est quoi le prix pour un terrain avec plage?" onkeydown="if(event.key==='Enter')sendMessage()">
+      <button id="sendBtn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SECTION EMAIL -->
+<div class="section">
+  <div class="section-label">Fonctionnalité 2 — Pré-réponse courriel</div>
+  <h2>Vos courriels, répondus en 10 secondes</h2>
+  <p>L'agent lit chaque courriel entrant et prépare un brouillon dans votre boîte. Vous lisez, vous ajustez si besoin, vous envoyez.</p>
+
+  <div class="email-demo">
+    <div class="email-demo-header">
+      📧 Simulation — courriel entrant → brouillon généré <span class="email-badge">IA</span>
+    </div>
+    <div class="email-received">
+      <div class="email-label">Courriel reçu</div>
+      <div class="email-from">De: <strong>marie.tremblay@gmail.com</strong></div>
+      <div class="email-body">
+        Bonjour, est-ce que les chiens sont acceptés? On est une famille de 4 avec un golden retriever. On aimerait réserver un terrain avec plage pour la semaine du 14 juillet. Combien ça coûterait? Merci!
+      </div>
+    </div>
+    <div class="email-draft">
+      <div class="email-label">Brouillon préparé par l'agent — en 8 secondes</div>
+      <div class="email-body">
+        Bonjour Marie, merci pour votre message! Pour un terrain avec plage pour une semaine, c'est 390$ (taxes en sus). Pour la politique concernant les animaux, je vous invite à confirmer directement avec nous au (450) 882-9929, on pourra vous confirmer les détails et vérifier la disponibilité pour la semaine du 14 juillet. Au plaisir de vous accueillir au Lac Paré!<span class="cursor"></span>
+      </div>
+      <div class="draft-note">✓ Brouillon dans votre boîte — à vous de relire et envoyer</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Prêt à l'essayer pour vrai?</h2>
+  <p>Configuration complète incluse. Aucun engagement.</p>
+  <div class="price-badge">
+    <div class="amount">50$</div>
+    <div class="period">par mois</div>
+  </div>
+  <a class="cta-btn" href="mailto:info@kodai.ca?subject=Agent IA — Domaine du Lac Paré&body=Bonjour, j'ai testé la démo et je suis intéressé.">
+    Oui, je veux ça pour mon camping →
+  </a>
+  <div class="cta-sub">Ou appelez Marco au (450) 421-2944</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Propulsé par <a href="https://kodai.ca" target="_blank">KodAI.ca</a> · Agence IA pour les campings du Québec
+</div>
+
+<script>
+const quickReplies = [
+  "Tarifs terrain avec plage",
+  "Activités disponibles",
+  "Location de kayak",
+  "Saison d'ouverture",
+  "Où êtes-vous situés?"
+];
+
+let messages = [];
+
+function now() {
+  return new Date().toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+}
+
+function addBotMessage(text, replies) {
+  const msgs = document.getElementById('messages');
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  const btns = (replies && replies.length)
+    ? `<div class="quick-replies">${replies.map(r => `<button class="quick-btn" onclick="sendMessage('${r}')">${r}</button>`).join('')}</div>`
+    : '';
+  d.innerHTML = `<div class="bubble">${escHtml(text)}</div>${btns}<div class="msg-time">${now()}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMessage(text) {
+  const msgs = document.getElementById('messages');
+  const d = document.createElement('div');
+  d.className = 'msg user';
+  d.innerHTML = `<div class="bubble">${escHtml(text)}</div><div class="msg-time">${now()}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('messages');
+  const d = document.createElement('div');
+  d.className = 'typing'; d.id = 'typing';
+  d.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typing');
+  if (t) t.remove();
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+async function sendMessage(text) {
+  const input = document.getElementById('userInput');
+  const msg = text || input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  document.getElementById('sendBtn').disabled = true;
+  addUserMessage(msg);
+  messages.push({ role: 'user', content: msg });
+  showTyping();
+  try {
+    const res = await fetch('/api/lac-pare', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages })
+    });
+    const data = await res.json();
+    const reply = data.message;
+    messages.push({ role: 'assistant', content: reply });
+    hideTyping();
+    addBotMessage(reply);
+  } catch(e) {
+    hideTyping();
+    addBotMessage("Désolé, une erreur est survenue. Appelez-nous au (450) 882-9929.");
+  }
+  document.getElementById('sendBtn').disabled = false;
+  document.getElementById('userInput').focus();
+}
+
+// Message d'accueil
+window.onload = function() {
+  addBotMessage(
+    "Bonjour! Je suis l'assistant du Domaine du Lac Paré. Je peux répondre à vos questions sur les tarifs, les activités, les services et plus encore.",
+    quickReplies
+  );
+};
+</script>
+</body>
+</html>
