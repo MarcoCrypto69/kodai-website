@@ -61,11 +61,37 @@
     font-size: 11px; font-weight: 700; color: var(--muted);
     text-transform: uppercase; letter-spacing: 1px;
   }
+  .nav-cta {
+    background: var(--grad); color: white !important;
+    font-weight: 700; font-size: 13px;
+    padding: 8px 18px; border-radius: 99px;
+    text-decoration: none; white-space: nowrap;
+    -webkit-text-fill-color: white;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ── ROI ── */
+  .roi-bar {
+    display: flex; gap: 1px;
+    background: var(--border); border-radius: 16px; overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .roi-card {
+    flex: 1; background: var(--surface2);
+    padding: 16px 12px; text-align: center;
+  }
+  .roi-num {
+    font-size: 24px; font-weight: 900;
+    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 4px;
+  }
+  .roi-label { font-size: 11px; color: var(--muted); line-height: 1.4; }
 
   /* ── HERO ── */
   .hero {
     position: relative; z-index: 1;
-    padding: 60px 24px 52px;
+    padding: 36px 24px 28px;
     text-align: center;
   }
   .hero::after {
@@ -292,6 +318,36 @@
     animation: blink 1s infinite;
   }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  #emailInput {
+    width: 100%; border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px 14px; font-size: 13px; outline: none;
+    background: var(--surface2); color: #94a3b8; font-family: inherit;
+    resize: vertical; min-height: 100px; line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+  #emailInput:focus { border-color: rgba(124,58,237,0.4); }
+  #emailInput::placeholder { color: var(--muted); }
+  .email-examples {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;
+  }
+  .example-btn {
+    background: var(--surface2); border: 1px solid rgba(124,58,237,0.25);
+    color: #a78bfa; border-radius: 99px; padding: 5px 12px;
+    font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit;
+    transition: all 0.15s;
+  }
+  .example-btn:hover { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.5); }
+  .email-send-btn {
+    margin-top: 10px;
+    background: var(--grad); color: white;
+    border: none; border-radius: 10px;
+    padding: 10px 20px; font-size: 13px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+    transition: opacity 0.15s, transform 0.15s;
+    box-shadow: 0 4px 16px rgba(124,58,237,0.25);
+  }
+  .email-send-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .email-send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
   .draft-note {
     font-size: 11px; color: #4ade80; margin-top: 8px;
     display: flex; align-items: center; gap: 5px;
@@ -367,7 +423,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">KodAI</div>
-  <div class="nav-badge">Démo personnalisée · Domaine du Lac Paré</div>
+  <a class="nav-cta" href="mailto:info@kodai.ca?subject=Agent IA — Domaine du Lac Paré&body=Bonjour, j'ai testé la démo et je suis intéressé.">Je veux ça →</a>
 </nav>
 
 <!-- HERO -->
@@ -392,7 +448,7 @@
       <div class="section-title">Widget sur votre site</div>
     </div>
     <h2>Testez l'agent maintenant</h2>
-    <p>Il connaît déjà vos tarifs, vos services, vos activités. Posez-lui n'importe quelle question comme si vous étiez un campeur.</p>
+    <p>Il connaît déjà vos tarifs, vos services, vos activités. Posez-lui les questions que vos campeurs vous posent le plus souvent — vous verrez exactement ce qu'ils recevraient.</p>
 
     <div class="chat-box">
       <div class="chat-header">
@@ -414,6 +470,24 @@
     </div>
   </div>
 
+  <!-- ROI -->
+  <div class="section">
+    <div class="roi-bar">
+      <div class="roi-card">
+        <div class="roi-num">5 min</div>
+        <div class="roi-label">économisées par courriel répétitif</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-num">~600</div>
+        <div class="roi-label">courriels par saison de 5 mois</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-num">50h</div>
+        <div class="roi-label">récupérées par année</div>
+      </div>
+    </div>
+  </div>
+
   <!-- EMAIL DRAFT -->
   <div class="section">
     <div class="section-label">
@@ -421,7 +495,7 @@
       <div class="section-title">Pré-réponse courriel</div>
     </div>
     <h2>Vos courriels, répondus en 10 secondes</h2>
-    <p>L'agent lit chaque courriel entrant et prépare un brouillon dans votre boîte. Vous lisez, vous ajustez si besoin, vous envoyez.</p>
+    <p>Collez un courriel reçu ici et voyez la magie opérer.</p>
 
     <div class="email-demo">
       <div class="email-demo-header">
@@ -431,22 +505,24 @@
       </div>
 
       <div class="email-block">
-        <div class="email-label">Courriel reçu</div>
-        <div class="email-from">De: <strong>marie.tremblay@gmail.com</strong></div>
-        <div class="email-body">
-          Bonjour, est-ce que les chiens sont acceptés? On est une famille de 4 avec un golden retriever. On aimerait réserver un terrain avec plage pour la semaine du 14 juillet. Combien ça coûterait? Merci!
+        <div class="email-label">Collez un vrai courriel — ou essayez un exemple</div>
+        <div class="email-examples">
+          <button class="example-btn" onclick="useExample(0)">🐕 Chiens acceptés?</button>
+          <button class="example-btn" onclick="useExample(1)">⛺ Terrain avec plage</button>
+          <button class="example-btn" onclick="useExample(2)">📅 Disponibilités juillet</button>
+          <button class="example-btn" onclick="useExample(3)">🚐 VR / roulotte</button>
         </div>
+        <textarea id="emailInput" placeholder="Collez ici un courriel reçu de vos campeurs..."></textarea>
+        <button class="email-send-btn" id="emailSendBtn" onclick="generateDraft()">Générer le brouillon →</button>
       </div>
 
-      <div class="email-block">
+      <div class="email-block" id="draftBlock" style="display:none;">
         <div class="email-label" style="display:flex;align-items:center;gap:8px;">
           Brouillon préparé par l'agent
-          <span class="timer-badge">⚡ 8 secondes</span>
+          <span class="timer-badge" id="timerBadge">⚡ génération...</span>
         </div>
-        <div class="email-body draft">
-          Bonjour Marie, merci pour votre message! Pour un terrain avec plage pour une semaine, c'est 390$ (taxes en sus). Pour la politique concernant les animaux, je vous invite à confirmer directement avec nous au (450) 882-9929, on pourra vous confirmer les détails et vérifier la disponibilité pour la semaine du 14 juillet. Au plaisir de vous accueillir au Lac Paré!<span class="cursor"></span>
-        </div>
-        <div class="draft-note">✓ Brouillon dans votre boîte — vous relisez et vous envoyez</div>
+        <div class="email-body draft" id="draftBody"></div>
+        <div class="draft-note">✓ Brouillon prêt — vous relisez et vous envoyez</div>
       </div>
     </div>
   </div>
@@ -552,9 +628,53 @@ async function sendMessage(text) {
   document.getElementById('userInput').focus();
 }
 
+const EXEMPLES = [
+  "Bonjour, est-ce que les chiens sont acceptés? On est une famille de 4 avec un golden retriever. On aimerait un terrain avec plage pour la semaine du 14 juillet. Combien ça coûterait? Merci!",
+  "Bonjour! On cherche un terrain avec plage pour 2 adultes et 2 enfants. Est-ce qu'il y en a de disponibles pour la fin de semaine du 4 juillet? Quel est le prix? Merci",
+  "Bonsoir, on aimerait savoir si vous avez des disponibilités pour la semaine du 21 au 28 juillet pour 2 adultes. Est-ce qu'il y a de l'électricité sur les terrains? Merci beaucoup",
+  "Bonjour, est-ce que vous acceptez les VR? On a une roulotte de 22 pieds avec slide-out. Est-ce qu'il y a du 30 ampères? Et est-ce qu'il y a un service de vidange sur place? Merci"
+];
+
+function useExample(i) {
+  const ta = document.getElementById('emailInput');
+  ta.value = EXEMPLES[i];
+  ta.focus();
+}
+
+async function generateDraft() {
+  const input = document.getElementById('emailInput');
+  const email = input.value.trim();
+  if (!email) return;
+  const btn = document.getElementById('emailSendBtn');
+  btn.disabled = true;
+  btn.textContent = 'Génération...';
+  const start = Date.now();
+  const draftBlock = document.getElementById('draftBlock');
+  const draftBody = document.getElementById('draftBody');
+  draftBlock.style.display = 'none';
+  try {
+    const res = await fetch('/api/lac-pare', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: [{ role: 'user', content: 'Tu reçois ce courriel d\'un campeur et tu prépares un brouillon de réponse au nom du Domaine du Lac Paré. Sois chaleureux, concis (3-4 phrases max), vouvoiement, aucune mise en forme. Courriel reçu:\n\n' + email }] })
+    });
+    const data = await res.json();
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    draftBody.textContent = data.message;
+    document.getElementById('timerBadge').textContent = `⚡ ${elapsed} secondes`;
+    draftBlock.style.display = 'block';
+    draftBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } catch(e) {
+    draftBody.textContent = "Erreur de connexion. Réessayez.";
+    draftBlock.style.display = 'block';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Générer le brouillon →';
+}
+
 window.onload = function() {
   addBotMessage(
-    "Bonjour! Je suis l'assistant du Domaine du Lac Paré. Je peux répondre à vos questions sur les tarifs, les activités, les services et plus encore.",
+    "Bonjour! Ceci est une démo de ce que vos campeurs verraient. Testez-moi en posant les questions qu'on vous pose le plus souvent — tarifs, activités, services, réservations...",
     quickReplies
   );
 };
