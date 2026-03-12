@@ -43,8 +43,11 @@ RÈGLES DE TON:
 - Maximum 2-3 phrases courtes
 - Pas de gras, pas de listes à puces, pas d'emojis, pas de mise en forme
 - Toujours vouvoyer le client
-- Si tu ne sais pas, dirige vers le (450) 882-9929
-- Ne jamais inventer de prix ou disponibilités non confirmés`;
+
+RÈGLE ABSOLUE — ANTI-HALLUCINATION:
+- Si l'information n'est PAS explicitement dans ce prompt, NE PAS l'inventer.
+- Répondre plutôt: "Je n'ai pas cette information — contactez-nous au (450) 882-9929 ou sur campingdulacpare.com"
+- Ne JAMAIS deviner une région, un prix, une règle ou une disponibilité non mentionnée ici.`;
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
