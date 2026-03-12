@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camping Mastigouche — Mandeville, Lanaudière</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --green:   #1a6b3c;
+    --green2:  #2d8653;
+    --light:   #f0f7f3;
+    --gold:    #c8973a;
+    --text:    #1a2e1e;
+    --muted:   #4a6355;
+    --border:  #d4e8dc;
+    --surface: #ffffff;
+    --grad:    linear-gradient(135deg, #1a6b3c, #2d8653);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px; height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(26,107,60,0.08);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-tree { font-size: 22px; }
+  .nav-name {
+    font-size: 17px; font-weight: 900; color: var(--green);
+    letter-spacing: -0.3px;
+  }
+  .nav-links {
+    display: flex; gap: 28px; align-items: center;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-tel {
+    background: var(--grad); color: white !important;
+    padding: 8px 18px; border-radius: 99px;
+    font-size: 13px; font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(26,107,60,0.3);
+    transition: opacity 0.15s;
+  }
+  .nav-tel:hover { opacity: 0.85; }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #0d3d1e 0%, #1a6b3c 50%, #0d4a25 100%);
+    min-height: 88vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 60px 24px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(200,151,58,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(45,134,83,0.2) 0%, transparent 50%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--surface));
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,151,58,0.15); border: 1px solid rgba(200,151,58,0.4);
+    border-radius: 99px; padding: 7px 18px;
+    font-size: 11px; font-weight: 700; color: #f0c060;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 7vw, 64px);
+    font-weight: 900; line-height: 1.08;
+    color: white; margin-bottom: 16px; letter-spacing: -1px;
+  }
+  .hero h1 .gold { color: #f0c060; }
+  .hero-sub {
+    font-size: 17px; color: rgba(255,255,255,0.72);
+    margin-bottom: 36px; line-height: 1.65; max-width: 500px; margin-inline: auto;
+  }
+  .hero-btns {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .btn-primary {
+    background: #f0c060; color: #1a2e1e;
+    padding: 14px 28px; border-radius: 12px;
+    font-size: 15px; font-weight: 800;
+    text-decoration: none; transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(200,151,58,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,151,58,0.5); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.1); color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 14px 28px; border-radius: 12px;
+    font-size: 15px; font-weight: 700;
+    text-decoration: none; transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+  .hero-stats {
+    display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num { font-size: 28px; font-weight: 900; color: #f0c060; }
+  .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 72px 24px; }
+  .container { max-width: 1040px; margin: 0 auto; }
+  .section-tag {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--green2); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-tag::before { content: ''; width: 24px; height: 2px; background: var(--green2); border-radius: 2px; }
+  h2 { font-size: clamp(26px, 4vw, 36px); font-weight: 900; color: var(--text); margin-bottom: 16px; }
+  .lead { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 560px; margin-bottom: 40px; }
+
+  /* ── ABOUT ── */
+  .about { background: var(--light); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-visual {
+    background: var(--grad); border-radius: 24px;
+    height: 320px; display: flex; align-items: center; justify-content: center;
+    font-size: 80px; box-shadow: 0 12px 40px rgba(26,107,60,0.25);
+  }
+  .about-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+  .about-list li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; font-weight: 600; color: var(--text);
+  }
+  .about-list li::before {
+    content: '✓'; width: 22px; height: 22px; border-radius: 6px;
+    background: var(--grad); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 900; flex-shrink: 0;
+  }
+
+  /* ── TARIFS ── */
+  .tarifs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  @media (max-width: 640px) { .tarifs-grid { grid-template-columns: 1fr; } }
+  .tarif-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 28px;
+    box-shadow: 0 4px 16px rgba(26,107,60,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .tarif-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,107,60,0.12); }
+  .tarif-card.featured {
+    border-color: var(--green); border-width: 2px;
+    background: linear-gradient(135deg, #f0f7f3, #e6f2eb);
+  }
+  .tarif-badge {
+    display: inline-block; background: var(--grad); color: white;
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; padding: 3px 10px; border-radius: 6px; margin-bottom: 16px;
+  }
+  .tarif-badge.gold { background: var(--gold); }
+  .tarif-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+  .tarif-desc { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .tarif-rows { display: flex; flex-direction: column; gap: 8px; }
+  .tarif-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px; background: rgba(26,107,60,0.05); border-radius: 8px;
+    font-size: 13px;
+  }
+  .tarif-row-label { color: var(--muted); font-weight: 500; }
+  .tarif-row-price { font-weight: 800; color: var(--green); font-size: 15px; }
+  .tarif-note { font-size: 11px; color: var(--muted); margin-top: 12px; }
+
+  /* ── ACTIVITÉS ── */
+  .activites { background: var(--light); }
+  .act-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
+  }
+  .act-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px 18px;
+    display: flex; align-items: center; gap: 14px;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .act-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,107,60,0.1); }
+  .act-icon { font-size: 26px; flex-shrink: 0; }
+  .act-name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .act-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ── ÉVÉNEMENTS ── */
+  .events-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;
+  }
+  .event-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px 18px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 2px 8px rgba(26,107,60,0.04);
+  }
+  .event-icon { font-size: 28px; flex-shrink: 0; }
+  .event-name { font-size: 14px; font-weight: 700; color: var(--text); }
+
+  /* ── SERVICES ── */
+  .services { background: linear-gradient(135deg, #0d3d1e, #1a6b3c); padding: 72px 24px; }
+  .services h2 { color: white; }
+  .services .section-tag { color: #86efac; }
+  .services .section-tag::before { background: #86efac; }
+  .services .lead { color: rgba(255,255,255,0.7); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px;
+  }
+  .service-item {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 16px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9);
+  }
+  .service-dot { width: 8px; height: 8px; border-radius: 50%; background: #86efac; flex-shrink: 0; }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+  }
+  @media (max-width: 720px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .contact-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--light); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .contact-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+  .contact-value { font-size: 15px; font-weight: 700; color: var(--text); margin-top: 2px; }
+  .contact-value a { color: var(--green); text-decoration: none; }
+  .contact-form {
+    background: var(--light); border: 1px solid var(--border);
+    border-radius: 20px; padding: 28px;
+  }
+  .contact-form h3 { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 14px; font-size: 14px; font-family: inherit;
+    background: white; color: var(--text); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--green);
+  }
+  .form-group textarea { min-height: 90px; resize: vertical; }
+  .form-submit {
+    width: 100%; background: var(--grad); color: white;
+    border: none; border-radius: 10px; padding: 12px;
+    font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  .form-submit:hover { opacity: 0.85; }
+
+  /* ── CHAT WIDGET ── */
+  #chat-widget {
+    position: fixed; bottom: 24px; right: 24px; z-index: 1000;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+  }
+  #chat-window {
+    width: 340px; background: white;
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+    display: none; flex-direction: column;
+    border: 1px solid var(--border);
+    animation: slideUp 0.2s ease;
+  }
+  @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @media (max-width: 400px) { #chat-window { width: calc(100vw - 32px); } }
+  .cw-header {
+    background: var(--grad);
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .cw-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .cw-title { color: white; font-weight: 700; font-size: 13px; }
+  .cw-status { color: rgba(255,255,255,0.75); font-size: 11px; display: flex; align-items: center; gap: 4px; }
+  .cw-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #86efac; }
+  .cw-close {
+    margin-left: auto; background: none; border: none; cursor: pointer;
+    color: rgba(255,255,255,0.7); font-size: 18px; line-height: 1;
+    padding: 4px;
+  }
+  .cw-messages {
+    height: 260px; overflow-y: auto;
+    padding: 14px; display: flex; flex-direction: column; gap: 8px;
+    background: #f8faff;
+  }
+  .cw-messages::-webkit-scrollbar { width: 3px; }
+  .cw-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .cw-msg { display: flex; flex-direction: column; max-width: 88%; }
+  .cw-msg.bot { align-self: flex-start; }
+  .cw-msg.user { align-self: flex-end; }
+  .cw-bubble { padding: 9px 13px; border-radius: 14px; font-size: 13px; line-height: 1.5; }
+  .cw-msg.bot .cw-bubble { background: white; border: 1px solid var(--border); border-bottom-left-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .cw-msg.user .cw-bubble { background: var(--grad); color: white; border-bottom-right-radius: 4px; }
+  .cw-quick { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .cw-qbtn {
+    background: white; border: 1px solid rgba(26,107,60,0.25);
+    color: var(--green); border-radius: 10px; padding: 4px 10px;
+    font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit;
+    transition: all 0.15s;
+  }
+  .cw-qbtn:hover { background: var(--green); color: white; }
+  .cw-typing {
+    display: flex; align-items: center; gap: 4px;
+    padding: 10px 13px; background: white;
+    border: 1px solid var(--border); border-radius: 14px; border-bottom-left-radius: 4px;
+    align-self: flex-start; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .cw-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: cwbounce 1.2s infinite; }
+  .cw-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .cw-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes cwbounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
+  .cw-input-area {
+    padding: 10px 12px; background: white;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: center;
+  }
+  #cwInput {
+    flex: 1; border: 1px solid var(--border); border-radius: 16px;
+    padding: 8px 13px; font-size: 12px; outline: none;
+    background: #f8faff; color: var(--text); font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  #cwInput:focus { border-color: var(--green); }
+  #cwInput::placeholder { color: #9ca3af; }
+  #cwSendBtn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--grad); border: none; cursor: pointer;
+    color: white; font-size: 13px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s;
+  }
+  #cwSendBtn:hover { transform: scale(1.1); }
+  #cwSendBtn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  #chat-toggle {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--grad); border: none; cursor: pointer;
+    color: white; font-size: 24px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(26,107,60,0.4);
+    transition: transform 0.15s;
+  }
+  #chat-toggle:hover { transform: scale(1.08); }
+  .chat-notif {
+    position: absolute; top: -4px; right: -4px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #ef4444; color: white;
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid white;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0d3d1e; color: rgba(255,255,255,0.6);
+    padding: 32px 24px; text-align: center;
+    font-size: 13px;
+  }
+  footer strong { color: white; }
+  .footer-kodai {
+    margin-top: 12px; font-size: 11px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .footer-kodai a {
+    color: #86efac; text-decoration: none; font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <span class="nav-tree">🌲</span>
+    <span class="nav-name">Camping Mastigouche</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#activites">Activités</a></li>
+    <li><a href="#evenements">Événements</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="tel:4508351797" class="nav-tel">📞 450-835-1797</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🌲 Mandeville · Lanaudière · Depuis 3 générations</div>
+    <h1>Le camping <span class="gold">familial</span><br>au cœur de<br>Lanaudière</h1>
+    <p class="hero-sub">Forêt, rivière, plage et montagne — à 10 km de la réserve faunique Mastigouche. 80 terrains, des activités pour tous, et une atmosphère de grande famille.</p>
+    <div class="hero-btns">
+      <a href="#tarifs" class="btn-primary">Voir les tarifs</a>
+      <a href="#contact" class="btn-secondary">Nous contacter</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">80</div>
+        <div class="hero-stat-label">terrains</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-label">générations</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">5 mois</div>
+        <div class="hero-stat-label">de saison</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">10 km</div>
+        <div class="hero-stat-label">de la réserve</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">🌲</div>
+      <div>
+        <div class="section-tag">Notre histoire</div>
+        <h2>De père en fils depuis trois générations</h2>
+        <p class="lead">Situé au 575 rang Mastigouche à Mandeville, notre camping familial vous accueille au cœur de la forêt laurentienne, le long de la rivière — dans une atmosphère chaleureuse et authentique.</p>
+        <ul class="about-list">
+          <li>75 terrains 3 services + terrains pour tentes</li>
+          <li>Terrains en forêt, bordant la rivière</li>
+          <li>À 10 km de la réserve faunique Mastigouche</li>
+          <li>Soirées et événements tout au long de la saison</li>
+          <li>Chiens acceptés en laisse</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFS -->
+<section id="tarifs">
+  <div class="container">
+    <div class="section-tag">Tarifs 2025</div>
+    <h2>Des prix pour toute la famille</h2>
+    <p class="lead">Taxes en sus. Réservations recommandées pour les fins de semaine et les semaines de juillet-août.</p>
+    <div class="tarifs-grid">
+      <div class="tarif-card featured">
+        <div class="tarif-badge">Plus populaire</div>
+        <div class="tarif-title">Terrain 3 services</div>
+        <div class="tarif-desc">Eau, électricité et égout — idéal pour roulotte et VR</div>
+        <div class="tarif-rows">
+          <div class="tarif-row">
+            <span class="tarif-row-label">Par jour</span>
+            <span class="tarif-row-price">40$</span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-row-label">Par semaine</span>
+            <span class="tarif-row-price">240$</span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-row-label">Par mois</span>
+            <span class="tarif-row-price">720$</span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-row-label">Saisonnier</span>
+            <span class="tarif-row-price">1 650$</span>
+          </div>
+        </div>
+        <div class="tarif-note">* Prix hors taxes</div>
+      </div>
+      <div class="tarif-card">
+        <div class="tarif-badge gold">Tente / Rustique</div>
+        <div class="tarif-title">Terrain 1 service</div>
+        <div class="tarif-desc">Eau seulement — parfait pour le camping rustique en tente</div>
+        <div class="tarif-rows">
+          <div class="tarif-row">
+            <span class="tarif-row-label">Par jour</span>
+            <span class="tarif-row-price">30$</span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-row-label">Par semaine</span>
+            <span class="tarif-row-price">180$</span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-row-label">Par mois</span>
+            <span class="tarif-row-price">540$</span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-row-label">Saisonnier</span>
+            <span class="tarif-row-price">1 150$</span>
+          </div>
+        </div>
+        <div class="tarif-note">* Prix hors taxes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITÉS -->
+<section class="activites" id="activites">
+  <div class="container">
+    <div class="section-tag">Activités</div>
+    <h2>Des activités pour tous les goûts</h2>
+    <p class="lead">Au camping ou à la réserve faunique Mastigouche à 10 km — nature, sport et plaisir en famille.</p>
+    <div class="act-grid">
+      <div class="act-card"><span class="act-icon">🏊</span><div><div class="act-name">Baignade</div><div class="act-sub">Plage sur place</div></div></div>
+      <div class="act-card"><span class="act-icon">🚣</span><div><div class="act-name">Kayak</div><div class="act-sub">Sur place</div></div></div>
+      <div class="act-card"><span class="act-icon">🥾</span><div><div class="act-name">Randonnée</div><div class="act-sub">Sur le site</div></div></div>
+      <div class="act-card"><span class="act-icon">🏐</span><div><div class="act-name">Volleyball</div><div class="act-sub">Terrain extérieur</div></div></div>
+      <div class="act-card"><span class="act-icon">🚲</span><div><div class="act-name">Vélo</div><div class="act-sub">Prêt gratuit</div></div></div>
+      <div class="act-card"><span class="act-icon">🎯</span><div><div class="act-name">Jeu de fers</div><div class="act-sub">Pétanque aussi</div></div></div>
+      <div class="act-card"><span class="act-icon">🏓</span><div><div class="act-name">Ping-pong</div><div class="act-sub">Salle de jeux intérieure</div></div></div>
+      <div class="act-card"><span class="act-icon">🎮</span><div><div class="act-name">Jeux de société</div><div class="act-sub">Salle communautaire</div></div></div>
+      <div class="act-card"><span class="act-icon">🎣</span><div><div class="act-name">Pêche</div><div class="act-sub">Réserve Mastigouche</div></div></div>
+      <div class="act-card"><span class="act-icon">🛶</span><div><div class="act-name">Canot / Pédalo</div><div class="act-sub">Réserve Mastigouche</div></div></div>
+      <div class="act-card"><span class="act-icon">🦌</span><div><div class="act-name">Observation faune</div><div class="act-sub">Réserve Mastigouche</div></div></div>
+      <div class="act-card"><span class="act-icon">🍂</span><div><div class="act-name">Cueillette</div><div class="act-sub">En forêt</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ÉVÉNEMENTS -->
+<section id="evenements">
+  <div class="container">
+    <div class="section-tag">Événements</div>
+    <h2>Une grande famille tout l'été</h2>
+    <p class="lead">Des soirées et événements thématiques organisés tout au long de la saison — pour petits et grands.</p>
+    <div class="events-grid">
+      <div class="event-card"><span class="event-icon">🎆</span><div class="event-name">Party de la St-Jean + feu de joie</div></div>
+      <div class="event-card"><span class="event-icon">🇨🇦</span><div class="event-name">Party fête du Canada + feux d'artifices</div></div>
+      <div class="event-card"><span class="event-icon">🥩</span><div class="event-name">Méchoui</div></div>
+      <div class="event-card"><span class="event-icon">🍷</span><div class="event-name">Vin et fromage</div></div>
+      <div class="event-card"><span class="event-icon">🎄</span><div class="event-name">Noël des campeurs</div></div>
+      <div class="event-card"><span class="event-icon">🎃</span><div class="event-name">Halloween des campeurs</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-tag">Services</div>
+    <h2>Tout pour votre confort</h2>
+    <p class="lead">Les équipements et services essentiels pour un séjour agréable.</p>
+    <div class="services-grid">
+      <div class="service-item"><span class="service-dot"></span>Zone Wi-Fi (pavillon communautaire)</div>
+      <div class="service-item"><span class="service-dot"></span>Bois pour feu de camp</div>
+      <div class="service-item"><span class="service-dot"></span>Aire de feu sur chaque terrain</div>
+      <div class="service-item"><span class="service-dot"></span>Douches</div>
+      <div class="service-item"><span class="service-dot"></span>Buanderie</div>
+      <div class="service-item"><span class="service-dot"></span>Pavillon communautaire</div>
+      <div class="service-item"><span class="service-dot"></span>Bacs de recyclage</div>
+      <div class="service-item"><span class="service-dot"></span>Chiens acceptés en laisse</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-tag">Contact</div>
+    <h2>Planifiez votre séjour</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Adresse</div>
+            <div class="contact-value">575 Rang Mastigouche<br>Mandeville, QC J0K 1L0</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Téléphone</div>
+            <div class="contact-value"><a href="tel:4508351797">450-835-1797</a> (en saison)<br><a href="tel:4388894340">438-889-4340</a> (hors saison)</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-label">Courriel</div>
+            <div class="contact-value"><a href="mailto:campingmastigouche@hotmail.com">campingmastigouche@hotmail.com</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Bureau ouvert</div>
+            <div class="contact-value">9h00 à 21h00<br>7 jours sur 7 (en saison)</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📅</div>
+          <div>
+            <div class="contact-label">Saison</div>
+            <div class="contact-value">Mi-mai à début octobre<br>Dates 2026 à confirmer</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Envoyer un message</h3>
+        <div class="form-group">
+          <label>Votre nom</label>
+          <input type="text" placeholder="Jean Tremblay">
+        </div>
+        <div class="form-group">
+          <label>Courriel</label>
+          <input type="email" placeholder="jean@exemple.com">
+        </div>
+        <div class="form-group">
+          <label>Type de terrain</label>
+          <select>
+            <option>3 services (roulotte/VR)</option>
+            <option>1 service (tente)</option>
+            <option>Saisonnier</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Dates souhaitées, questions..."></textarea>
+        </div>
+        <button class="form-submit" onclick="alert('Formulaire de démo — contactez-nous au 450-835-1797')">Envoyer →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Camping Mastigouche</strong> · 575 Rang Mastigouche, Mandeville, QC J0K 1L0<br>
+  450-835-1797 · campingmastigouche@hotmail.com
+  <div class="footer-kodai">
+    Site réalisé par <a href="https://kodai.ca" target="_blank">KodAI.ca</a>
+  </div>
+</footer>
+
+<!-- CHAT WIDGET -->
+<div id="chat-widget">
+  <div id="chat-window">
+    <div class="cw-header">
+      <div class="cw-avatar">🌲</div>
+      <div>
+        <div class="cw-title">Assistant — Camping Mastigouche</div>
+        <div class="cw-status"><span class="cw-status-dot"></span> En ligne 24/7</div>
+      </div>
+      <button class="cw-close" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="cw-messages" id="cwMessages"></div>
+    <div class="cw-input-area">
+      <input type="text" id="cwInput" placeholder="Posez votre question..." onkeydown="if(event.key==='Enter')cwSend()">
+      <button id="cwSendBtn" onclick="cwSend()">➤</button>
+    </div>
+  </div>
+  <button id="chat-toggle" onclick="toggleChat()">
+    💬
+    <span class="chat-notif" id="chatNotif">1</span>
+  </button>
+</div>
+
+<script>
+let chatOpen = false;
+let cwMessages = [];
+let chatInitialized = false;
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  const win = document.getElementById('chat-window');
+  win.style.display = chatOpen ? 'flex' : 'none';
+  document.getElementById('chatNotif').style.display = 'none';
+  if (chatOpen && !chatInitialized) {
+    chatInitialized = true;
+    cwAddBot(
+      "Bonjour! Je suis l'assistant du Camping Mastigouche. Je peux répondre à vos questions sur les tarifs, activités et services.",
+      ["Prix pour une roulotte", "Activités disponibles", "Chiens acceptés?", "Saison d'ouverture"]
+    );
+  }
+  if (chatOpen) document.getElementById('cwInput').focus();
+}
+
+function cwNow() {
+  return new Date().toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+}
+
+function cwEsc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+function cwAddBot(text, replies) {
+  const msgs = document.getElementById('cwMessages');
+  const d = document.createElement('div');
+  d.className = 'cw-msg bot';
+  const btns = (replies && replies.length)
+    ? `<div class="cw-quick">${replies.map(r=>`<button class="cw-qbtn" onclick="cwSend('${r}')">${r}</button>`).join('')}</div>`
+    : '';
+  d.innerHTML = `<div class="cw-bubble">${cwEsc(text)}</div>${btns}`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function cwAddUser(text) {
+  const msgs = document.getElementById('cwMessages');
+  const d = document.createElement('div');
+  d.className = 'cw-msg user';
+  d.innerHTML = `<div class="cw-bubble">${cwEsc(text)}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function cwShowTyping() {
+  const msgs = document.getElementById('cwMessages');
+  const d = document.createElement('div');
+  d.className = 'cw-typing'; d.id = 'cwTyping';
+  d.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function cwHideTyping() { const t=document.getElementById('cwTyping'); if(t)t.remove(); }
+
+async function cwSend(text) {
+  const input = document.getElementById('cwInput');
+  const msg = text || input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  document.getElementById('cwSendBtn').disabled = true;
+  cwAddUser(msg);
+  cwMessages.push({ role: 'user', content: msg });
+  cwShowTyping();
+  try {
+    const res = await fetch('/api/camping-mastigouche', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: cwMessages })
+    });
+    const data = await res.json();
+    const reply = data.message;
+    cwMessages.push({ role: 'assistant', content: reply });
+    cwHideTyping();
+    cwAddBot(reply);
+  } catch(e) {
+    cwHideTyping();
+    cwAddBot("Désolé, une erreur est survenue. Appelez-nous au 450-835-1797.");
+  }
+  document.getElementById('cwSendBtn').disabled = false;
+  document.getElementById('cwInput').focus();
+}
+</script>
+</body>
+</html>
