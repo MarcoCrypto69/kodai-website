@@ -46,7 +46,9 @@ Dom est un ami personnel. Premier client KodAI. Bénéficie du Cercle Fondateur 
 
 ### Formulaire d'échange
 - Le client soumet son véhicule actuel (année, marque, modèle, km, état, photos)
-- Dom reçoit une notification avec tous les détails
+- **Évaluation IA instantanée** — après soumission, l'IA affiche une fourchette de prix estimée basée sur le marché (ex: "Valeur estimée : 12 000$ – 14 500$")
+- Mention obligatoire : *"Estimation approximative — valeur finale confirmée après inspection"*
+- Dom reçoit une notification avec tous les détails + l'estimation IA
 
 ### Relances automatiques
 - Email automatique au client quand il soumet un formulaire d'intérêt
