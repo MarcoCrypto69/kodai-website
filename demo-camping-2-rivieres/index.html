@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camping des Deux Rivières — Crabtree, Lanaudière</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --vert: #2d6a4f;
+    --vert2: #40916c;
+    --vert-clair: #74c69d;
+    --brun: #6b4226;
+    --brun-clair: #c68642;
+    --bg: #f8faf8;
+    --blanc: #ffffff;
+    --texte: #1a2a1a;
+    --gris: #5a6a5a;
+    --gris-clair: #edf4ed;
+    --border: #d0e4d0;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--texte); }
+  a { text-decoration: none; color: inherit; }
+
+  /* BANNER */
+  .banner {
+    background: var(--brun);
+    color: #fff8e7;
+    text-align: center;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--blanc);
+    border-bottom: 2px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px; max-width: 1100px; margin: 0 auto;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo-icon {
+    width: 46px; height: 46px;
+    background: linear-gradient(135deg, var(--vert), var(--vert2));
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .logo-text-main { font-size: 17px; font-weight: 800; color: var(--vert); line-height: 1.2; }
+  .logo-text-sub { font-size: 11px; color: var(--gris); font-weight: 400; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--texte); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--vert2); }
+  .nav-cta {
+    background: var(--vert); color: white;
+    padding: 10px 22px; border-radius: 25px;
+    font-size: 14px; font-weight: 600;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--vert2); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(160deg, #1a3d2b 0%, #2d6a4f 50%, #40916c 100%);
+    color: white;
+    padding: 80px 24px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(255,255,255,0.04)' d='M0,192L80,186.7C160,181,320,171,480,186.7C640,203,800,245,960,245.3C1120,245,1280,203,1360,181.3L1440,160L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'/%3E%3C/svg%3E") bottom no-repeat;
+    background-size: cover;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .hero h1 span { color: var(--vert-clair); }
+  .hero p {
+    font-size: 18px;
+    opacity: 0.88;
+    max-width: 560px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--brun-clair);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+    padding: 14px 32px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.25); }
+  .hero-scroll {
+    margin-top: 48px;
+    display: flex; align-items: center; justify-content: center; gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat strong { display: block; font-size: 26px; font-weight: 800; }
+  .hero-stat span { font-size: 12px; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.5px; }
+  .hero-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.25); }
+
+  /* SECTION */
+  section { padding: 72px 24px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    display: inline-block;
+    color: var(--vert2);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: clamp(22px, 3vw, 36px);
+    font-weight: 800;
+    color: var(--texte);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 16px;
+    color: var(--gris);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 44px;
+  }
+
+  /* SERVICES */
+  #services { background: var(--blanc); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
+    background: var(--gris-clair);
+    border-radius: 16px;
+    padding: 28px 22px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(45,106,79,0.12); }
+  .service-icon { font-size: 36px; margin-bottom: 14px; }
+  .service-title { font-size: 16px; font-weight: 700; color: var(--vert); margin-bottom: 8px; }
+  .service-desc { font-size: 14px; color: var(--gris); line-height: 1.6; }
+
+  /* CAMPING */
+  #terrains { background: var(--bg); }
+  .terrains-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .terrain-card {
+    background: var(--blanc);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .terrain-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(45,106,79,0.15); }
+  .terrain-visual {
+    height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px;
+  }
+  .terrain-visual.v1 { background: linear-gradient(135deg, #c8e6c9, #a5d6a7); }
+  .terrain-visual.v2 { background: linear-gradient(135deg, #b3e5fc, #81d4fa); }
+  .terrain-visual.v3 { background: linear-gradient(135deg, #ffe0b2, #ffcc80); }
+  .terrain-body { padding: 22px; }
+  .terrain-name { font-size: 17px; font-weight: 800; color: var(--texte); margin-bottom: 6px; }
+  .terrain-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .tag {
+    background: var(--gris-clair); border: 1px solid var(--border);
+    color: var(--vert);
+    font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 10px;
+  }
+  .terrain-desc { font-size: 13px; color: var(--gris); line-height: 1.6; }
+
+  /* RESTAURANT */
+  #restaurant { background: var(--blanc); }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .menu-section {
+    background: var(--gris-clair);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+  }
+  .menu-section h3 {
+    font-size: 15px; font-weight: 800;
+    color: var(--vert);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .menu-item {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 7px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 13px;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item-name { color: var(--texte); font-weight: 500; }
+  .menu-item-price { color: var(--brun); font-weight: 700; white-space: nowrap; margin-left: 8px; }
+
+  /* ÉVÉNEMENTS */
+  #evenements { background: var(--bg); }
+  .events-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .event-card {
+    background: var(--blanc);
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    display: flex; gap: 18px; align-items: flex-start;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.15s;
+  }
+  .event-card:hover { transform: translateY(-2px); }
+  .event-date {
+    background: linear-gradient(135deg, var(--vert), var(--vert2));
+    color: white;
+    border-radius: 12px;
+    padding: 10px 14px;
+    text-align: center;
+    min-width: 56px;
+    flex-shrink: 0;
+  }
+  .event-date strong { display: block; font-size: 22px; font-weight: 900; line-height: 1; }
+  .event-date span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
+  .event-name { font-size: 15px; font-weight: 700; color: var(--texte); margin-bottom: 4px; }
+  .event-desc { font-size: 13px; color: var(--gris); line-height: 1.5; }
+
+  /* RÈGLEMENTS */
+  #reglements { background: #1a3d2b; color: white; }
+  #reglements .section-title { color: white; }
+  #reglements .section-desc { color: rgba(255,255,255,0.7); }
+  .regles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .regle-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .regle-icon { font-size: 22px; flex-shrink: 0; }
+  .regle-text { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.85); }
+  .regle-text strong { display: block; color: white; font-size: 14px; margin-bottom: 3px; }
+
+  /* CONTACT */
+  #contact { background: var(--blanc); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 700px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-info { display: flex; flex-direction: column; gap: 18px; }
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--gris-clair);
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+  }
+  .contact-item-icon { font-size: 24px; flex-shrink: 0; }
+  .contact-item-title { font-size: 13px; font-weight: 700; color: var(--vert); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .contact-item-val { font-size: 15px; color: var(--texte); font-weight: 500; }
+  .contact-item-sub { font-size: 12px; color: var(--gris); margin-top: 2px; }
+  .contact-form-box {
+    background: linear-gradient(135deg, var(--vert), var(--vert2));
+    border-radius: 20px;
+    padding: 36px;
+    color: white;
+  }
+  .contact-form-box h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .contact-form-box p { font-size: 14px; opacity: 0.85; margin-bottom: 24px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 600; opacity: 0.85; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14px;
+    color: white;
+    outline: none;
+    font-family: inherit;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.55); }
+  .form-group input:focus, .form-group textarea:focus { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.2); }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-submit {
+    width: 100%;
+    background: var(--brun-clair);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+
+  /* FOOTER */
+  footer {
+    background: #0d1f0d;
+    color: rgba(255,255,255,0.75);
+    padding: 48px 24px 24px;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 24px;
+  }
+  @media (max-width: 700px) { .footer-top { grid-template-columns: 1fr; gap: 28px; } }
+  .footer-brand h3 { font-size: 17px; font-weight: 800; color: white; margin-bottom: 8px; }
+  .footer-brand p { font-size: 13px; line-height: 1.7; }
+  .footer-col h4 { font-size: 13px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 14px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col ul li a { font-size: 13px; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--vert-clair); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    font-size: 12px;
+  }
+  .kodai-badge-footer a { color: var(--vert-clair); font-weight: 700; }
+
+  /* KODAI BADGE FIXE */
+  .kodai-badge-fixed {
+    position: fixed;
+    bottom: 18px; left: 18px;
+    background: rgba(0,0,0,0.75);
+    color: white;
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 999;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .kodai-badge-fixed a { color: var(--vert-clair); font-weight: 700; }
+
+  /* MOBILE NAV */
+  .nav-mobile-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--vert); }
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 20px 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); border-bottom: 2px solid var(--border); gap: 16px; }
+    .nav-links.open { display: flex; }
+    .nav-links .nav-cta { text-align: center; }
+    .nav-mobile-toggle { display: block; }
+    nav { position: relative; }
+    .hero-divider { display: none; }
+    section { padding: 52px 20px; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">🏕️ Saison 2025 ouverte — Réservez tôt pour les meilleures places!</div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="logo-icon">🏕️</div>
+      <div>
+        <div class="logo-text-main">Camping des Deux Rivières</div>
+        <div class="logo-text-sub">Crabtree, Lanaudière</div>
+      </div>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#services">Services</a>
+      <a href="#terrains">Terrains</a>
+      <a href="#restaurant">Restaurant</a>
+      <a href="#evenements">Événements</a>
+      <a href="#contact" class="nav-cta">Réserver maintenant</a>
+    </div>
+    <button class="nav-mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">⚜️ Lanaudière, Québec</div>
+  <h1>La nature <span>à deux pas</span><br>de chez vous</h1>
+  <p>Camping familial au cœur de Lanaudière — terrains avec 3 services, piscine, restaurant et activités pour toute la famille.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">📅 Réserver ma place</a>
+    <a href="#terrains" class="btn-secondary">Voir les terrains</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-stat">
+      <strong>100+</strong>
+      <span>Terrains</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <strong>3 services</strong>
+      <span>Eau · Élec · Égout</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <strong>Piscine</strong>
+      <span>Surveillée</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <strong>Restaurant</strong>
+      <span>Sur place</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <span class="section-label">Ce qu'on offre</span>
+    <h2 class="section-title">Tout pour une escapade parfaite</h2>
+    <p class="section-desc">Du camping traditionnel au VR avec tous les services — profitez d'une nature préservée avec le confort moderne.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏕️</div>
+        <div class="service-title">Terrains 3 services</div>
+        <div class="service-desc">Eau potable, électricité et égout sur chaque terrain. Idéal pour VR et tentes.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏊</div>
+        <div class="service-title">Piscine surveillée</div>
+        <div class="service-desc">Grande piscine avec maître-nageur. Parfaite pour les enfants comme les adultes.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🍔</div>
+        <div class="service-title">Restaurant</div>
+        <div class="service-desc">Casse-croûte sur place avec déjeuners, repas chauds et crème glacée. Menu varié pour toute la famille.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🧺</div>
+        <div class="service-title">Buanderie</div>
+        <div class="service-desc">Laveuses et sécheuses disponibles sur place pour les séjours prolongés.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚽</div>
+        <div class="service-title">Terrains de sports</div>
+        <div class="service-desc">Volleyball, pétanque, fer à cheval et terrain de jeux. De l'action pour tous les âges.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎪</div>
+        <div class="service-title">Parc pour enfants</div>
+        <div class="service-desc">Aire de jeux sécurisée pour que les petits s'amusent en toute liberté.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TERRAINS -->
+<section id="terrains">
+  <div class="section-inner">
+    <span class="section-label">Hébergement</span>
+    <h2 class="section-title">Choisissez votre terrain</h2>
+    <p class="section-desc">Des emplacements pour tous les styles de camping, des tentes aux grands VR.</p>
+    <div class="terrains-grid">
+      <div class="terrain-card">
+        <div class="terrain-visual v1">🌿</div>
+        <div class="terrain-body">
+          <div class="terrain-name">Terrain Tente</div>
+          <div class="terrain-tags">
+            <span class="tag">Eau potable</span>
+            <span class="tag">Électricité</span>
+            <span class="tag">Table pique-nique</span>
+          </div>
+          <div class="terrain-desc">Emplacement gazonné pour tentes de toutes tailles. Accès aux douches et toilettes communes.</div>
+        </div>
+      </div>
+      <div class="terrain-card">
+        <div class="terrain-visual v2">🚐</div>
+        <div class="terrain-body">
+          <div class="terrain-name">Terrain VR — 3 services</div>
+          <div class="terrain-tags">
+            <span class="tag">Eau + Élec + Égout</span>
+            <span class="tag">50 amp</span>
+            <span class="tag">Nivellement</span>
+          </div>
+          <div class="terrain-desc">Terrain avec branchement complet (eau, électricité 50A, vidange d'eaux usées). Idéal pour VR de toutes tailles.</div>
+        </div>
+      </div>
+      <div class="terrain-card">
+        <div class="terrain-visual v3">🔥</div>
+        <div class="terrain-body">
+          <div class="terrain-name">Terrain Familial</div>
+          <div class="terrain-tags">
+            <span class="tag">Foyer extérieur</span>
+            <span class="tag">Grande superficie</span>
+            <span class="tag">Vue nature</span>
+          </div>
+          <div class="terrain-desc">Grands terrains pour les familles avec espaces de jeux, foyer privé et vue dégagée sur la nature.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESTAURANT -->
+<section id="restaurant">
+  <div class="section-inner">
+    <span class="section-label">Casse-croûte</span>
+    <h2 class="section-title">Restaurant sur place</h2>
+    <p class="section-desc">Pas besoin de sortir du camping — notre casse-croûte vous sert des repas chauds du matin au soir.</p>
+    <div class="menu-grid">
+      <div class="menu-section">
+        <h3>🍳 Déjeuners</h3>
+        <div class="menu-item"><span class="menu-item-name">Œufs, bacon, rôties</span><span class="menu-item-price">8,50$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Crêpes (3) avec sirop</span><span class="menu-item-price">7,00$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Gruau avec fruits</span><span class="menu-item-price">5,00$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Muffin maison + café</span><span class="menu-item-price">4,50$</span></div>
+      </div>
+      <div class="menu-section">
+        <h3>🍔 Repas chauds</h3>
+        <div class="menu-item"><span class="menu-item-name">Hamburger classique</span><span class="menu-item-price">10,00$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Hot-dog avec frites</span><span class="menu-item-price">7,50$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Poutine</span><span class="menu-item-price">8,00$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Club sandwich</span><span class="menu-item-price">11,00$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Assiette du jour</span><span class="menu-item-price">12,50$</span></div>
+      </div>
+      <div class="menu-section">
+        <h3>🍦 Desserts & Boissons</h3>
+        <div class="menu-item"><span class="menu-item-name">Crème glacée (1 boule)</span><span class="menu-item-price">2,50$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Crème glacée (2 boules)</span><span class="menu-item-price">4,00$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Slush / Freezie</span><span class="menu-item-price">2,00$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Café / Thé</span><span class="menu-item-price">2,50$</span></div>
+        <div class="menu-item"><span class="menu-item-name">Boisson gazeuse</span><span class="menu-item-price">2,00$</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÉVÉNEMENTS -->
+<section id="evenements">
+  <div class="section-inner">
+    <span class="section-label">Saison 2025</span>
+    <h2 class="section-title">Activités & Événements</h2>
+    <p class="section-desc">Toute la saison, on anime le camping avec des activités pour petits et grands.</p>
+    <div class="events-list">
+      <div class="event-card">
+        <div class="event-date"><strong>23</strong><span>Mai</span></div>
+        <div>
+          <div class="event-name">Ouverture de la saison</div>
+          <div class="event-desc">Bienvenue à tous les campeurs! Barbecue d'accueil et animations pour les enfants.</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date"><strong>21</strong><span>Juin</span></div>
+        <div>
+          <div class="event-name">Fête de la Saint-Jean</div>
+          <div class="event-desc">Feu de camp, musique et festivités pour souligner la fête nationale du Québec.</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date"><strong>1</strong><span>Juil</span></div>
+        <div>
+          <div class="event-name">Fête du Canada</div>
+          <div class="event-desc">Feux d'artifice, jeux en famille et soirée animée pour célébrer.</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date"><strong>2</strong><span>Août</span></div>
+        <div>
+          <div class="event-name">Fin de semaine Olympique</div>
+          <div class="event-desc">Tournois de volleyball, pétanque et compétitions amicales pour toute la famille.</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date"><strong>30</strong><span>Août</span></div>
+        <div>
+          <div class="event-name">Grande Guignolée du camping</div>
+          <div class="event-desc">Collecte de denrées et soirée communautaire pour clore la belle saison estivale.</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date"><strong>1</strong><span>Sept</span></div>
+        <div>
+          <div class="event-name">Fermeture de la saison</div>
+          <div class="event-desc">Dernier souper de camping, tirage de prix et au revoir jusqu'à l'an prochain!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RÈGLEMENTS -->
+<section id="reglements">
+  <div class="section-inner">
+    <span class="section-label" style="color: var(--vert-clair);">Pour le bien de tous</span>
+    <h2 class="section-title">Règlements du camping</h2>
+    <p class="section-desc">Quelques règles simples pour que tout le monde passe un beau séjour.</p>
+    <div class="regles-grid">
+      <div class="regle-card">
+        <div class="regle-icon">🔇</div>
+        <div class="regle-text"><strong>Silence nocturne</strong>Silence obligatoire de 23h à 8h. Respectez le repos de vos voisins.</div>
+      </div>
+      <div class="regle-card">
+        <div class="regle-icon">🐕</div>
+        <div class="regle-text"><strong>Animaux acceptés</strong>Les chiens sont les bienvenus en laisse. Ramassez les déjections de votre animal.</div>
+      </div>
+      <div class="regle-card">
+        <div class="regle-icon">🚗</div>
+        <div class="regle-text"><strong>Vitesse limitée</strong>Maximum 15 km/h dans le camping. Priorité aux piétons et aux enfants en tout temps.</div>
+      </div>
+      <div class="regle-card">
+        <div class="regle-icon">🔥</div>
+        <div class="regle-text"><strong>Feux de camp</strong>Feux permis dans les foyers désignés uniquement. Toujours éteindre avant de dormir.</div>
+      </div>
+      <div class="regle-card">
+        <div class="regle-icon">🗑️</div>
+        <div class="regle-text"><strong>Propreté</strong>Gardez votre terrain propre. Utilisez les bacs de recyclage et compostage disponibles.</div>
+      </div>
+      <div class="regle-card">
+        <div class="regle-icon">👨‍👩‍👧‍👦</div>
+        <div class="regle-text"><strong>Visites</strong>Maximum 6 visiteurs par terrain. Les visiteurs doivent s'enregistrer à la réception.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <span class="section-label">Nous joindre</span>
+    <h2 class="section-title">Réservez votre terrain</h2>
+    <p class="section-desc">Appelez-nous ou remplissez le formulaire — nous vous répondons rapidement.</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-title">Adresse</div>
+            <div class="contact-item-val">777 chemin des Deux-Rivières</div>
+            <div class="contact-item-sub">Crabtree, QC J0K 1B0</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div>
+            <div class="contact-item-title">Téléphone</div>
+            <div class="contact-item-val"><a href="tel:4507544916" style="color: var(--vert); font-weight:700;">450-754-4916</a></div>
+            <div class="contact-item-sub">7 jours / 7 en saison</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📅</div>
+          <div>
+            <div class="contact-item-title">Saison</div>
+            <div class="contact-item-val">Mi-mai à début septembre</div>
+            <div class="contact-item-sub">Réservations acceptées toute l'année</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-title">Région</div>
+            <div class="contact-item-val">Lanaudière, Québec</div>
+            <div class="contact-item-sub">À 45 min de Montréal</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-box">
+        <h3>Demande de réservation</h3>
+        <p>Dites-nous vos dates et le type de terrain souhaité.</p>
+        <div class="form-group">
+          <label>Votre nom</label>
+          <input type="text" placeholder="Jean Tremblay">
+        </div>
+        <div class="form-group">
+          <label>Téléphone ou courriel</label>
+          <input type="text" placeholder="450-xxx-xxxx">
+        </div>
+        <div class="form-group">
+          <label>Type de terrain</label>
+          <select>
+            <option>Tente</option>
+            <option>VR — 3 services</option>
+            <option>Terrain familial</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Dates souhaitées</label>
+          <input type="text" placeholder="Du 15 au 18 juillet">
+        </div>
+        <div class="form-group">
+          <label>Message (optionnel)</label>
+          <textarea placeholder="Nombre de personnes, besoins spéciaux..."></textarea>
+        </div>
+        <button class="form-submit" onclick="alert('Merci! Nous vous contacterons sous 24h.')">📨 Envoyer ma demande</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>🏕️ Camping des Deux Rivières</h3>
+        <p>Votre destination camping familiale en Lanaudière depuis des générations. Profitez de la nature, de la piscine et du restaurant sur place.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#services">Nos services</a></li>
+          <li><a href="#terrains">Terrains</a></li>
+          <li><a href="#restaurant">Restaurant</a></li>
+          <li><a href="#evenements">Événements</a></li>
+          <li><a href="#reglements">Règlements</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Infos</h4>
+        <ul>
+          <li><a href="tel:4507544916">450-754-4916</a></li>
+          <li><a href="#">777 ch. des Deux-Rivières</a></li>
+          <li><a href="#">Crabtree, QC J0K 1B0</a></li>
+          <li><a href="#contact">Réservations</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Camping des Deux Rivières — Tous droits réservés</span>
+      <span class="kodai-badge-footer">Site réalisé par <a href="https://kodai.ca" target="_blank">KodAI.ca</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- Badge KodAI fixe -->
+<div class="kodai-badge-fixed">Démo par <a href="https://kodai.ca" target="_blank">KodAI.ca</a></div>
+
+</body>
+</html>
